@@ -95,4 +95,4 @@ CREATE TABLE orders(
     FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
 );
 
-COMMENT ON TABLE inventory IS 'The inventory table is used for managing inventory items.';
+COMMENT ON TABLE orders IS 'The inventory table is used for managing inventory items.';
