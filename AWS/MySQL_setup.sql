@@ -1,8 +1,10 @@
 /*
 Created by: Zachary Young
+Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/03/2021
+Last edited: 07/05/2021
 Created for: CMSC495
+
 
 MySQL
 
@@ -79,7 +81,7 @@ CREATE TABLE inventory(
     InventoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Name VARCHAR(60) UNIQUE NOT NULL,  
     Description VARCHAR(120) UNIQUE NOT NULL,
-    Category VARCHAR(60) UNIQUE NOT NULL, 
+    Category VARCHAR(60) NOT NULL, 
     WholeSalePrice DECIMAL(8,2) NOT NULL,
     RetailPrice DECIMAL(8,2) NOT NULL,
     Quantity INT NOT NULL
@@ -87,13 +89,12 @@ CREATE TABLE inventory(
 COMMENT="The inventory table is used for managing inventory items."
 ;
 
--- Purchase Order table
 CREATE TABLE orders(
     OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-    EmployeeID INT UNIQUE NOT NULL,
-    ItemID INT UNIQUE NOT NULL,
-    Description VARCHAR(120) UNIQUE NOT NULL,
-    FoodCategory VARCHAR(60) UNIQUE NOT NULL, 
+    EmployeeID INT NOT NULL,
+    ItemID INT NOT NULL,
+    Description VARCHAR(120) NOT NULL,
+    FoodCategory VARCHAR(60) NOT NULL, 
     WholeSaleUnitPrice DECIMAL(8,2) NOT NULL,
     WholeSaleTotalPrice DECIMAL(10,2) NOT NULL,
     Quantity INT NOT NULL, 
