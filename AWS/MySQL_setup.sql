@@ -34,7 +34,7 @@ CREATE USER 'inventory_admin'@'localhost' IDENTIFIED BY 'password';
 CREATE USER 'inventory_user'@'localhost' IDENTIFIED BY 'password';
 SELECT user FROM mysql.user;
 
-
+/*
 -- remove user ability to query any database
 SHOW GRANTS FOR 'inventory_admin'@'localhost'; 
 SHOW GRANTS FOR 'inventory_user'@'localhost'; 
@@ -52,7 +52,7 @@ GRANT ALL PRIVILEGES ON %database_name% TO 'inventory_user'@'localhost';
 -- check permission of users
 SHOW GRANTS FOR 'inventory_admin'@'localhost';
 SHOW GRANTS FOR 'inventory_user'@'localhost';
-
+*/
 
 /* Build tables */
 
