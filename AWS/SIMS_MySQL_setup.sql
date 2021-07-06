@@ -5,37 +5,56 @@ Created on: 07/01/2021
 Last edited: 07/05/2021
 Created for: CMSC495
 
-
-MySQL
+Tested platform(s): 
+  mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
 
 Ensure the following are applied:
-- AWS account differs from MySQL account and from Application account
-
-Objectives
+  - AWS account differs from MySQL account and from Application account
+  
+Objectives:
   - Secure MySQL instance, Databases and Tables
   - Create new users that can query applicaiton database
   - Lock down new user permissions
   - Create new applicaiton database
   - Create 4 tables: Users, Inventory, Order History, and App Passwords
-  
+
+HELPFUL COMMANDS:
+  drop app tables: "
+        DROP TABLE IF EXISTS inventory_app_data.orders;
+        DROP TABLE IF EXISTS inventory_app_data.users;
+        DROP TABLE IF EXISTS inventory_app_data.inventory;
+        "
+  drop app mysql.user: "
+        DROP USER IF EXISTS 'inventory_admin'@'localhost';
+        DROP USER IF EXISTS 'inventory_user'@'localhost';
+        "
+  drop app database: "
+        USE mysql; DROP DATABASE IF EXISTS inventory_app_data;
+        "
+        
+EXAMPLE USAGE:
+mysql -u root -p < ./SIMS_MySQL_setup.sql
+
 */
 
-/* Setup and harden SQL instance */
 
--- show current databases and users
-SHOW databases;
-SELECT user FROM mysql.user;
+/* create MySQL users for DataBase connection */
+SELECT ' [+] Configuring users ...' as '';
 USE mysql;
+CREATE USER IF NOT EXISTS 'inventory_admin'@'localhost' IDENTIFIED BY 'password';
+CREATE USER IF NOT EXISTS 'inventory_user'@'localhost' IDENTIFIED BY 'password';
+SELECT ' [+] Users configured:' as '';
+SELECT user FROM mysql.user WHERE user LIKE "inventory%";
 
--- create database for the app
-CREATE DATABASE inventory_app_data;
+/* create database if it does not exist */
+SELECT ' [+] Configuring database ...' as '';
+CREATE DATABASE IF NOT EXISTS inventory_app_data;
+SELECT ' [+] database built:' as '';
 SHOW databases;
 
--- create users for database
-CREATE USER 'inventory_admin'@'localhost' IDENTIFIED BY 'password';
-CREATE USER 'inventory_user'@'localhost' IDENTIFIED BY 'password';
-SELECT user FROM mysql.user;
+USE inventory_app_data;
 
+/* limit user to only application data/users */
 /*
 -- remove user ability to query any database
 SHOW GRANTS FOR 'inventory_admin'@'localhost'; 
@@ -54,17 +73,15 @@ GRANT ALL PRIVILEGES ON %database_name% TO 'inventory_user'@'localhost';
 -- check permission of users
 SHOW GRANTS FOR 'inventory_admin'@'localhost';
 SHOW GRANTS FOR 'inventory_user'@'localhost';
+
 */
 
-/* Build tables */
-
--- switch to table
-SHOW databases;
-USE inventory_app_data;
+/* create tables if they do not exists */
+SELECT ' [+] Configuring tables ...' as '';
 
 -- User application table
 -- Role: 0 = admin, 1 = approver, 2 = employee
-CREATE TABLE users(
+CREATE TABLE IF NOT EXISTS users(
     UserID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Username VARCHAR(60) UNIQUE NOT NULL, 
     Fname VARCHAR(60) NOT NULL, 
@@ -77,7 +94,7 @@ COMMENT="The users table is used for managing application users."
 -- password table referencing user
 
 -- Inventory table
-CREATE TABLE inventory(
+CREATE TABLE IF NOT EXISTS  inventory(
     InventoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Name VARCHAR(60) UNIQUE NOT NULL,  
     Description VARCHAR(120) UNIQUE NOT NULL,
@@ -89,8 +106,11 @@ CREATE TABLE inventory(
 COMMENT="The inventory table is used for managing inventory items."
 ;
 
-CREATE TABLE orders(
-    OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+-- OrderID will be the complete to track all items related to single order
+-- OrderID Random GUID assigned by Java Function .... 
+CREATE TABLE IF NOT EXISTS orders(
+    EventID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+    OrderID INT NOT NULL, 
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
     Description VARCHAR(120) NOT NULL,
@@ -106,5 +126,10 @@ CREATE TABLE orders(
 COMMENT="The orders table is used for managing whole sale orders placed."
 ;
 
+SELECT ' [+] tables built:' as '';
+SHOW tables;
+
 -- check those tables
+SELECT ' [+] Final report:' as '';
 SELECT TABLE_COMMENT,CREATE_TIME,UPDATE_TIME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='inventory_app_data';
+SELECT ' [!] COMPELETE.' as '';
