@@ -160,7 +160,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
         jButton33 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sales Inventory Management System (SIMS)");
+        setTitle("Sales Inventory Management System (SIMS) - Supervisor");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -813,7 +813,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(102, 102, 102));
 
-        jButton11.setText("Waste Item");
+        jButton11.setText("Waste Item(s)");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);

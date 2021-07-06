@@ -10,12 +10,12 @@ package mockgui;
  *
  * @author munki
  */
-public class AdminGUI extends javax.swing.JFrame {
+public class AdminWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminGUI
      */
-    public AdminGUI() {
+    public AdminWindow() {
         initComponents();
     }
 
@@ -39,6 +39,7 @@ public class AdminGUI extends javax.swing.JFrame {
         jButton34 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sales Inventory Management System (SIMS) - Admin");
 
         userList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Zachary Young", "Gary Uhland II", "Sophia Tetang", "Marsha Balthazar", "Benjamin Sutter" };
@@ -172,20 +173,21 @@ public class AdminGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminGUI().setVisible(true);
+                new AdminWindow().setVisible(true);
             }
         });
     }

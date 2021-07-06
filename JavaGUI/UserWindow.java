@@ -121,7 +121,7 @@ public class UserWindow extends javax.swing.JFrame {
         jButton32 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sales Inventory Management System (SIMS)");
+        setTitle("Sales Inventory Management System (SIMS) - User");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -656,7 +656,7 @@ public class UserWindow extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(102, 102, 102));
 
-        jButton11.setText("Initialize Wast Request");
+        jButton11.setText("Initialize Waste Request");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
@@ -702,7 +702,7 @@ public class UserWindow extends javax.swing.JFrame {
                         .addComponent(jTextField8))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
