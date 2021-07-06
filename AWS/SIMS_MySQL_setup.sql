@@ -9,9 +9,8 @@ Tested platform(s):
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
 
 Ensure the following are applied:
-  - AWS account differs from MySQL account and from Application account
-  
-Objectives:
+- AWS account differs from MySQL account and from Application account
+Objectives
   - Secure MySQL instance, Databases and Tables
   - Create new users that can query applicaiton database
   - Lock down new user permissions
@@ -109,8 +108,8 @@ COMMENT="The inventory table is used for managing inventory items."
 -- OrderID will be the complete to track all items related to single order
 -- OrderID Random GUID assigned by Java Function .... 
 CREATE TABLE IF NOT EXISTS orders(
-    EventID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-    OrderID INT NOT NULL, 
+    OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+    EventID INT NOT NULL, 
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
     Description VARCHAR(120) NOT NULL,
