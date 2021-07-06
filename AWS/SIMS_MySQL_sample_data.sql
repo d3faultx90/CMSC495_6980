@@ -13,6 +13,10 @@ Ensure the following are applied:
 
 Objectives
 -
+        
+EXAMPLE USAGE:
+mysql -u root -p < ./SIMS_MySQL_sample_data.sql
+
 
 */
 
