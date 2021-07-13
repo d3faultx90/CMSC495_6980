@@ -55,12 +55,15 @@ SHOW databases;
 SELECT ' [+] Updating user permissions ...' as '';
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
+SHOW GRANTS FOR 'zyoung5';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin_bkup';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin_bkup';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'zyoung5';
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
+SHOW GRANTS FOR 'zyoung5';
 SELECT ' [+] Users permissions updated.' as '';
 
 /* All users created will have a SQL account and be \
@@ -104,7 +107,7 @@ CREATE TABLE IF NOT EXISTS  inventory(
     InventoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Name VARCHAR(60) UNIQUE NOT NULL,  
     Description VARCHAR(120) UNIQUE NOT NULL,
-    Category VARCHAR(60) NOT NULL, 
+    FoodCategory VARCHAR(60) NOT NULL, 
     WholeSalePrice DECIMAL(8,2) NOT NULL,
     RetailPrice DECIMAL(8,2) NOT NULL,
     Quantity INT NOT NULL
@@ -119,13 +122,13 @@ CREATE TABLE IF NOT EXISTS orders(
     OrderEventID INT NOT NULL, 
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
-    Description VARCHAR(120) NOT NULL,
-    FoodCategory VARCHAR(60) NOT NULL, 
+    SalesTax DECIMAL(5,4) NOT NULL,
     WholeSaleUnitPrice DECIMAL(8,2) NOT NULL,
-    WholeSaleTotalPrice DECIMAL(10,2) NOT NULL,
+    WholeSaleTotalPrice DECIMAL(10,2) AS (((WholeSaleUnitPrice * Quantity) *
+	       	SalesTax ) + (WholeSaleUnitPrice * Quantity)),
     Quantity INT NOT NULL, 
     OrderDate DATETIME NOT NULL,
-    Status INT DEFAULT 0 CHECK (Status = 0 OR Status = 1),
+    Status INT DEFAULT 0 CHECK (Status = 0 OR Status = 1 OR Status = 2),
     FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
     FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
 )
@@ -138,9 +141,8 @@ CREATE TABLE IF NOT EXISTS sales(
     SalesEventID INT NOT NULL,
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
-    Description VARCHAR(120) NOT NULL,
-    FoodCategory VARCHAR(60) NOT NULL, 
     SalePrice DECIMAL(8,2) NOT NULL,
+    TotalSalePrice  DECIMAL(10,2) AS (SalePrice * Quantity),
     Quantity INT NOT NULL, 
     OrderDate DATETIME NOT NULL,
     FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
