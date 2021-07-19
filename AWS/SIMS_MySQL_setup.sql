@@ -2,7 +2,7 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/12/2021
+Last edited: 07/18/2021
 Created for: CMSC495
 
 Tested platform(s): 
@@ -58,9 +58,9 @@ SHOW GRANTS FOR 'SIMS_admin_bkup';
 SHOW GRANTS FOR 'zyoung5';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin_bkup';
-GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin' REQUIRE SSL;
-GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin_bkup' REQUIRE SSL;
-GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'zyoung5' REQUIRE SSL;
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin_bkup';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'zyoung5';
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
 SHOW GRANTS FOR 'zyoung5';
@@ -121,6 +121,7 @@ CREATE TABLE IF NOT EXISTS orders(
     OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     OrderEventID INT NOT NULL, 
     EmployeeID INT NOT NULL,
+    ApproverID INT,
     ItemID INT NOT NULL,
     SalesTax DECIMAL(5,4) NOT NULL,
     WholeSaleUnitPrice DECIMAL(8,2) NOT NULL,
@@ -130,6 +131,7 @@ CREATE TABLE IF NOT EXISTS orders(
     OrderDate DATETIME NOT NULL,
     Status INT DEFAULT 0 CHECK (Status = 0 OR Status = 1 OR Status = 2),
     FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
+    FOREIGN KEY (ApproverID) REFERENCES users(UserID),
     FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
 )
 COMMENT="The orders table is used for managing whole sale orders placed."
@@ -141,10 +143,10 @@ CREATE TABLE IF NOT EXISTS sales(
     SalesEventID INT NOT NULL,
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
-    SalePrice DECIMAL(8,2) NOT NULL,
-    TotalSalePrice  DECIMAL(10,2) AS (SalePrice * Quantity),
+    SalesPrice DECIMAL(8,2) NOT NULL,
+    TotalSalePrice  DECIMAL(10,2) AS (SalesPrice * Quantity),
     Quantity INT NOT NULL, 
-    OrderDate DATETIME NOT NULL,
+    SalesDate DATETIME NOT NULL,
     FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
     FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
 )
