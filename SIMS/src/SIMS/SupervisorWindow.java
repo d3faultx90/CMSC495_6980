@@ -11,11 +11,14 @@ import java.util.ArrayList;
 
 public class SupervisorWindow extends javax.swing.JFrame {
 
+	/* These are used to hold results of the queries so only one connection is needed.
+	Once the connection is made, these are filled with the various queries (item, sales, and orders) */
 	private List<String> itemNames = new ArrayList<String>(); 
-	private List<List> results = new ArrayList<List>();
-    /**
-     * Creates new form Main
-     */
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
+	// resultsFromOrderQuery
+	// resultsFromSalesQuery
+	// resultsFromUsersQuery
+
     public SupervisorWindow() {
     	initialize();
         initComponents();
@@ -25,7 +28,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
         Connector c = new Connector();
         c.connect();
         itemNames = c.getItemNames();
-        results = c.getResults();
+        resultsFromItemQuery = c.getResultsOfItemQuery();
     }   
 
     /**
@@ -41,12 +44,12 @@ public class SupervisorWindow extends javax.swing.JFrame {
         homePanel = new SIMS.HomePanel();
         inventoryTab = new javax.swing.JPanel();
         inventorySubTabs = new javax.swing.JTabbedPane();
-        viewInventoryPanel1 = new SIMS.ViewInventoryPanel(results);
-        wastePanel1 = new SIMS.WastePanel(results);
-        orderPanel1 = new SIMS.OrderPanel(results);
-        reorderPanel = new SIMS.ReorderPanel(results);
+        viewInventoryPanel1 = new SIMS.ViewInventoryPanel(resultsFromItemQuery);
+        wastePanel1 = new SIMS.WastePanel(resultsFromItemQuery);
+        orderPanel1 = new SIMS.OrderPanel(resultsFromItemQuery);
+        reorderPanel = new SIMS.ReorderPanel(resultsFromItemQuery);
         addNewItemPanel1 = new SIMS.AddNewItemPanel();
-        salesPanel = new SIMS.SalesPanel(results);
+        salesPanel = new SIMS.SalesPanel(resultsFromItemQuery);
         reportPanel = new SIMS.ReportPanel();
         importAndExportPanel = new SIMS.ImportAndExportPanel();
         requestsPanel = new SIMS.RequestsPanel();

@@ -13,10 +13,10 @@ import javax.swing.JTable;
 
 public class ViewInventoryPanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public ViewInventoryPanel(List<List> results) {
-    	this.results = results;
+    public ViewInventoryPanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }  
 
@@ -32,7 +32,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         panel = new javax.swing.JPanel();
         viewDetailButton = new javax.swing.JButton();
         helpButtoon = new javax.swing.JButton();
-        itemFilterPanel = new SIMS.ItemFilterPanel(results);
+        itemFilterPanel = new SIMS.ItemFilterPanel(resultsFromItemQuery);
 
         panel.setPreferredSize(new java.awt.Dimension(436, 234));
 

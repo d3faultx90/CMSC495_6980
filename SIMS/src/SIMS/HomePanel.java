@@ -184,7 +184,7 @@ public class HomePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_helpButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        GeneralGuiFunctions.close(SwingUtilities.getWindowAncestor(this), new LoginWindow());
+        GeneralGuiFunctions.closeWindow(SwingUtilities.getWindowAncestor(this), new LoginWindow());
     }//GEN-LAST:event_logoutButtonActionPerformed
 
 

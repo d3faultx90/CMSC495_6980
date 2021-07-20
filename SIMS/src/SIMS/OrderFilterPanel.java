@@ -19,10 +19,10 @@ import javax.swing.table.TableRowSorter;
 
 public class OrderFilterPanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public OrderFilterPanel(List<List> results) {
-    	this.results = results;
+    public OrderFilterPanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }
 
@@ -107,18 +107,17 @@ public class OrderFilterPanel extends javax.swing.JPanel {
                 .addComponent(itemScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                 .addContainerGap())
         );
-//        DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
-//        for (List l : results) {
-//        	model.addRow(new Object[]{l.get(1), l.get(6)});
-//        }
+        
+        
+        // This needs to be updated with stuff from the order query
+        //GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(), resultsFromItemQuery);
+        
+        
     }// </editor-fold>//GEN-END:initComponents
 
     private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filterFieldKeyReleased
-        // https://stackoverflow.com/a/37989058
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(((DefaultTableModel) itemTable.getModel()));
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterField.getText()));
-
-        itemTable.setRowSorter(sorter);
+    	// This needs to be updated with stuff from the order query
+    	// GeneralGuiFunctions.filterTable(itemTable, filterField);
     }//GEN-LAST:event_filterFieldKeyReleased
 
     private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterFieldActionPerformed

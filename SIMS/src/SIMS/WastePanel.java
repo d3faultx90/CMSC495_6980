@@ -4,6 +4,7 @@
  * Date: July 19th, 2021
  * Purpose: Panel that is used in the Waste Subtab
  */
+
 package SIMS;
 
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ import java.util.List;
 
 public class WastePanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public WastePanel(List<List> results) {
-    	this.results = results;
+    public WastePanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }  
 
@@ -32,7 +33,7 @@ public class WastePanel extends javax.swing.JPanel {
         quantityLabel = new javax.swing.JLabel();
         quantityTextfield = new javax.swing.JTextField();
         helpButton = new javax.swing.JButton();
-        itemFilterPanel1 = new SIMS.ItemFilterPanel(results);
+        itemFilterPanel1 = new SIMS.ItemFilterPanel(resultsFromItemQuery);
 
         wasteButton.setText("Waste Item(s)");
         wasteButton.addActionListener(new java.awt.event.ActionListener() {

@@ -2,7 +2,7 @@
  * File: OrderAndSalesPanel.java
  * Author: Ben Sutter
  * Date: July 19th, 2021
- * Purpose: Panel that is used in the order and sales panel
+ * Purpose: Panel that is used in the order and sales panels
  */
 package SIMS;
 
@@ -14,12 +14,37 @@ import javax.swing.table.DefaultTableModel;
 
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public OrderAndSalesPanel(List<List> results) {
-    	this.results = results;
+    public OrderAndSalesPanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }    
+    
+    // When pressed, adds the selected item along with its quantity to the other table
+    private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
+            list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
+        }
+
+        JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
+        String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+        if (!list.contains(selectedCellValue)) {
+        	// Add the selected item and the quantity to the order or sales table.
+            DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+            model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
+        } else {
+        	// Don't add the item to the table if it is already in there
+            System.out.println("That item is already in the table (this needs to be a JOptionPane eventually)");
+        }
+    }
+
+    // Remove the selected row from the table
+    private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+        model.removeRow(orderTable.getSelectedRow());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +60,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
         quantityTextfield = new javax.swing.JTextField();
         addToButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
-        itemFilterPanel = new SIMS.ItemFilterPanel(results);
+        itemFilterPanel = new SIMS.ItemFilterPanel(resultsFromItemQuery);
         completionPanel = new javax.swing.JPanel();
         removeFromButton = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -157,28 +182,6 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
                 .addComponent(completionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToButtonActionPerformed
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
-            list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
-        }
-
-        JTable table = itemFilterPanel.itemTable;
-        String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
-        if (!list.contains(selectedCellValue)) {
-            DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-            model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
-        } else {
-            System.out.println("That's already in there silly");
-        }
-    }//GEN-LAST:event_addToButtonActionPerformed
-
-    private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-        model.removeRow(orderTable.getSelectedRow());
-    }//GEN-LAST:event_removeFromButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addToButton;

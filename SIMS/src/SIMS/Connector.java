@@ -12,7 +12,13 @@ import java.sql.DriverManager;
 
 public class Connector {
 	
-	private List<List> results = new ArrayList<List>();
+	// This array list of lists holds all items retrieved from the query
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
+	
+	//Require implementation
+	private List<List> resultsFromSalesQuery = new ArrayList<List>();
+	private List<List> resultsFromUserQuery = new ArrayList<List>();
+	private List<List> resultsFromOrderQuery = new ArrayList<List>();
     
     private static final String DB_USER = "admin";
     private static final String DB_PASSWORD = "OB3rwqzxqmLr4E8eTDTM";
@@ -52,7 +58,7 @@ public class Connector {
                     for (int i = 1; i <= columnsNumber; i++) {
                         row.add(rs.getString(i));
                     }
-                    results.add(row);
+                    resultsFromItemQuery.add(row);
                 }
              
             } catch (SQLException e) {
@@ -61,23 +67,42 @@ public class Connector {
         
     }
     
-    public List<List> getResults(){
-    	return results;
+    // Accessor method for the results of item query
+    public List<List> getResultsOfItemQuery(){
+    	return resultsFromItemQuery;
     }
     
+    // Strips the results of the item query and creates a list of only the names of the items
     public List<String> getItemNames(){
     	List names = new ArrayList<String>();
     	
-    	for (List l : results) {
+    	for (List l : resultsFromItemQuery) {
     		names.add(l.get(1));
     	}
     	return names;
     }
     
+//    // Accessor method for the results of order query
+//    public List<List> getResultsOfOrderQuery(){
+//    	return resultsFromOrderQuery;
+//    }
+//    
+//    // Accessor method for the results of user query
+//    public List<List> getResultsOfUserQuery(){
+//    	return resultsFromUserQuery;
+//    }
+//    
+//    // Accessor method for the results of sales query
+//    public List<List> getResultsOfSalesQuery(){
+//    	return resultsFromSalesQuery;
+//    }
+    
+
+    
 //    public List<String> getItemNamesAndQuantity(){
 //    	List namesAndQuantity = new ArrayList<String>();
 //    	
-//    	for (List l : results) {
+//    	for (List l : resultsFromItemQuery) {
 //    		//System.out.println("LOOOPED");
 //    		List temp =
 //    		names.add(l.get(1));

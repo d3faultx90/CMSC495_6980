@@ -117,7 +117,7 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameTextfieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        GeneralGuiFunctions.close(this, new SupervisorWindow());
+        GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed

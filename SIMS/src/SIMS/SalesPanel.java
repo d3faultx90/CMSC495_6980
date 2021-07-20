@@ -12,10 +12,10 @@ import java.util.List;
 
 public class SalesPanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public SalesPanel(List<List> results) {
-    	this.results = results;
+    public SalesPanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }  
 
@@ -31,7 +31,7 @@ public class SalesPanel extends javax.swing.JPanel {
         salesTab = new javax.swing.JPanel();
         dateComboBox = new javax.swing.JComboBox<>();
         saveSaleButton = new javax.swing.JButton();
-        salesPanel = new SIMS.OrderAndSalesPanel(results);
+        salesPanel = new SIMS.OrderAndSalesPanel(resultsFromItemQuery);
 
         salesTab.setToolTipText("[187,187,187]");
 

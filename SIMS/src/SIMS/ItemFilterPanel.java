@@ -16,25 +16,19 @@ import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author munki
- */
 public class ItemFilterPanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public ItemFilterPanel(List<List> results) {
-    	this.results = results;
+    public ItemFilterPanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }
     
-//    /**
-//     * Creates new form FilterPanel
-//     */
-//    public FilterPanel(String orderOrSale, List<current items or something) {
-//        initComponents();
-//    }
+    // Filters the table
+    private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
+    	GeneralGuiFunctions.filterTable(itemTable, filterField);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,11 +46,6 @@ public class ItemFilterPanel extends javax.swing.JPanel {
 
         filterLabel.setText("Filter");
 
-        filterField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filterFieldActionPerformed(evt);
-            }
-        });
         filterField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 filterFieldKeyReleased(evt);
@@ -113,23 +102,8 @@ public class ItemFilterPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
         
-        DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
-        for (List l : results) {
-        	model.addRow(new Object[]{l.get(1), l.get(6)});
-        }
+        GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(), resultsFromItemQuery);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filterFieldKeyReleased
-        // https://stackoverflow.com/a/37989058
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(((DefaultTableModel) itemTable.getModel()));
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterField.getText()));
-
-        itemTable.setRowSorter(sorter);
-    }//GEN-LAST:event_filterFieldKeyReleased
-
-    private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_filterFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

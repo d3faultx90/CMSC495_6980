@@ -11,10 +11,10 @@ import java.util.List;
 
 public class ReorderPanel extends javax.swing.JPanel {
 
-	private List<List> results = new ArrayList<List>();
+	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public ReorderPanel(List<List> results) {
-    	this.results = results;
+    public ReorderPanel(List<List> resultsFromItemQuery) {
+    	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
     }   
 
@@ -27,7 +27,7 @@ public class ReorderPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        orderFilterPanel1 = new SIMS.OrderFilterPanel(results);
+        orderFilterPanel1 = new SIMS.OrderFilterPanel(resultsFromItemQuery);
         helpButton = new javax.swing.JButton();
         reorderButton = new javax.swing.JButton();
 
