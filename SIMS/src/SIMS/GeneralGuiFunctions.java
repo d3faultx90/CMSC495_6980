@@ -1,8 +1,8 @@
 /*
- * File: .java
+ * File: GeneralGuiFunctions.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Holds functions that are used in multiple panels/windows of the GUI
  */
 package SIMS;
 

@@ -1,26 +1,23 @@
 /*
- * File: .java
+ * File: SalesPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Holds the sales panel that is nested in User/Supervisor window
  */
+
 package SIMS;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author munki
- */
 public class SalesPanel extends javax.swing.JPanel {
 
-	private List<String> itemNames = new ArrayList<String>(); 
+	private List<List> results = new ArrayList<List>();
 	
-    public SalesPanel(List<String> itemNames) {
-    	this.itemNames = itemNames;
+    public SalesPanel(List<List> results) {
+    	this.results = results;
         initComponents();
-    }
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,7 +31,7 @@ public class SalesPanel extends javax.swing.JPanel {
         salesTab = new javax.swing.JPanel();
         dateComboBox = new javax.swing.JComboBox<>();
         saveSaleButton = new javax.swing.JButton();
-        salesPanel = new SIMS.OrderAndSalesPanel(itemNames);
+        salesPanel = new SIMS.OrderAndSalesPanel(results);
 
         salesTab.setToolTipText("[187,187,187]");
 

@@ -1,15 +1,11 @@
 /*
- * File: .java
+ * File: ReportPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Panel that is used in the report tab of the main GUI
  */
 package SIMS;
 
-/**
- *
- * @author munki
- */
 public class ReportPanel extends javax.swing.JPanel {
 
     /**

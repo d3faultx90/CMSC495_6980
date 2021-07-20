@@ -1,15 +1,11 @@
 /*
- * File: .java
+ * File: ImportAndExportPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Panel that is used in the Import/Export tab of the Main GUI
  */
 package SIMS;
 
-/**
- *
- * @author munki
- */
 public class ImportAndExportPanel extends javax.swing.JPanel {
 
     /**

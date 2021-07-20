@@ -1,21 +1,18 @@
 /*
- * File: MainWindow.java
+ * File: SupervisorWindow.java
  * Author: Ben Sutter
- * Date: July 2nd, 2021
- * Purpose: Hold the GUI
+ * Date: July 19th, 2021
+ * Purpose: Master GUI that holds many of the elements
  */
 package SIMS;
 
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.ArrayList;
 
 public class SupervisorWindow extends javax.swing.JFrame {
 
 	private List<String> itemNames = new ArrayList<String>(); 
+	private List<List> results = new ArrayList<List>();
     /**
      * Creates new form Main
      */
@@ -28,6 +25,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
         Connector c = new Connector();
         c.connect();
         itemNames = c.getItemNames();
+        results = c.getResults();
     }   
 
     /**
@@ -43,18 +41,19 @@ public class SupervisorWindow extends javax.swing.JFrame {
         homePanel = new SIMS.HomePanel();
         inventoryTab = new javax.swing.JPanel();
         inventorySubTabs = new javax.swing.JTabbedPane();
-        viewInventoryPanel1 = new SIMS.ViewInventoryPanel(itemNames);
-        addNewItemPanel = new SIMS.AddNewItemPanel();
-        wastePanel1 = new SIMS.WastePanel(itemNames);
-        orderPanel1 = new SIMS.OrderPanel(itemNames);
-        reorderPanel = new SIMS.ReorderPanel(itemNames);
-        salesPanel = new SIMS.SalesPanel(itemNames);
+        viewInventoryPanel1 = new SIMS.ViewInventoryPanel(results);
+        wastePanel1 = new SIMS.WastePanel(results);
+        orderPanel1 = new SIMS.OrderPanel(results);
+        reorderPanel = new SIMS.ReorderPanel(results);
+        addNewItemPanel1 = new SIMS.AddNewItemPanel();
+        salesPanel = new SIMS.SalesPanel(results);
         reportPanel = new SIMS.ReportPanel();
         importAndExportPanel = new SIMS.ImportAndExportPanel();
         requestsPanel = new SIMS.RequestsPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sales Inventory Management System (SIMS) - Supervisor");
+        setResizable(false);
 
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(419, 418));
         jTabbedPane1.addTab("Home", homePanel);
@@ -62,10 +61,10 @@ public class SupervisorWindow extends javax.swing.JFrame {
         inventorySubTabs.setBackground(new java.awt.Color(102, 102, 102));
         inventorySubTabs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         inventorySubTabs.addTab("View Inventory", viewInventoryPanel1);
-        inventorySubTabs.addTab("Add New Item", addNewItemPanel);
         inventorySubTabs.addTab("Waste Item(s)", wastePanel1);
         inventorySubTabs.addTab("Order", orderPanel1);
         inventorySubTabs.addTab("Reorder", reorderPanel);
+        inventorySubTabs.addTab("Add New Item", addNewItemPanel1);
 
         javax.swing.GroupLayout inventoryTabLayout = new javax.swing.GroupLayout(inventoryTab);
         inventoryTab.setLayout(inventoryTabLayout);
@@ -145,7 +144,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
-    private SIMS.AddNewItemPanel addNewItemPanel;
+    private SIMS.AddNewItemPanel addNewItemPanel1;
     private SIMS.HomePanel homePanel;
     private SIMS.ImportAndExportPanel importAndExportPanel;
     private javax.swing.JTabbedPane inventorySubTabs;

@@ -1,8 +1,8 @@
 /*
- * File: .java
+ * File: OrderAndSalesPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Panel that is used in the order and sales panel
  */
 package SIMS;
 
@@ -12,18 +12,14 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author munki
- */
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
-	private List<String> itemNames = new ArrayList<String>(); 
+	private List<List> results = new ArrayList<List>();
 	
-    public OrderAndSalesPanel(List<String> itemNames) {
-    	this.itemNames = itemNames;
+    public OrderAndSalesPanel(List<List> results) {
+    	this.results = results;
         initComponents();
-    }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +35,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
         quantityTextfield = new javax.swing.JTextField();
         addToButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
-        orderFilterPanel = new SIMS.FilterPanel(itemNames);
+        itemFilterPanel = new SIMS.ItemFilterPanel(results);
         completionPanel = new javax.swing.JPanel();
         removeFromButton = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -67,27 +63,23 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
             .addGroup(filterPanelLayout.createSequentialGroup()
                 .addComponent(helpButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(filterPanelLayout.createSequentialGroup()
                         .addComponent(quantityLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addToButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(orderFilterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         filterPanelLayout.setVerticalGroup(
             filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filterPanelLayout.createSequentialGroup()
                 .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(filterPanelLayout.createSequentialGroup()
-                        .addComponent(helpButton)
-                        .addGap(0, 101, Short.MAX_VALUE))
-                    .addGroup(filterPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(orderFilterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(helpButton)
+                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addToButton)
                     .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -130,7 +122,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
             .addGroup(completionPanelLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(removeFromButton, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(completionPanelLayout.createSequentialGroup()
                     .addGap(43, 43, 43)
@@ -172,7 +164,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
             list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
         }
 
-        JTable table = orderFilterPanel.itemTable;
+        JTable table = itemFilterPanel.itemTable;
         String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
         if (!list.contains(selectedCellValue)) {
             DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
@@ -193,8 +185,8 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
     private javax.swing.JPanel completionPanel;
     private javax.swing.JPanel filterPanel;
     private javax.swing.JButton helpButton;
+    private SIMS.ItemFilterPanel itemFilterPanel;
     private javax.swing.JScrollPane jScrollPane6;
-    private SIMS.FilterPanel orderFilterPanel;
     private javax.swing.JTable orderTable;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JTextField quantityTextfield;

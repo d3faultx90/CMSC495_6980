@@ -1,8 +1,8 @@
 /*
- * File: .java
+ * File: ViewInventoryPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Panel that is used in the view inventory subtab
  */
 package SIMS;
 
@@ -11,18 +11,14 @@ import java.util.List;
 
 import javax.swing.JTable;
 
-/**
- *
- * @author munki
- */
 public class ViewInventoryPanel extends javax.swing.JPanel {
 
-	private List<String> itemNames = new ArrayList<String>(); 
+	private List<List> results = new ArrayList<List>();
 	
-    public ViewInventoryPanel(List<String> itemNames) {
-    	this.itemNames = itemNames;
+    public ViewInventoryPanel(List<List> results) {
+    	this.results = results;
         initComponents();
-    }
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +32,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         panel = new javax.swing.JPanel();
         viewDetailButton = new javax.swing.JButton();
         helpButtoon = new javax.swing.JButton();
-        filterPanel = new SIMS.FilterPanel(itemNames);
+        itemFilterPanel = new SIMS.ItemFilterPanel(results);
 
         panel.setPreferredSize(new java.awt.Dimension(436, 234));
 
@@ -57,11 +53,11 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
                 .addComponent(helpButtoon)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(viewDetailButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(filterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(viewDetailButton, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,13 +65,13 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(helpButtoon)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 248, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(itemFilterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(viewDetailButton)
-                .addGap(64, 64, 64))
+                .addGap(40, 40, 40))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -101,15 +97,15 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailButtonActionPerformed
-        JTable table = filterPanel.itemTable;
+        JTable table = itemFilterPanel.itemTable;
         String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
         System.out.println(selectedCellValue);
     }//GEN-LAST:event_viewDetailButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private SIMS.FilterPanel filterPanel;
     private javax.swing.JButton helpButtoon;
+    private SIMS.ItemFilterPanel itemFilterPanel;
     private javax.swing.JPanel panel;
     private javax.swing.JButton viewDetailButton;
     // End of variables declaration//GEN-END:variables

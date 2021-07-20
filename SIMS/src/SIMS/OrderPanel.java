@@ -1,26 +1,22 @@
 /*
- * File: .java
+ * File: OrderPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Panel that is used in the order subtab
  */
 package SIMS;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author munki
- */
 public class OrderPanel extends javax.swing.JPanel {
 
-	private List<String> itemNames = new ArrayList<String>(); 
+	private List<List> results = new ArrayList<List>();
 	
-    public OrderPanel(List<String> itemNames) {
-    	this.itemNames = itemNames;
+    public OrderPanel(List<List> results) {
+    	this.results = results;
         initComponents();
-    }
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +29,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
         panel = new javax.swing.JPanel();
         orderButton = new javax.swing.JButton();
-        orderAndSalesPanel = new SIMS.OrderAndSalesPanel(itemNames);
+        orderAndSalesPanel = new SIMS.OrderAndSalesPanel(results);
 
         orderButton.setBackground(new java.awt.Color(0, 102, 0));
         orderButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N

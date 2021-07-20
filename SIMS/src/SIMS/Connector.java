@@ -77,11 +77,23 @@ public class Connector {
     	//System.out.println(names);
     	return names;
     }
-      
-    public static void main(String[] args) throws Exception {
-        Connector c = new Connector();
-        c.connect();
-        c.getItemNames();
-    }
+    
+//    public List<String> getItemNamesAndQuantity(){
+//    	List namesAndQuantity = new ArrayList<String>();
+//    	
+//    	for (List l : results) {
+//    		//System.out.println("LOOOPED");
+//    		List temp =
+//    		names.add(l.get(1));
+//    	}
+//    	//System.out.println(names);
+//    	return namesAndQuantity;
+//    }
+//      
+//    public static void main(String[] args) throws Exception {
+//        Connector c = new Connector();
+//        c.connect();
+//        c.getItemNames();
+//    }
 
 }

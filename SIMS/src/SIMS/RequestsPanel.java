@@ -1,15 +1,11 @@
 /*
- * File: .java
+ * File: RequestsPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
- * Purpose:
+ * Date: July 19th, 2021
+ * Purpose: Holds the request panel that is nested in User/Supervisor window
  */
 package SIMS;
 
-/**
- *
- * @author munki
- */
 public class RequestsPanel extends javax.swing.JPanel {
 
     /**
@@ -41,6 +37,7 @@ public class RequestsPanel extends javax.swing.JPanel {
         wasteRequestList = new javax.swing.JList<>();
         wasteLabel = new javax.swing.JLabel();
         helpButton = new javax.swing.JButton();
+        orderLabel = new javax.swing.JLabel();
 
         orderRequestList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "7/4/21 7:42 PM - Benjamin Sutter", "7/5/21 8:31 AM - Benjamin Sutter", "stuff", "stuff", "stuff", "stuff" };
@@ -74,59 +71,63 @@ public class RequestsPanel extends javax.swing.JPanel {
         helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         helpButton.setText("?");
 
+        orderLabel.setText("Order Requests");
+
         javax.swing.GroupLayout requestPanelLayout = new javax.swing.GroupLayout(requestPanel);
         requestPanel.setLayout(requestPanelLayout);
         requestPanelLayout.setHorizontalGroup(
             requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestPanelLayout.createSequentialGroup()
+                .addComponent(helpButton)
                 .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(helpButton)
                     .addGroup(requestPanelLayout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(wasteREquestTable)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, requestPanelLayout.createSequentialGroup()
-                                        .addComponent(viewWasteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(editWasteButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(deleteWasteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(requestPanelLayout.createSequentialGroup()
-                                    .addGap(75, 75, 75)
-                                    .addComponent(wasteLabel)))
-                            .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(orderRequestPane)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, requestPanelLayout.createSequentialGroup()
-                                    .addComponent(viewOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(editOrderButton)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(deleteOrderbutton))))))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addGap(54, 54, 54)
+                        .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(requestPanelLayout.createSequentialGroup()
+                                .addComponent(viewOrderButton)
+                                .addGap(32, 32, 32)
+                                .addComponent(editOrderButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                                .addComponent(deleteOrderbutton))
+                            .addGroup(requestPanelLayout.createSequentialGroup()
+                                .addComponent(viewWasteButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(editWasteButton)
+                                .addGap(32, 32, 32)
+                                .addComponent(deleteWasteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(requestPanelLayout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addComponent(wasteLabel))
+                            .addComponent(orderRequestPane)
+                            .addComponent(wasteREquestTable)))
+                    .addGroup(requestPanelLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(orderLabel)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         requestPanelLayout.setVerticalGroup(
             requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(requestPanelLayout.createSequentialGroup()
-                .addComponent(helpButton)
+                .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(helpButton)
+                    .addComponent(orderLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orderRequestPane, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(orderRequestPane, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewOrderButton)
                     .addComponent(editOrderButton)
                     .addComponent(deleteOrderbutton))
                 .addGap(18, 18, 18)
                 .addComponent(wasteLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(wasteREquestTable, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(wasteREquestTable, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewWasteButton)
                     .addComponent(editWasteButton)
                     .addComponent(deleteWasteButton))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -150,6 +151,7 @@ public class RequestsPanel extends javax.swing.JPanel {
     private javax.swing.JButton editOrderButton;
     private javax.swing.JButton editWasteButton;
     private javax.swing.JButton helpButton;
+    private javax.swing.JLabel orderLabel;
     private javax.swing.JList<String> orderRequestList;
     private javax.swing.JScrollPane orderRequestPane;
     private javax.swing.JPanel requestPanel;
