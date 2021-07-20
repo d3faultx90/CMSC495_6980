@@ -54,9 +54,7 @@ public class Connector {
                     }
                     results.add(row);
                 }
-
-                System.out.println(results);
-                
+             
             } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,10 +69,8 @@ public class Connector {
     	List names = new ArrayList<String>();
     	
     	for (List l : results) {
-    		//System.out.println("LOOOPED");
     		names.add(l.get(1));
     	}
-    	//System.out.println(names);
     	return names;
     }
     

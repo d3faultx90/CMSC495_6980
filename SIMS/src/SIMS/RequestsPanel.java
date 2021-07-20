@@ -40,7 +40,7 @@ public class RequestsPanel extends javax.swing.JPanel {
         orderLabel = new javax.swing.JLabel();
 
         orderRequestList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "7/4/21 7:42 PM - Benjamin Sutter", "7/5/21 8:31 AM - Benjamin Sutter", "stuff", "stuff", "stuff", "stuff" };
+            String[] strings = { "7/8/21 7:42 PM - Benjamin Sutter", "7/7/21 8:31 AM - Benjamin Sutter", "7/6/21 8:30 AM - Benjamin Sutter", "7/5/21 8:31 AM - Benjamin Sutter", "7/4/21 8:31 AM - Benjamin Sutter", "7/3/21 8:31 AM - Benjamin Sutter" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
