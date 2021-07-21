@@ -9,6 +9,7 @@ Tested platform(s):
 Ensure the following are applied:
   - Create new users that can query application database
   - Lock down new user permissions
+  
 HELPFUL COMMANDS:
   drop app tables:
 DROP TABLE IF EXISTS SIMS_app_data.orders;
@@ -17,13 +18,12 @@ DROP TABLE IF EXISTS SIMS_app_data.inventory;
 DROP TABLE IF EXISTS SIMS_app_data.sales;
   
   drop app mysql.user:
-DROP USER IF EXISTS 'SIMS_admin'@'localhost';
-DROP USER IF EXISTS 'SIMS_admin_bkup'@'localhost';
-DROP USER IF EXISTS 'zyoung5';EXISTS 'SIMS_admin_bkup'@'localhost';
-        "
-  drop app database: "
-        USE mysql; DROP DATABASE IF EXISTS SIMS_app_data;
-        "
+DROP USER IF EXISTS 'SIMS_admin';
+DROP USER IF EXISTS 'SIMS_admin_bkup';
+DROP USER IF EXISTS 'zyoung5';
+
+  drop app database: 
+USE mysql; DROP DATABASE IF EXISTS SIMS_app_data;
         
 EXAMPLE USAGE:
 mysql -u root -p < ./SIMS_MySQL_setup.sql
