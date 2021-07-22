@@ -15,6 +15,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.JOptionPane;
 
 public class GeneralGuiFunctions {
 
@@ -39,5 +40,17 @@ public class GeneralGuiFunctions {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterField.getText()));
 
         table.setRowSorter(sorter);
+    }
+    
+    //Display this JOptionpane whenever a field is missing input or has negative values
+    static void displayErrorPane(String errorMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage,
+                "Invalid Field Entry", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    //Display this JOptionpane whenever a field is missing input or has negative values
+    static void displayHelpPane(String helpInformation) {
+        JOptionPane.showMessageDialog(null, helpInformation,
+                "Help", JOptionPane.QUESTION_MESSAGE);
     }
 }

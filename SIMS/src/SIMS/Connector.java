@@ -20,8 +20,8 @@ public class Connector {
 	private List<List> resultsFromUserQuery = new ArrayList<List>();
 	private List<List> resultsFromOrderQuery = new ArrayList<List>();
     
-    private static final String DB_USER = "admin";
-    private static final String DB_PASSWORD = "OB3rwqzxqmLr4E8eTDTM";
+    private static final String DB_USER = "SIMS_admin";
+    private static final String DB_PASSWORD = "SIMS_Sup3r_C0mplex!";
     
     // This key store has only the prod root ca.
     /* This should be started with

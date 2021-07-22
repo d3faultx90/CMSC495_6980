@@ -102,7 +102,7 @@ public class HomePanel extends javax.swing.JPanel {
         lastWeekSaleLabel.setText("Last week's sales");
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Refresh Inventory");
+        jButton1.setText("Refresh Data");
 
         refreshLabel.setForeground(new java.awt.Color(255, 0, 0));
         refreshLabel.setText("In case manual refresh is needed ->");
@@ -180,7 +180,7 @@ public class HomePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-        // TODO add your handling code here:
+        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }//GEN-LAST:event_helpButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
