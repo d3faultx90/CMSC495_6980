@@ -2,16 +2,14 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/18/2021
+Last edited: 07/20/2021
 Created for: CMSC495
-
 Tested platform(s): 
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
-
 Ensure the following are applied:
   - Create new users that can query application database
   - Lock down new user permissions
-
+  
 HELPFUL COMMANDS:
   drop app tables:
 DROP TABLE IF EXISTS SIMS_app_data.orders;
@@ -20,17 +18,15 @@ DROP TABLE IF EXISTS SIMS_app_data.inventory;
 DROP TABLE IF EXISTS SIMS_app_data.sales;
   
   drop app mysql.user:
-DROP USER IF EXISTS 'SIMS_admin'@'localhost';
-DROP USER IF EXISTS 'SIMS_admin_bkup'@'localhost';
-DROP USER IF EXISTS 'zyoung5';EXISTS 'SIMS_admin_bkup'@'localhost';
-        "
-  drop app database: "
-        USE mysql; DROP DATABASE IF EXISTS SIMS_app_data;
-        "
+DROP USER IF EXISTS 'SIMS_admin';
+DROP USER IF EXISTS 'SIMS_admin_bkup';
+DROP USER IF EXISTS 'zyoung5';
+
+  drop app database: 
+USE mysql; DROP DATABASE IF EXISTS SIMS_app_data;
         
 EXAMPLE USAGE:
 mysql -u root -p < ./SIMS_MySQL_setup.sql
-
 */
 
 
@@ -53,6 +49,9 @@ SHOW databases;
 
 /* harden default SIMS admin account */
 SELECT ' [+] Updating user permissions ...' as '';
+SELECT user,ssl_type,Host from mysql.user;
+UPDATE mysql.user SET ssl_type = 'ANY' WHERE Host != 'localhost';
+FLUSH PRIVILEGES;
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
 SHOW GRANTS FOR 'zyoung5';
@@ -61,6 +60,9 @@ REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin_bkup';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin_bkup';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'zyoung5';
+UPDATE mysql.user SET ssl_type = 'ANY' WHERE Host != 'localhost';
+FLUSH PRIVILEGES;
+SELECT user,ssl_type,Host from mysql.user;
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
 SHOW GRANTS FOR 'zyoung5';
