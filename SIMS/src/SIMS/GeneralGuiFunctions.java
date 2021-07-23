@@ -23,7 +23,7 @@ public class GeneralGuiFunctions {
     static void closeWindow(Window toClose, javax.swing.JFrame toOpen) {
         WindowEvent closeWindow = new WindowEvent(toClose, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
-        new SupervisorWindow().setVisible(true);
+        toOpen.setVisible(true);
     }
     
     // Given a 2D list, add the item and the quantity of the list to the selected table

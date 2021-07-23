@@ -34,8 +34,18 @@ public class ReorderPanel extends javax.swing.JPanel {
         helpButton.setBackground(new java.awt.Color(255, 255, 153));
         helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         helpButton.setText("?");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
 
         reorderButton.setText("Reorder");
+        reorderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reorderButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -61,6 +71,14 @@ public class ReorderPanel extends javax.swing.JPanel {
                 .addContainerGap(72, Short.MAX_VALUE))
         );
     }// </editor-fold>                        
+
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+    }                                          
+
+    private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
 
 
     // Variables declaration - do not modify                     
