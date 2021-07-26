@@ -29,7 +29,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
         }
 
         JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
-        String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+        String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
         if (!list.contains(selectedCellValue)) {
         	// Add the selected item and the quantity to the order or sales table.
             DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
@@ -47,7 +47,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
     }
     
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }   
 
     /**

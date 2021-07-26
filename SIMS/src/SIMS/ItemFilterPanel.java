@@ -23,6 +23,7 @@ public class ItemFilterPanel extends javax.swing.JPanel {
     public ItemFilterPanel(List<List> resultsFromItemQuery) {
     	this.resultsFromItemQuery = resultsFromItemQuery;
         initComponents();
+        GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(), Connector.getItemTable());
     }
     
     // Filters the table
@@ -102,7 +103,7 @@ public class ItemFilterPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
         
-        GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(), resultsFromItemQuery);
+        
     }// </editor-fold>//GEN-END:initComponents
 
 

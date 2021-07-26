@@ -14,8 +14,8 @@ import java.sql.DriverManager;
 public class Connector {
 	
 	// This array list of lists holds all items retrieved from the query
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
-	
+	private static List<List> resultsFromItemQuery = new ArrayList<List>();
+	private static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	
     private static final String DB_USER = "SIMS_admin";
     private static final String DB_PASSWORD = "SIMS_Sup3r_C0mplex!";
@@ -80,13 +80,13 @@ public class Connector {
         switch(query.toLowerCase())
         {
             case "inventory":
-            	results = runAllQuery("SELECT * FROM SIMS_app_data.inventory");
+            	resultsFromItemQuery = runAllQuery("SELECT * FROM SIMS_app_data.inventory");
                 break;
             case "users":
             	results = runAllQuery("SELECT * FROM SIMS_app_data.users");
                 break;
             case "orders":
-            	results = runAllQuery("SELECT * FROM SIMS_app_data.orders");
+            	resultsFromOrderQuery = runAllQuery("SELECT * FROM SIMS_app_data.orders");
                 break;
             case "sales":
             	results = runAllQuery("SELECT * FROM SIMS_app_data.sales");
@@ -177,5 +177,13 @@ public class Connector {
     	return role;
     	    	
     } // end of getUserRole()
+    
+    static public List<List> getItemTable(){
+    	return resultsFromItemQuery;
+    }
+    
+    static public List<List> getOrderTable(){
+    	return resultsFromOrderQuery;
+    }
 
 }

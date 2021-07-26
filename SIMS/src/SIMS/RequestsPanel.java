@@ -44,6 +44,7 @@ public class RequestsPanel extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+
         orderRequestPane.setViewportView(orderRequestList);
 
         viewOrderButton.setText("View");
@@ -70,6 +71,11 @@ public class RequestsPanel extends javax.swing.JPanel {
         helpButton.setBackground(new java.awt.Color(255, 255, 153));
         helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         helpButton.setText("?");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
 
         orderLabel.setText("Order Requests");
 
@@ -103,7 +109,7 @@ public class RequestsPanel extends javax.swing.JPanel {
                     .addGroup(requestPanelLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(orderLabel)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         requestPanelLayout.setVerticalGroup(
             requestPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,15 +140,17 @@ public class RequestsPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(requestPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(requestPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(requestPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
+
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+    }     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

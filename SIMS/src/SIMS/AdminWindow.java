@@ -137,7 +137,7 @@ public class AdminWindow extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }                                          
 
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               

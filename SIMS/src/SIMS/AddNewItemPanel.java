@@ -189,7 +189,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
     }                                             
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }  
 
 

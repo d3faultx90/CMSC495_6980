@@ -29,7 +29,7 @@ public class GeneralGuiFunctions {
     // Given a 2D list, add the item and the quantity of the list to the selected table
     static void addItemAndQuantityToTable(DefaultTableModel model, List<List> resultsFromItemQuery) {
         for (List l : resultsFromItemQuery) {
-        	model.addRow(new Object[]{l.get(1), l.get(6)});
+        	model.addRow(new Object[]{l.get(1), String.format("%,d", Integer.parseInt((String) l.get(6)))});
         }
     }
     

@@ -123,7 +123,7 @@ public class ImportAndExportPanel extends javax.swing.JPanel {
     }                                            
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }                                          
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             

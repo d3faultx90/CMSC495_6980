@@ -123,9 +123,9 @@ public class ReportPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_helpButtonActionPerformed
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
