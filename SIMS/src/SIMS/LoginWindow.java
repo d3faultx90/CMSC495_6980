@@ -6,6 +6,8 @@
  */
 package SIMS;
 
+import java.util.Arrays;
+
 public class LoginWindow extends javax.swing.JFrame {
     /**
      * Creates new form Login
@@ -117,28 +119,30 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameTextfieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-
-        // these should be some values only available in a specific class
-        String u = usernameTextfield.getText();
-        char[] p = {'P','@','s','s','w','0','r','d'};
-
-        System.out.println(usernameTextfield.getText());
-        Boolean validUser = Connector.verifyUser(u, p);
-
-        if (validUser = true) {
-            int userRole = Connector.getUserRole(u, p);
-        } else {
-            //print error message
-            System.out.println("Invalid user");
-        }
-
-        GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
+    	String username = usernameTextfield.getText();
+    	char[] password =  passwordTextfield.getPassword(); //Risk
+    	int result = verifyUser(username, password);
+    	if (result != 0) {
+    		GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
+    	}
+    	else {
+    		GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
+    	}
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
         new ChangePasswordWindow().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_changePasswordButtonActionPerformed
     
+    //test method to make sure login works.
+    private int verifyUser(String username, char[] password) {
+    	if (username.equals("super") && new String(password).equals("password")) {
+    		return 1;
+    	}
+    	else {
+    		return 0;
+    	}
+    }
     /**
      * @param args the command line arguments
      */
