@@ -12,39 +12,78 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
+
+
+
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
     public OrderAndSalesPanel() {
         initComponents();
     }    
     
-    // When pressed, adds the selected item along with its quantity to the other table
+ // When pressed,checks if item is selected, quantity enter and adds the selected item along with its quantity to the other table
     private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
-            list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
-        }
+        
+    	ArrayList<String> list = new ArrayList<String>();
+    	try {
+    			int quantity = (Integer.parseInt(quantityTextfield.getText()));
+    		
+    			for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
+            
+    				list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
+    			}
 
-        JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
-        String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
-        if (!list.contains(selectedCellValue)) {
-        	// Add the selected item and the quantity to the order or sales table.
-            DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-            model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
-        } else {
-        	// Don't add the item to the table if it is already in there
-            System.out.println("That item is already in the table (this needs to be a JOptionPane eventually)");
-        }
-    }
+    			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
+    			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+        
+       
+    			if(selectedCellValue.isEmpty()) {GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
+    			}else if(quantityTextfield.getText().isEmpty())
+    			{
+    				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
+        	
+    			}//else if(!(Integer.parseInt(quantityTextfield.getText())>0)){}
+    			else if(list.contains(selectedCellValue)) {
+        	
+    				GeneralGuiFunctions.displayErrorPane("That item is already in the order list");
+        	
+    			}else {
+        	 
+    					DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+    					//model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
+    					model.addRow(new Object[]{selectedCellValue, quantity});
+    			}	
+    	}catch(NumberFormatException d) {
+    		
+    		GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
+    		
+    	}catch(Exception e) {
+    		
+    		GeneralGuiFunctions.displayErrorPane("Please select an item");
+    		
+    	}
+    	   
+        
+      }//end addToButtonActionPerformed
 
-    // Remove the selected row from the table
+ // Checks if item is selected then removes the selected row from the table
     private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-        model.removeRow(orderTable.getSelectedRow());
-    }
+        
+    	try{
+    		
+    		DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+            model.removeRow(orderTable.getSelectedRow());
+            
+        }catch(Exception e) {
+        	
+        	GeneralGuiFunctions.displayErrorPane("Please select an item to be removed");	
+        }
+    }//end removeFromButtonActionPerformed
     
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+        // TODO add your handling code here:
+    	GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }   
 
     /**
