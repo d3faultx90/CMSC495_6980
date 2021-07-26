@@ -13,8 +13,9 @@ public class SupervisorWindow extends javax.swing.JFrame {
 
 	/* These are used to hold results of the queries so only one connection is needed.
 	Once the connection is made, these are filled with the various queries (item, sales, and orders) */
-	private List<String> itemNames = new ArrayList<String>(); 
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
+	static List<String> itemNames = new ArrayList<String>(); 
+	static List<List> resultsFromItemQuery = new ArrayList<List>();
+	static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	// resultsFromOrderQuery
 	// resultsFromSalesQuery
 	// resultsFromUsersQuery
@@ -27,12 +28,19 @@ public class SupervisorWindow extends javax.swing.JFrame {
     private void initialize() {
         Connector c = new Connector();
         resultsFromItemQuery = c.getResultsofQuery("inventory");
-        resultsFromItemQuery = c.getResultsofQuery("orders");
-        for (List l : resultsFromItemQuery) {
-            itemNames.add((String) l.get(1));
-        }
-    } 
+        resultsFromOrderQuery = c.getResultsofQuery("orders");
 
+    } 
+    
+    static List<List> getItemTable(){
+    	return resultsFromItemQuery;
+    }
+
+    static List<List> getOrderTable(){
+    	return resultsFromOrderQuery;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,12 +54,12 @@ public class SupervisorWindow extends javax.swing.JFrame {
         homePanel = new SIMS.HomePanel();
         inventoryTab = new javax.swing.JPanel();
         inventorySubTabs = new javax.swing.JTabbedPane();
-        viewInventoryPanel1 = new SIMS.ViewInventoryPanel(resultsFromItemQuery);
-        wastePanel1 = new SIMS.WastePanel(resultsFromItemQuery);
-        orderPanel1 = new SIMS.OrderPanel(resultsFromItemQuery);
-        reorderPanel = new SIMS.ReorderPanel(resultsFromItemQuery);
+        viewInventoryPanel1 = new SIMS.ViewInventoryPanel();
+        wastePanel1 = new SIMS.WastePanel();
+        orderPanel1 = new SIMS.OrderPanel();
+        reorderPanel = new SIMS.ReorderPanel();
         addNewItemPanel1 = new SIMS.AddNewItemPanel();
-        salesPanel = new SIMS.SalesPanel(resultsFromItemQuery);
+        salesPanel = new SIMS.SalesPanel();
         reportPanel = new SIMS.ReportPanel();
         importAndExportPanel = new SIMS.ImportAndExportPanel();
         requestsPanel = new SIMS.RequestsPanel();
@@ -110,8 +118,8 @@ public class SupervisorWindow extends javax.swing.JFrame {
         jTabbedPane1.getAccessibleContext().setAccessibleName("Main");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>                        
-
 
     // Variables declaration - do not modify                     
     private SIMS.AddNewItemPanel addNewItemPanel1;

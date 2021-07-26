@@ -101,7 +101,8 @@ public class ChangePasswordWindow extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+        setLocationRelativeTo(null);
+    }// </editor-fold>                            
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                     
         // TODO add your handling code here:

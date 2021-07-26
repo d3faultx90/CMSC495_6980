@@ -14,10 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
-	
-    public OrderAndSalesPanel(List<List> resultsFromItemQuery) {
-    	this.resultsFromItemQuery = resultsFromItemQuery;
+    public OrderAndSalesPanel() {
         initComponents();
     }    
     
@@ -64,7 +61,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
         quantityTextfield = new javax.swing.JTextField();
         addToButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
-        itemFilterPanel = new SIMS.ItemFilterPanel(resultsFromItemQuery);
+        itemFilterPanel = new SIMS.ItemFilterPanel();
         completionPanel = new javax.swing.JPanel();
         removeFromButton = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();

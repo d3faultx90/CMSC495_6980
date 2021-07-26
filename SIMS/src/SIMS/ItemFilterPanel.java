@@ -17,13 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemFilterPanel extends javax.swing.JPanel {
-
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public ItemFilterPanel(List<List> resultsFromItemQuery) {
-    	this.resultsFromItemQuery = resultsFromItemQuery;
+    public ItemFilterPanel() {
         initComponents();
-        GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(), Connector.getItemTable());
+        GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(), SupervisorWindow.getItemTable());
     }
     
     // Filters the table

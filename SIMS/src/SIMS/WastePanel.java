@@ -12,10 +12,7 @@ import java.util.List;
 
 public class WastePanel extends javax.swing.JPanel {
 
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
-	
-    public WastePanel(List<List> resultsFromItemQuery) {
-    	this.resultsFromItemQuery = resultsFromItemQuery;
+    public WastePanel() {
         initComponents();
     }  
 
@@ -33,7 +30,7 @@ public class WastePanel extends javax.swing.JPanel {
         quantityLabel = new javax.swing.JLabel();
         quantityTextfield = new javax.swing.JTextField();
         helpButton = new javax.swing.JButton();
-        itemFilterPanel1 = new SIMS.ItemFilterPanel(resultsFromItemQuery);
+        itemFilterPanel1 = new SIMS.ItemFilterPanel();
 
         wasteButton.setText("Waste Item(s)");
         wasteButton.addActionListener(new java.awt.event.ActionListener() {

@@ -14,8 +14,6 @@ import java.sql.DriverManager;
 public class Connector {
 	
 	// This array list of lists holds all items retrieved from the query
-	private static List<List> resultsFromItemQuery = new ArrayList<List>();
-	private static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	
     private static final String DB_USER = "SIMS_admin";
     private static final String DB_PASSWORD = "SIMS_Sup3r_C0mplex!";
@@ -72,33 +70,40 @@ public class Connector {
         return results;
     } // // end of runQuery()
     
-    // Return all items!
+   
+ // Return  items!
     protected List<List> getResultsofQuery(String query) {
-    	
-    	List<List> results = new ArrayList<List>();
-    	System.out.println(query);
+        /**
+         * Method returns user role based on entry in SIMS_app_data.users.
+         * 
+         * @param userName This is a String object used to log into the MySQL instance.
+         * @param password This is a char[] object used to log into the MySQL instance.
+         * @return role This returns a integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User
+         */
+
+        List<List> results = new ArrayList<List>();
+
         switch(query.toLowerCase())
         {
             case "inventory":
-            	resultsFromItemQuery = runAllQuery("SELECT * FROM SIMS_app_data.inventory");
+                results = runAllQuery("SELECT * FROM SIMS_app_data.inventory");
                 break;
             case "users":
-            	results = runAllQuery("SELECT * FROM SIMS_app_data.users");
+                results = runAllQuery("SELECT * FROM SIMS_app_data.users");
                 break;
             case "orders":
-            	resultsFromOrderQuery = runAllQuery("SELECT * FROM SIMS_app_data.orders");
+                results = runAllQuery("SELECT * FROM SIMS_app_data.orders");
                 break;
             case "sales":
-            	results = runAllQuery("SELECT * FROM SIMS_app_data.sales");
+                results = runAllQuery("SELECT * FROM SIMS_app_data.sales");
                 break;
             default:
-            	System.out.println("Table does not exists");
-            	//return something else
+                System.out.println("Table does not exists");
+                //return something else
         }
-    	
-    	return results;
+
+        return results;
     } // end of getAllInventoryItems()
-   
     
     //
     protected static Boolean verifyUser(String userName, char[] password) {
@@ -178,12 +183,12 @@ public class Connector {
     	    	
     } // end of getUserRole()
     
-    static public List<List> getItemTable(){
-    	return resultsFromItemQuery;
-    }
-    
-    static public List<List> getOrderTable(){
-    	return resultsFromOrderQuery;
-    }
+//    static public List<List> getItemTable(){
+//    	return resultsFromItemQuery;
+//    }
+//    
+//    static public List<List> getOrderTable(){
+//    	return resultsFromOrderQuery;
+//    }
 
 }

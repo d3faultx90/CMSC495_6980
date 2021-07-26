@@ -13,10 +13,7 @@ import javax.swing.JTable;
 
 public class ViewInventoryPanel extends javax.swing.JPanel {
 
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
-	
-    public ViewInventoryPanel(List<List> resultsFromItemQuery) {
-    	this.resultsFromItemQuery = resultsFromItemQuery;
+    public ViewInventoryPanel() {
         initComponents();
     }  
 
@@ -32,7 +29,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         panel = new javax.swing.JPanel();
         viewDetailButton = new javax.swing.JButton();
         helpButtoon = new javax.swing.JButton();
-        itemFilterPanel = new SIMS.ItemFilterPanel(resultsFromItemQuery);
+        itemFilterPanel = new SIMS.ItemFilterPanel();
 
         panel.setPreferredSize(new java.awt.Dimension(436, 234));
 
@@ -105,7 +102,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         JTable table = itemFilterPanel.itemTable;
         String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
         
-        for (List l : Connector.getItemTable()) {
+        for (List l : SupervisorWindow.getItemTable()) {
         	if (l.get(1) == selectedCellValue) {
         		// https://www.codermag.net/2016/07/how-to-convert-list-to-list.html
         		List<String> stringList = (List<String>)(Object)l;

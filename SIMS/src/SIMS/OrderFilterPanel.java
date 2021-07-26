@@ -19,11 +19,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class OrderFilterPanel extends javax.swing.JPanel {
-
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public OrderFilterPanel(List<List> resultsFromItemQuery) {
-    	this.resultsFromItemQuery = resultsFromItemQuery;
+    public OrderFilterPanel() {
         initComponents();
         TableColumnModel columnModel = itemTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(35);
@@ -126,8 +123,7 @@ public class OrderFilterPanel extends javax.swing.JPanel {
     private void addOrderAndIdToTable() {
     
     	DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
-    	System.out.println(Connector.getOrderTable());
-        for (List l : Connector.getOrderTable()) {
+        for (List l : SupervisorWindow.getOrderTable()) {
         	model.addRow(new Object[]{l.get(1), l.get(9), l.get(10)});
         }
     }

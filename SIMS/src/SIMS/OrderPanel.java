@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderPanel extends javax.swing.JPanel {
-
-	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-    public OrderPanel(List<List> resultsFromItemQuery) {
-    	this.resultsFromItemQuery = resultsFromItemQuery;
+    public OrderPanel() {
         initComponents();
     }  
 
@@ -29,7 +26,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
         panel = new javax.swing.JPanel();
         orderButton = new javax.swing.JButton();
-        orderAndSalesPanel = new SIMS.OrderAndSalesPanel(resultsFromItemQuery);
+        orderAndSalesPanel = new SIMS.OrderAndSalesPanel();
 
         orderButton.setBackground(new java.awt.Color(0, 102, 0));
         orderButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
