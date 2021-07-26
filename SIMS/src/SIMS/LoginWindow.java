@@ -117,6 +117,21 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameTextfieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+
+        // these should be some values only available in a specific class
+        String u = usernameTextfield.getText();
+        char[] p = {'P','@','s','s','w','0','r','d'};
+
+        System.out.println(usernameTextfield.getText());
+        Boolean validUser = Connector.verifyUser(u, p);
+
+        if (validUser = true) {
+            int userRole = Connector.getUserRole(u, p);
+        } else {
+            //print error message
+            System.out.println("Invalid user");
+        }
+
         GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
     }//GEN-LAST:event_loginButtonActionPerformed
 

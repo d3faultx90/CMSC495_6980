@@ -3,6 +3,7 @@ package SIMS;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Connection;
@@ -15,13 +16,16 @@ public class Connector {
 	// This array list of lists holds all items retrieved from the query
 	private List<List> resultsFromItemQuery = new ArrayList<List>();
 	
-	//Require implementation
-	private List<List> resultsFromSalesQuery = new ArrayList<List>();
-	private List<List> resultsFromUserQuery = new ArrayList<List>();
-	private List<List> resultsFromOrderQuery = new ArrayList<List>();
-    
+	
     private static final String DB_USER = "SIMS_admin";
     private static final String DB_PASSWORD = "SIMS_Sup3r_C0mplex!";
+
+    private static final String KEY_STORE_FILE_PATH = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
+    private static final String KEY_STORE_PASS = "password";
+        
+    static String url = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
+    String user = DB_USER;
+    String pass = DB_PASSWORD;
     
     // This key store has only the prod root ca.
     /* This should be started with
@@ -29,92 +33,149 @@ public class Connector {
      * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1" -Djavax.net.ssl.keyStorePassword="password"
      */ 
     
-    private static final String KEY_STORE_FILE_PATH = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
-    private static final String KEY_STORE_PASS = "password";
-    
-    public void connect() {
+    private List<List> runAllQuery(String query) {
+    	
     	System.setProperty("javax.net.ssl.trustStore", KEY_STORE_FILE_PATH);
         System.setProperty("javax.net.ssl.trustStorePassword", KEY_STORE_PASS);
         
+        List<List> results =  new ArrayList<List>();
         
-        String url = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
-        String user = DB_USER;
-        String pass = DB_PASSWORD;
-
-        String query = "SELECT * FROM SIMS_app_data.inventory;";
-        try (Connection con = DriverManager.getConnection(url, user, pass);
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery(query)) {
-                
-                ResultSetMetaData rsmd = rs.getMetaData();
-                int columnsNumber = rsmd.getColumnCount();
-                
-                
-                
-                while (rs.next()) {
-                    
-                    ArrayList<String> row = new ArrayList<String>();
-                    
-                    for (int i = 1; i <= columnsNumber; i++) {
-                        row.add(rs.getString(i));
-                    }
-                    resultsFromItemQuery.add(row);
+        try {
+        	
+        	// connect to database via JDBC
+        	Connection con = DriverManager.getConnection(url, user, pass);
+        	Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+        	
+        	ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();  
+            
+            while (rs.next()) {
+            
+            	ArrayList<String> row = new ArrayList<String>();
+            	
+            	for (int i = 1; i <= columnsNumber; i++) {
+            		row.add(rs.getString(i));
                 }
-             
-            } catch (SQLException e) {
+            	
+            	results.add(row);
+            }
+            
+			// close con, rs, and st
+			rs.close();
+			st.close();
+			con.close();
+            
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-    }
+        return results;
+    } // // end of runQuery()
     
-    // Accessor method for the results of item query
-    public List<List> getResultsOfItemQuery(){
-    	return resultsFromItemQuery;
-    }
-    
-    // Strips the results of the item query and creates a list of only the names of the items
-    public List<String> getItemNames(){
-    	List names = new ArrayList<String>();
+    // Return all items!
+    protected List<List> getResultsofQuery(String query) {
     	
-    	for (List l : resultsFromItemQuery) {
-    		names.add(l.get(1));
-    	}
-    	return names;
-    }
+    	List<List> results = new ArrayList<List>();
+    	System.out.println(query);
+        switch(query.toLowerCase())
+        {
+            case "inventory":
+            	results = runAllQuery("SELECT * FROM SIMS_app_data.inventory");
+                break;
+            case "users":
+            	results = runAllQuery("SELECT * FROM SIMS_app_data.users");
+                break;
+            case "orders":
+            	results = runAllQuery("SELECT * FROM SIMS_app_data.orders");
+                break;
+            case "sales":
+            	results = runAllQuery("SELECT * FROM SIMS_app_data.sales");
+                break;
+            default:
+            	System.out.println("Table does not exists");
+            	//return something else
+        }
+    	
+    	return results;
+    } // end of getAllInventoryItems()
+   
     
-//    // Accessor method for the results of order query
-//    public List<List> getResultsOfOrderQuery(){
-//    	return resultsFromOrderQuery;
-//    }
-//    
-//    // Accessor method for the results of user query
-//    public List<List> getResultsOfUserQuery(){
-//    	return resultsFromUserQuery;
-//    }
-//    
-//    // Accessor method for the results of sales query
-//    public List<List> getResultsOfSalesQuery(){
-//    	return resultsFromSalesQuery;
-//    }
+    //
+    protected static Boolean verifyUser(String userName, char[] password) {
+    	
+    	Boolean result = true;
+    	String pass = String.valueOf(password);
+    	
+    	System.setProperty("javax.net.ssl.trustStore", KEY_STORE_FILE_PATH);
+        System.setProperty("javax.net.ssl.trustStorePassword", KEY_STORE_PASS);
+                                        
+        try {
+        	
+        	// connect to database via JDBC
+        	Connection con = DriverManager.getConnection(url, userName, pass);
+        	
+        	PreparedStatement st = con.prepareStatement("SELECT Username FROM SIMS_app_data.users WHERE Username = ?");
+        	st.setString(1, userName);
+            ResultSet rs = st.executeQuery();
+        	
+        	ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();  
+            
+            if (columnsNumber != 1) {
+            	result = false;
+            } else {
+            	result = true;
+            }
+            
+			// close con, rs, and st
+			rs.close();
+			st.close();
+			con.close();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        	result = false;
+        }
+        
+    	return result;
+    	
+    } // end of verifyUser()
     
+    // 
+    protected static int getUserRole(String userName, char[] password) {
+    	
+    	// invalid role
+    	int role = 3;
+    	String pass = String.valueOf(password);
 
-    
-//    public List<String> getItemNamesAndQuantity(){
-//    	List namesAndQuantity = new ArrayList<String>();
-//    	
-//    	for (List l : resultsFromItemQuery) {
-//    		//System.out.println("LOOOPED");
-//    		List temp =
-//    		names.add(l.get(1));
-//    	}
-//    	//System.out.println(names);
-//    	return namesAndQuantity;
-//    }
-//      
-//    public static void main(String[] args) throws Exception {
-//        Connector c = new Connector();
-//        c.connect();
-//        c.getItemNames();
-//    }
+    	System.setProperty("javax.net.ssl.trustStore", KEY_STORE_FILE_PATH);
+        System.setProperty("javax.net.ssl.trustStorePassword", KEY_STORE_PASS);
+                                        
+        try {
+        	
+        	// connect to database via JDBC
+        	Connection con = DriverManager.getConnection(url, userName, pass);
+        	
+        	PreparedStatement st = con.prepareStatement("SELECT role FROM SIMS_app_data.users WHERE Username = ?");
+        	st.setString(1, userName);
+            ResultSet rs = st.executeQuery();
+        	
+            while (rs.next()) {
+            	role = (Integer) rs.getInt(1);
+            }
+                        
+            // close con, rs, and st
+            rs.close();
+            st.close();
+        	con.close();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            role = 3;
+        }
+        
+    	return role;
+    	    	
+    } // end of getUserRole()
 
 }

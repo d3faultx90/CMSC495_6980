@@ -26,10 +26,11 @@ public class SupervisorWindow extends javax.swing.JFrame {
     
     private void initialize() {
         Connector c = new Connector();
-        c.connect();
-        itemNames = c.getItemNames();
-        resultsFromItemQuery = c.getResultsOfItemQuery();
-    }   
+        resultsFromItemQuery = c.getResultsofQuery("inventory");
+        for (List l : resultsFromItemQuery) {
+            itemNames.add((String) l.get(1));
+        }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
