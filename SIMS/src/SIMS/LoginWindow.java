@@ -121,8 +121,8 @@ public class LoginWindow extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
     	String username = usernameTextfield.getText();
     	char[] password =  passwordTextfield.getPassword(); //Risk
-    	int result = verifyUser(username, password);
-    	if (result != 0) {
+    	boolean result = Connector.verifyUser(username, password);
+    	if (!result) {
     		GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
     	}
     	else {
@@ -134,15 +134,6 @@ public class LoginWindow extends javax.swing.JFrame {
         new ChangePasswordWindow().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_changePasswordButtonActionPerformed
     
-    //test method to make sure login works.
-    private int verifyUser(String username, char[] password) {
-    	if (username.equals("super") && new String(password).equals("password")) {
-    		return 1;
-    	}
-    	else {
-    		return 0;
-    	}
-    }
     /**
      * @param args the command line arguments
      */
