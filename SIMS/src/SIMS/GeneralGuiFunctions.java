@@ -9,7 +9,9 @@ package SIMS;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.WindowEvent;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -52,5 +54,23 @@ public class GeneralGuiFunctions {
     static void displayHelpPane(String helpInformation) {
         JOptionPane.showMessageDialog(null, helpInformation,
                 "Help", JOptionPane.QUESTION_MESSAGE);
+    }
+    
+    //Display this JOptionpane whenever a field is missing input or has negative values
+    static String stringToPrice(String unparsedPrice) {
+    	String parsedPrice = "";
+        try {
+        	double price = Double.parseDouble(unparsedPrice);  
+        	NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+        	String finalAmount = formatter.format(price);
+        	if (price < 1) {
+        		parsedPrice = "¢" + price;
+        	} else {
+        		parsedPrice = "$" + price;
+        	}
+        } catch (Exception e) {
+        	displayErrorPane("That is not a number");
+        }
+        return parsedPrice;
     }
 }

@@ -104,7 +104,16 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
     private void viewDetailButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         JTable table = itemFilterPanel.itemTable;
         String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
-        System.out.println(selectedCellValue);
+        
+        for (List l : Connector.getItemTable()) {
+        	if (l.get(1) == selectedCellValue) {
+        		// https://www.codermag.net/2016/07/how-to-convert-list-to-list.html
+        		List<String> stringList = (List<String>)(Object)l;
+        		new ItemDetailsWindow(stringList.get(1), stringList.get(2), stringList.get(3), stringList.get(4), stringList.get(5), stringList.get(6)).setVisible(true); 
+        		break;
+        	}
+        }
+
     }                                                
 
     private void helpButtoonActionPerformed(java.awt.event.ActionEvent evt) {                                            
