@@ -13,9 +13,9 @@ import java.sql.DriverManager;
 
 public class Connector {
 	
-	// This array list of lists holds all items retrieved from the query
-	private static List<List> resultsFromItemQuery = new ArrayList<List>();
-	private static List<List> resultsFromOrderQuery = new ArrayList<List>();
+    // This array list of lists holds all items retrieved from the query
+    private static List<List> resultsFromItemQuery = new ArrayList<List>();
+    private static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	
     private static final String DB_USER = "SIMS_admin";
     private static final String DB_PASSWORD = "SIMS_Sup3r_C0mplex!";
@@ -102,6 +102,14 @@ public class Connector {
     
     //
     protected static Boolean verifyUser(String userName, char[] password) {
+        /**
+         * Method attempts to login using Username provided and verify if 
+         * userName exist in SIMS_app_data.users.
+         * 
+         * @param userName This is a String object used to log into the MySQL instance.
+         * @param password This is a char[] object used to log into the MySQL instance.
+         * @return result This returns a boolean value based on whether the user can log in. 
+         */
     	
     	Boolean result = true;
     	String pass = String.valueOf(password);
@@ -143,6 +151,13 @@ public class Connector {
     
     // 
     protected static int getUserRole(String userName, char[] password) {
+	    /**
+	     * Method returns user role based on entry in SIMS_app_data.users.
+	     * 
+	     * @param userName This is a String object used to log into the MySQL instance.
+	     * @param password This is a char[] object used to log into the MySQL instance.
+	     * @return role This returns a integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User
+	     */
     	
     	// invalid role
     	int role = 3;
