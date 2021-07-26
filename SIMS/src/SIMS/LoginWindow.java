@@ -117,22 +117,23 @@ public class LoginWindow extends javax.swing.JFrame {
     	String username = usernameTextfield.getText();
     	char[] password =  passwordTextfield.getPassword(); //Risk
     	boolean result = Connector.verifyUser(username, password);
-    	if (result == true) {
-    		int user = Connector.getUserRole(username, password);
-    		if (user == 0) {
-    			GeneralGuiFunctions.closeWindow(this, new AdminWindow());
-    		}
-    		else if (user == 1) {
-    			GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
-    		}
-    		else {
-    			GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());//Change this to normal user
-    		}
-    		
-    	}
-    	else {
-    		GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
-    	}
+//    	if (result == true) {
+//    		int user = Connector.getUserRole(username, password);
+//    		if (user == 0) {
+//    			GeneralGuiFunctions.closeWindow(this, new AdminWindow());
+//    		}
+//    		else if (user == 1) {
+//    			GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
+//    		}
+//    		else {
+//    			GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());//Change this to normal user
+//    		}
+//    		
+//    	}
+//    	else {
+//    		GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
+//    	}
+    	GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed

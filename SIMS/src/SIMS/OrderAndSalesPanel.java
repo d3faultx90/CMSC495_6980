@@ -35,7 +35,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
     			}
 
     			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
-    			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
+    			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
         
        
     			if(selectedCellValue.isEmpty()) {GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
