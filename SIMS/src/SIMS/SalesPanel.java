@@ -16,9 +16,9 @@ public class SalesPanel extends javax.swing.JPanel {
         initComponents();
     }  
 
-    private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSaleButtonActionPerformed
+    private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_saveSaleButtonActionPerformed
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

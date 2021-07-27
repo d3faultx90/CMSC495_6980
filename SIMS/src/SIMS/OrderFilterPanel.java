@@ -30,20 +30,20 @@ public class OrderFilterPanel extends javax.swing.JPanel {
     }
     
     
-    private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filterFieldKeyReleased
+    private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
     	// This needs to be updated with stuff from the order query
     	GeneralGuiFunctions.filterTable(itemTable, filterField);
-    }//GEN-LAST:event_filterFieldKeyReleased
+    }
 
-    private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterFieldActionPerformed
+    private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_filterFieldActionPerformed
+    }
     
-
     // Given a 2D list, add the item and the quantity of the list to the selected table
     private void addOrderAndIdToTable() {
     
     	DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
+    	// ToDO, make ENUM of this
     	// 0 is pending
     	// 1 is approved
     	// 2 is denied

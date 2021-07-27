@@ -8,9 +8,6 @@ package SIMS;
 
 public class ReportPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ReportPanel
-     */
     public ReportPanel() {
         initComponents();
     }

@@ -1,15 +1,11 @@
 /*
- * File: .java
+ * File: OrderOrWasteRequestPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
+ * Date: July 27th, 2021
  * Purpose:
  */
 package SIMS;
 
-/**
- *
- * @author munki
- */
 public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 	String tableTitle = "";
@@ -33,7 +29,6 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
     private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         System.out.println("Pressed deny button");
     }     
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton approveButton;

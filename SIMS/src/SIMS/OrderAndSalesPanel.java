@@ -32,7 +32,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
     private javax.swing.JButton removeFromButton;
     // End of variables declaration
     
-    // When pressed,checks if item is selected, quantity enter and adds the selected item along with its quantity to the other table
+    // When pressed, checks if item is selected, quantity enter and adds the selected item along with its quantity to the other table
     private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
     	ArrayList<String> list = new ArrayList<String>();
@@ -77,7 +77,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
         
       }//end addToButtonActionPerformed
 
- // Checks if item is selected then removes the selected row from the table
+    // Checks if item is selected then removes the selected row from the table
     private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromButtonActionPerformed
         
     	try{

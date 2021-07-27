@@ -9,20 +9,45 @@ package SIMS;
 import java.util.Arrays;
 
 public class LoginWindow extends javax.swing.JFrame {
-    /**
-     * Creates new form Login
-     */
+
     public LoginWindow() {
         initComponents();
     }
     
-    private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
-        new ChangePasswordWindow().setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_changePasswordButtonActionPerformed
+    private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        new ChangePasswordWindow().setVisible(true);
+    }
     
-    /**
-     * @param args the command line arguments
-     */
+    private void usernameTextfieldActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+        String username = usernameTextfield.getText();
+        char[] password =  passwordTextfield.getPassword(); //Risk
+        Connector connector = new Connector(username, password); //Will accept trustStoreFilePath,trustStorePassword,mySqlPath
+        boolean result = connector.verifyUser();
+        // If the user is valid, then get their role
+        if (result == true) {
+            connector.getUserRole(); // Based on their role, show them their appropriate window
+            if (connector.role == 0) {
+                GeneralGuiFunctions.closeWindow(this, new AdminWindow());
+            }
+            else if (connector.role == 1) {
+                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));
+            }
+            else if (connector.role == 2) {
+            	// We do not have a user window currently
+                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));//Change this to normal user
+            }
+
+        }
+        else {
+            GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -161,32 +186,5 @@ public class LoginWindow extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>   
-
-    private void usernameTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameTextfieldActionPerformed
-
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String username = usernameTextfield.getText();
-        char[] password =  passwordTextfield.getPassword(); //Risk
-        Connector connector = new Connector(username, password); //Will accept trustStoreFilePath,trustStorePassword,mySqlPath
-        boolean result = connector.verifyUser();
-        if (result == true) {
-            connector.getUserRole();
-            if (connector.role == 0) {
-                GeneralGuiFunctions.closeWindow(this, new AdminWindow());
-            }
-            else if (connector.role == 1) {
-                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));
-            }
-            else if (connector.role == 2) {
-                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));//Change this to normal user
-            }
-
-        }
-        else {
-            GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
-        }
-    }//GEN-LAST:event_loginButtonActionPerformed
 
 }

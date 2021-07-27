@@ -8,9 +8,6 @@ package SIMS;
 
 public class ImportAndExportPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ImportAndExportPanel
-     */
     public ImportAndExportPanel() {
         initComponents();
     }
@@ -134,6 +131,5 @@ public class ImportAndExportPanel extends javax.swing.JPanel {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>                        
-
 
 }

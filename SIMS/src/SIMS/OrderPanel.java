@@ -15,9 +15,9 @@ public class OrderPanel extends javax.swing.JPanel {
         initComponents();
     }  
 
-    private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
+    private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-    }//GEN-LAST:event_orderButtonActionPerformed
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -22,6 +22,7 @@ public class HomePanel extends javax.swing.JPanel {
         GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }//GEN-LAST:event_helpButtonActionPerformed
 
+    // When the user logs out, opens a new LoginWindow and closes the current window
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         GeneralGuiFunctions.closeWindow(SwingUtilities.getWindowAncestor(this), new LoginWindow());
     }//GEN-LAST:event_logoutButtonActionPerformed
