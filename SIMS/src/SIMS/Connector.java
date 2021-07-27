@@ -25,7 +25,7 @@ public class Connector {
 	protected Connector(String user, char[] password) {
 		this.user = user;
 		this.password = password;
-		this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
+		this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore";
 		this.trustStorePassword = "password";
 		this.mySqlPath = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
 	}
@@ -33,7 +33,7 @@ public class Connector {
     // This key store has only the prod root ca.
     /* This should be started with
      * 
-     * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1" -Djavax.net.ssl.keyStorePassword="password"
+     * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore" -Djavax.net.ssl.keyStorePassword="password"
      */ 
     
     private List<List> runAllQuery(String query) {
