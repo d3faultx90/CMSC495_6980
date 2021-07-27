@@ -12,23 +12,23 @@ import java.sql.DriverManager;
 
 
 public class Connector {
-	
-	// constructor variables
-	protected String user;
-	private char[] password;
-	private String trustStoreFilePath;
-	private String trustStorePassword;
-	private String mySqlPath;	
-	protected int role;
-	
-	// constructor
-	protected Connector(String user, char[] password) {
-		this.user = user;
-		this.password = password;
-		this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
-		this.trustStorePassword = "password";
-		this.mySqlPath = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
-	}
+    
+    // constructor variables
+    protected String user;
+    private char[] password;
+    private String trustStoreFilePath;
+    private String trustStorePassword;
+    private String mySqlPath;   
+    protected int role;
+    
+    // constructor
+    protected Connector(String user, char[] password) {
+        this.user = user;
+        this.password = password;
+        this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
+        this.trustStorePassword = "password";
+        this.mySqlPath = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
+    }
     
     // This key store has only the prod root ca.
     /* This should be started with
@@ -37,53 +37,61 @@ public class Connector {
      */ 
     
     private List<List> runAllQuery(String query) {
-    	
-    	System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
-        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
-    	String pass = String.valueOf(this.password);
+        /**
+         * Method returns List<List> containing MySQL results from
+         *  query crafted by caller.
+         * 
+         * @param query (MySQL) crafted by caller.
+         * @return results is a list of list containing all results from
+         *  the MySQL Query.
+         */
+        
+        System.setProperty("javax.net.ssl.trustStore", this.trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", this.trustStorePassword);
+        String pass = String.valueOf(this.password);
         
         List<List> results =  new ArrayList<List>();
         
         try {
-        	
-        	// connect to database via JDBC
-        	Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
-        	Statement st = con.createStatement();
+            
+            // connect to database via JDBC
+            Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
-        	
-        	ResultSetMetaData rsmd = rs.getMetaData();
+            
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();  
             
             while (rs.next()) {
             
-            	ArrayList<String> row = new ArrayList<String>();
-            	
-            	for (int i = 1; i <= columnsNumber; i++) {
-            		row.add(rs.getString(i));
+                ArrayList<String> row = new ArrayList<String>();
+                
+                for (int i = 1; i <= columnsNumber; i++) {
+                    row.add(rs.getString(i));
                 }
-            	
-            	results.add(row);
+                
+                results.add(row);
             }
             
-			// close con, rs, and st
-			rs.close();
-			st.close();
-			con.close();
+            // close con, rs, and st
+            rs.close();
+            st.close();
+            con.close();
             
         } catch (SQLException e) {
-        	// handle and stop print for production
+            // handle and stop print for production
             e.printStackTrace();
         }
         return results;
-    } // // end of runQuery()
-    
-    // Return all the items!
+    } // end of runAllQuery()
+
     protected List<List> getResultsofQuery(String tableName) {
         /**
          * Method returns List<List> containing MySQL SELECT query.
          * 
          * @param tableName This is the name of the table you wish to query.
-         * @return results 
+         * @return results a list of list which is the results from
+         *  the MySQL Query.
          */
 
         List<List> results = new ArrayList<List>();
@@ -111,7 +119,7 @@ public class Connector {
         }
 
         return results;
-    } // end of getAllInventoryItems()
+    } // end of getResultsofQuery()
     
     // should only be called from LoginWindow
     protected Boolean verifyUser() {
@@ -123,82 +131,83 @@ public class Connector {
          * @param password This is a char[] object used to log into the MySQL instance.
          * @return result This returns a boolean value based on whether the user can log in. 
          */
-    	
-    	Boolean result = true;
-    	String pass = String.valueOf(this.password);
-    	
-    	System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
-        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+        
+        Boolean result = true;
+        String pass = String.valueOf(this.password);
+        
+        System.setProperty("javax.net.ssl.trustStore", this.trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", this.trustStorePassword);
                                         
         try {
-        	
-        	// connect to database via JDBC
-        	Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
-        	
-        	PreparedStatement st = con.prepareStatement("SELECT Username FROM SIMS_app_data.users WHERE Username = ?");
-        	st.setString(1, this.user);
+            
+            // connect to database via JDBC
+            Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
+            
+            PreparedStatement st = con.prepareStatement("SELECT Username FROM SIMS_app_data.users WHERE Username = ?");
+            st.setString(1, this.user);
             ResultSet rs = st.executeQuery();
-        	
-        	ResultSetMetaData rsmd = rs.getMetaData();
+            
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();  
             
             if (columnsNumber != 1) {
-            	result = false;
+                result = false;
             } else {
-            	result = true;
+                result = true;
             }
             
-			// close con, rs, and st
-			rs.close();
-			st.close();
-			con.close();
+            // close con, rs, and st
+            rs.close();
+            st.close();
+            con.close();
             
         } catch (SQLException e) {
             e.printStackTrace();
-        	result = false;
+            result = false;
         }
         
-    	return result;
-    	
+        return result;
+        
     } // end of verifyUser()
     
     // should only be called from LoginWindow
     protected void getUserRole() {
-	    /**
-	     * Method returns user role based on entry in SIMS_app_data.users.
-	     * 
-	     * @param userName This is a String object used to log into the MySQL instance.
-	     * @param password This is a char[] object used to log into the MySQL instance.
-	     * sets role as integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User
-	     */
-    	
-    	// invalid role
-    	int role = 3;
-    	String pass = String.valueOf(this.password);
-    	
-    	System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
-        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+        /**
+         * Method returns user role based on entry in SIMS_app_data.users.
+         * 
+         * @param userName This is a String object used to log into the MySQL instance.
+         * @param password This is a char[] object used to log into the MySQL instance.
+         * sets object role as integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User,
+         *  3 = fail/bad
+         */
+        
+        // invalid role
+        int role = 3;
+        String pass = String.valueOf(this.password);
+        
+        System.setProperty("javax.net.ssl.trustStore", this.trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", this.trustStorePassword);
                                         
         try {
-        	
-        	// connect to database via JDBC
-        	Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
-        	
-        	PreparedStatement st = con.prepareStatement("SELECT role FROM SIMS_app_data.users WHERE Username = ?");
-        	st.setString(1, this.user);
+            
+            // connect to database via JDBC
+            Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
+            
+            PreparedStatement st = con.prepareStatement("SELECT role FROM SIMS_app_data.users WHERE Username = ?");
+            st.setString(1, this.user);
             ResultSet rs = st.executeQuery();
-        	
+            
             while (rs.next()) {
-            	role = (Integer) rs.getInt(1);
+                role = (Integer) rs.getInt(1);
             }
                         
             // close con, rs, and st
             rs.close();
             st.close();
-        	con.close();
-        	
-        	this.role = role;
-        	
+            con.close();
+            
+            this.role = role;
+            
         } catch (SQLException e) {
             e.printStackTrace();
             this.role = 3;
@@ -211,21 +220,21 @@ public class Connector {
     //protected List<List> retrieveInventoryCategories(){return sort and unique categories} // end of retrieveInventoryCategories()
     
     //protected List<List> createInventoryItem(String name, String category, double purchasePrice, 
-		// double sellPrice, String description, int quantity){return getResultsofQuery(inventory)} // end of updatedInventory()
+        // double sellPrice, String description, int quantity){return getResultsofQuery(inventory)} // end of updatedInventory()
     
     //protected List<List> updatedInventory(String itemName, int quantity){return getResultsofQuery(inventory)} // end of updatedInventory()
     
     //protected List<List> retrieveSalesByDate(Date time){return all sales with unique MySQL query} // end of retrieveSalesByDate()
     
-    //protected List<List> createOrder(List<List> orderData){return getResultsofQuery(orders)} // end of createOrder()
+    //protected List<List> createOrder(Date time, List<List> orderData){return getResultsofQuery(orders)} // end of createOrder()
     
-    //protected List<List> createWaste(List<List> orderData){return getResultsofQuery(Waste)} // end of createWaste()
+    //protected List<List> createWaste(Date time, List<List> wasteData){return getResultsofQuery(Waste)} // end of createWaste()
     
     //protected List<List> createSales(Date time, List<List> saleData){return getResultsofQuery(sales)} // end of createSales()
     
-    //protected List<List> updateOrderStatus(String status, int orderEventID){return getResultsofQuery(orders)} // end of updateOrderStatus()
+    //protected List<List> updateOrderStatus(Date time, String status, int orderEventID){return getResultsofQuery(orders)} // end of updateOrderStatus()
     
-    //protected List<List> updateWasteStatus(String status, int wasteEventID){return getResultsofQuery(waste)} // end of updateWasteStatus()
+    //protected List<List> updateWasteStatus(Date time, String status, int wasteEventID){return getResultsofQuery(waste)} // end of updateWasteStatus()
     
     /** Java.sql.SQLExcpetion errors:
      * java.sql.SQLException: Access denied for user ....
