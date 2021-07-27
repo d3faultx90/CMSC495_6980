@@ -17,12 +17,14 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	static List<List> resultsFromItemQuery = new ArrayList<List>();
 	static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	Connector connector;
+	static String username;
 	// resultsFromOrderQuery
 	// resultsFromSalesQuery
 	// resultsFromUsersQuery
 
-    public SupervisorWindow(Connector connector) {
+    public SupervisorWindow(Connector connector, String user) {
     	this.connector = connector;
+    	username = user;
     	initialize();
         initComponents();
     }
@@ -30,7 +32,6 @@ public class SupervisorWindow extends javax.swing.JFrame {
     private void initialize() {
         resultsFromItemQuery = connector.getResultsofQuery("inventory");
         resultsFromOrderQuery = connector.getResultsofQuery("orders");
-
     } 
     
     static List<List> getItemTable(){
@@ -41,6 +42,9 @@ public class SupervisorWindow extends javax.swing.JFrame {
     	return resultsFromOrderQuery;
     }
     
+    static String getUsername(){
+    	return username;
+    }
 
 
     

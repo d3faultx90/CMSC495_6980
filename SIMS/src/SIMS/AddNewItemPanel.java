@@ -9,6 +9,9 @@ package SIMS;
 import java.util.ArrayList;
 import java.util.List;
 
+// To do lis
+// Ability to add new category (not in combobox menu)
+
 public class AddNewItemPanel extends javax.swing.JPanel {
 
 	String[] categories;
@@ -18,6 +21,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		initComponents();
 	}
 
+	// Given the ItemTable, find all unique categories.
 	private void parseCategories() {
     	ArrayList<String> categoryArrayList = new ArrayList<String>();
         for (List l : SupervisorWindow.getItemTable()) {
@@ -26,8 +30,37 @@ public class AddNewItemPanel extends javax.swing.JPanel {
         		categoryArrayList.add(l.get(3).toString());
         	}
         }
+        // Convert to an Array because that is what the JComboBox expects
     	categories = categoryArrayList.toArray(String[]::new);
     }
+	
+	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		System.out.println("Item added to database!");
+	}
+
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+	}
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private javax.swing.JButton addItemButton;
+	private javax.swing.JLabel barcodeLabel;
+	private javax.swing.JComboBox<String> categoryComboBox;
+	private javax.swing.JLabel categoryLabel;
+	private javax.swing.JLabel descriptionlabel;
+	private javax.swing.JButton helpButton;
+	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JTextArea jTextArea1;
+	private javax.swing.JPanel mainPanel;
+	private javax.swing.JLabel nameLabel;
+	private javax.swing.JTextField nameTextfield;
+	private javax.swing.JLabel purchasePriceLabel;
+	private javax.swing.JTextField purchasePriceTextfield;
+	private javax.swing.JLabel quantityLabel;
+	private javax.swing.JTextField quantityTextField;
+	private javax.swing.JLabel sellPriceLabel;
+	private javax.swing.JTextField sellPriceTextfield;
+	// End of variables declaration//GEN-END:variables
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -240,31 +273,4 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 						.addGap(0, 6, Short.MAX_VALUE)));
 	}// </editor-fold>
 
-	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		System.out.println("Item added to database!");
-	}
-
-	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
-	}
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton addItemButton;
-	private javax.swing.JLabel barcodeLabel;
-	private javax.swing.JComboBox<String> categoryComboBox;
-	private javax.swing.JLabel categoryLabel;
-	private javax.swing.JLabel descriptionlabel;
-	private javax.swing.JButton helpButton;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTextArea jTextArea1;
-	private javax.swing.JPanel mainPanel;
-	private javax.swing.JLabel nameLabel;
-	private javax.swing.JTextField nameTextfield;
-	private javax.swing.JLabel purchasePriceLabel;
-	private javax.swing.JTextField purchasePriceTextfield;
-	private javax.swing.JLabel quantityLabel;
-	private javax.swing.JTextField quantityTextField;
-	private javax.swing.JLabel sellPriceLabel;
-	private javax.swing.JTextField sellPriceTextfield;
-	// End of variables declaration//GEN-END:variables
 }

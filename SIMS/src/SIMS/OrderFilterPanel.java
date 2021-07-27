@@ -58,7 +58,6 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 
         itemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"274514745", "2020-06-19 19:34:02", "Complete"}
             },
             new String [] {
                 "Order ID", "Order Date", "Status"

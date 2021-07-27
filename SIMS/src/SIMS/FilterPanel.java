@@ -1,7 +1,7 @@
 /*
- * File: .java
+ * File: FilterPanel.java
  * Author: Ben Sutter
- * Date: Month day, 2021
+ * Date: July 26th, 2021
  * Purpose:
  */
 package SIMS;

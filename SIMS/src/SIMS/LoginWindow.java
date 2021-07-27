@@ -126,10 +126,10 @@ public class LoginWindow extends javax.swing.JFrame {
                 GeneralGuiFunctions.closeWindow(this, new AdminWindow());
             }
             else if (connector.role == 1) {
-                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector));
+                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));
             }
             else if (connector.role == 2) {
-                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector));//Change this to normal user
+                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));//Change this to normal user
             }
 
         }
