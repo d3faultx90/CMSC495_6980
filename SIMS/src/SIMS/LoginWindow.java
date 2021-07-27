@@ -114,26 +114,26 @@ public class LoginWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameTextfieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-    	String username = usernameTextfield.getText();
-    	char[] password =  passwordTextfield.getPassword(); //Risk
-    	boolean result = Connector.verifyUser(username, password);
-//    	if (result == true) {
-//    		int user = Connector.getUserRole(username, password);
-//    		if (user == 0) {
-//    			GeneralGuiFunctions.closeWindow(this, new AdminWindow());
-//    		}
-//    		else if (user == 1) {
-//    			GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
-//    		}
-//    		else {
-//    			GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());//Change this to normal user
-//    		}
-//    		
-//    	}
-//    	else {
-//    		GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
-//    	}
-    	GeneralGuiFunctions.closeWindow(this, new SupervisorWindow());
+        String username = usernameTextfield.getText();
+        char[] password =  passwordTextfield.getPassword(); //Risk
+        Connector connector = new Connector(username, password);
+        boolean result = connector.verifyUser();
+        if (result == true) {
+            int user = connector.getUserRole();
+            if (user == 0) {
+                GeneralGuiFunctions.closeWindow(this, new AdminWindow());
+            }
+            else if (user == 1) {
+                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector));
+            }
+            else {
+                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector));//Change this to normal user
+            }
+
+        }
+        else {
+            GeneralGuiFunctions.displayHelpPane("Credentials incorrect. Try again.");
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed

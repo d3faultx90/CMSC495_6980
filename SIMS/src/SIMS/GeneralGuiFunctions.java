@@ -73,4 +73,9 @@ public class GeneralGuiFunctions {
         }
         return parsedPrice;
     }
+    
+//    static List<String> determineCategories(List<List> items){
+//    	List<String> categories = new List<String>();
+//    	return items;
+//    }
 }

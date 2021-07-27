@@ -16,19 +16,20 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	static List<String> itemNames = new ArrayList<String>(); 
 	static List<List> resultsFromItemQuery = new ArrayList<List>();
 	static List<List> resultsFromOrderQuery = new ArrayList<List>();
+	Connector connector;
 	// resultsFromOrderQuery
 	// resultsFromSalesQuery
 	// resultsFromUsersQuery
 
-    public SupervisorWindow() {
+    public SupervisorWindow(Connector connector) {
+    	this.connector = connector;
     	initialize();
         initComponents();
     }
     
     private void initialize() {
-        Connector c = new Connector();
-        resultsFromItemQuery = c.getResultsofQuery("inventory");
-        resultsFromOrderQuery = c.getResultsofQuery("orders");
+        resultsFromItemQuery = connector.getResultsofQuery("inventory");
+        resultsFromOrderQuery = connector.getResultsofQuery("orders");
 
     } 
     

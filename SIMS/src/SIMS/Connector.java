@@ -12,17 +12,22 @@ import java.sql.DriverManager;
 
 
 public class Connector {
-
 	
-    private static final String DB_USER = "SIMS_admin";
-    private static final String DB_PASSWORD = "SIMS_Sup3r_C0mplex!";
-
-    private static final String KEY_STORE_FILE_PATH = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
-    private static final String KEY_STORE_PASS = "password";
-        
-    static String url = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
-    String user = DB_USER;
-    String pass = DB_PASSWORD;
+	// constructor variables
+	private String user;
+	private char[] password;
+	private String trustStoreFilePath;
+	private String trustStorePassword;
+	private String mySqlPath;	
+	
+	// constructor
+	protected Connector(String user, char[] password) {
+		this.user = user;
+		this.password = password;
+		this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore1";
+		this.trustStorePassword = "password";
+		this.mySqlPath = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
+	}
     
     // This key store has only the prod root ca.
     /* This should be started with
@@ -32,15 +37,16 @@ public class Connector {
     
     private List<List> runAllQuery(String query) {
     	
-    	System.setProperty("javax.net.ssl.trustStore", KEY_STORE_FILE_PATH);
-        System.setProperty("javax.net.ssl.trustStorePassword", KEY_STORE_PASS);
+    	System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+    	String pass = String.valueOf(this.password);
         
         List<List> results =  new ArrayList<List>();
         
         try {
         	
         	// connect to database via JDBC
-        	Connection con = DriverManager.getConnection(url, user, pass);
+        	Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
         	Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
         	
@@ -69,20 +75,18 @@ public class Connector {
         return results;
     } // // end of runQuery()
     
-   
- // Return  items!
-    protected List<List> getResultsofQuery(String query) {
+    // Return  items!
+    protected List<List> getResultsofQuery(String tableName) {
         /**
-         * Method returns user role based on entry in SIMS_app_data.users.
+         * Method returns List<List> containing MySQL SELECT query.
          * 
-         * @param userName This is a String object used to log into the MySQL instance.
-         * @param password This is a char[] object used to log into the MySQL instance.
-         * @return role This returns a integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User
+         * @param tableName This is the name of the table you wish to query.
+         * @return results 
          */
 
         List<List> results = new ArrayList<List>();
 
-        switch(query.toLowerCase())
+        switch(tableName.toLowerCase())
         {
             case "inventory":
                 results = runAllQuery("SELECT * FROM SIMS_app_data.inventory");
@@ -105,7 +109,7 @@ public class Connector {
     } // end of getAllInventoryItems()
     
     //
-    protected static Boolean verifyUser(String userName, char[] password) {
+    protected Boolean verifyUser() {
         /**
          * Method attempts to login using Username provided and verify if 
          * userName exist in SIMS_app_data.users.
@@ -116,18 +120,18 @@ public class Connector {
          */
     	
     	Boolean result = true;
-    	String pass = String.valueOf(password);
+    	String pass = String.valueOf(this.password);
     	
-    	System.setProperty("javax.net.ssl.trustStore", KEY_STORE_FILE_PATH);
-        System.setProperty("javax.net.ssl.trustStorePassword", KEY_STORE_PASS);
+    	System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
                                         
         try {
         	
         	// connect to database via JDBC
-        	Connection con = DriverManager.getConnection(url, userName, pass);
+        	Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
         	
         	PreparedStatement st = con.prepareStatement("SELECT Username FROM SIMS_app_data.users WHERE Username = ?");
-        	st.setString(1, userName);
+        	st.setString(1, this.user);
             ResultSet rs = st.executeQuery();
         	
         	ResultSetMetaData rsmd = rs.getMetaData();
@@ -154,7 +158,7 @@ public class Connector {
     } // end of verifyUser()
     
     // 
-    protected static int getUserRole(String userName, char[] password) {
+    protected int getUserRole() {
 	    /**
 	     * Method returns user role based on entry in SIMS_app_data.users.
 	     * 
@@ -165,18 +169,18 @@ public class Connector {
     	
     	// invalid role
     	int role = 3;
-    	String pass = String.valueOf(password);
-
-    	System.setProperty("javax.net.ssl.trustStore", KEY_STORE_FILE_PATH);
-        System.setProperty("javax.net.ssl.trustStorePassword", KEY_STORE_PASS);
+    	String pass = String.valueOf(this.password);
+    	
+    	System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
                                         
         try {
         	
         	// connect to database via JDBC
-        	Connection con = DriverManager.getConnection(url, userName, pass);
+        	Connection con = DriverManager.getConnection(mySqlPath, this.user, pass);
         	
         	PreparedStatement st = con.prepareStatement("SELECT role FROM SIMS_app_data.users WHERE Username = ?");
-        	st.setString(1, userName);
+        	st.setString(1, this.user);
             ResultSet rs = st.executeQuery();
         	
             while (rs.next()) {
@@ -197,12 +201,4 @@ public class Connector {
     	    	
     } // end of getUserRole()
     
-//    static public List<List> getItemTable(){
-//    	return resultsFromItemQuery;
-//    }
-//    
-//    static public List<List> getOrderTable(){
-//    	return resultsFromOrderQuery;
-//    }
-
 }
