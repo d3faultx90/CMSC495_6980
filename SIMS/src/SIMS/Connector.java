@@ -14,11 +14,12 @@ import java.sql.DriverManager;
 public class Connector {
 	
 	// constructor variables
-	private String user;
+	protected String user;
 	private char[] password;
 	private String trustStoreFilePath;
 	private String trustStorePassword;
 	private String mySqlPath;	
+	protected int role;
 	
 	// constructor
 	protected Connector(String user, char[] password) {
@@ -70,12 +71,13 @@ public class Connector {
 			con.close();
             
         } catch (SQLException e) {
+        	// handle and stop print for production
             e.printStackTrace();
         }
         return results;
     } // // end of runQuery()
     
-    // Return  items!
+    // Return all the items!
     protected List<List> getResultsofQuery(String tableName) {
         /**
          * Method returns List<List> containing MySQL SELECT query.
@@ -100,6 +102,9 @@ public class Connector {
             case "sales":
                 results = runAllQuery("SELECT * FROM SIMS_app_data.sales");
                 break;
+            case "waste":
+                results = runAllQuery("SELECT * FROM SIMS_app_data.waste");
+                break;
             default:
                 System.out.println("Table does not exists");
                 //return something else
@@ -108,7 +113,7 @@ public class Connector {
         return results;
     } // end of getAllInventoryItems()
     
-    //
+    // should only be called from LoginWindow
     protected Boolean verifyUser() {
         /**
          * Method attempts to login using Username provided and verify if 
@@ -157,14 +162,14 @@ public class Connector {
     	
     } // end of verifyUser()
     
-    // 
-    protected int getUserRole() {
+    // should only be called from LoginWindow
+    protected void getUserRole() {
 	    /**
 	     * Method returns user role based on entry in SIMS_app_data.users.
 	     * 
 	     * @param userName This is a String object used to log into the MySQL instance.
 	     * @param password This is a char[] object used to log into the MySQL instance.
-	     * @return role This returns a integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User
+	     * sets role as integer. 0 = Admin, 1 = Supervisor, 2 = Employee/User
 	     */
     	
     	// invalid role
@@ -191,14 +196,38 @@ public class Connector {
             rs.close();
             st.close();
         	con.close();
-            
+        	
+        	this.role = role;
+        	
         } catch (SQLException e) {
             e.printStackTrace();
-            role = 3;
+            this.role = 3;
         }
-        
-    	return role;
-    	    	
+                
     } // end of getUserRole()
     
+    //protected Boolean verifyItemExists(String itemName){} // end of verifyItemExists()
+
+    //protected List<List> retrieveInventoryCategories(){return sort and unique categories} // end of retrieveInventoryCategories()
+    
+    //protected List<List> createInventoryItem(String name, String category, double purchasePrice, 
+		// double sellPrice, String description, int quantity){return getResultsofQuery(inventory)} // end of updatedInventory()
+    
+    //protected List<List> updatedInventory(String itemName, int quantity){return getResultsofQuery(inventory)} // end of updatedInventory()
+    
+    //protected List<List> retrieveSalesByDate(Date time){return all sales with unique MySQL query} // end of retrieveSalesByDate()
+    
+    //protected List<List> createOrder(List<List> orderData){return getResultsofQuery(orders)} // end of createOrder()
+    
+    //protected List<List> createWaste(List<List> orderData){return getResultsofQuery(Waste)} // end of createWaste()
+    
+    //protected List<List> createSales(Date time, List<List> saleData){return getResultsofQuery(sales)} // end of createSales()
+    
+    //protected List<List> updateOrderStatus(String status, int orderEventID){return getResultsofQuery(orders)} // end of updateOrderStatus()
+    
+    //protected List<List> updateWasteStatus(String status, int wasteEventID){return getResultsofQuery(waste)} // end of updateWasteStatus()
+    
+    /** Java.sql.SQLExcpetion errors:
+     * java.sql.SQLException: Access denied for user ....
+     */
 }

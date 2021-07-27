@@ -123,6 +123,9 @@ public class OrderFilterPanel extends javax.swing.JPanel {
     private void addOrderAndIdToTable() {
     
     	DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
+    	// 0 is pending
+    	// 1 is approved
+    	// 2 is denied
         for (List l : SupervisorWindow.getOrderTable()) {
         	model.addRow(new Object[]{l.get(1), l.get(9), l.get(10)});
         }

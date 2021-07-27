@@ -10,11 +10,12 @@ import javax.swing.SwingUtilities;
 
 public class HomePanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form HomePanel
-     */
+	TimeThread time;
+	
     public HomePanel() {
         initComponents();
+        time = new TimeThread(currentTimeLabel);
+        time.start();
     }
 
     /**

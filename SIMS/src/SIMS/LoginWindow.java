@@ -116,17 +116,17 @@ public class LoginWindow extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = usernameTextfield.getText();
         char[] password =  passwordTextfield.getPassword(); //Risk
-        Connector connector = new Connector(username, password);
+        Connector connector = new Connector(username, password); //Will accept trustStoreFilePath,trustStorePassword,mySqlPath
         boolean result = connector.verifyUser();
         if (result == true) {
-            int user = connector.getUserRole();
-            if (user == 0) {
+            connector.getUserRole();
+            if (connector.role == 0) {
                 GeneralGuiFunctions.closeWindow(this, new AdminWindow());
             }
-            else if (user == 1) {
+            else if (connector.role == 1) {
                 GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector));
             }
-            else {
+            else if (connector.role == 2) {
                 GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector));//Change this to normal user
             }
 
