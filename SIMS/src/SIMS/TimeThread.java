@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 public class TimeThread extends Thread {
 
     private JLabel label;//Thread will update this label every second
+	boolean isRunning = true;
 
     //Store the date format for easy use
     private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
@@ -25,16 +26,19 @@ public class TimeThread extends Thread {
         this.label = label;
     }
 
+    public void stopThread() {
+    	isRunning = false;
+    }
+
     @Override
     public void run() {
     	// Need better logic
-    	while(true) {
+    	while(isRunning) {
 	        try {
 	            Date date = new Date(System.currentTimeMillis());
 	            //label.setText("Current time: " + time.format(date));
 	            label.setText(time.format(date));
 	            Thread.sleep(1000);//Sleeps every second so it only increments in seconds
-	            System.out.println("Current time: " + time.format(date));
 	        } catch (InterruptedException e) {
 	        }
         }

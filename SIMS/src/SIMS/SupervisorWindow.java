@@ -40,6 +40,8 @@ public class SupervisorWindow extends javax.swing.JFrame {
     static List<List> getOrderTable(){
     	return resultsFromOrderQuery;
     }
+    
+
 
     
     /**
@@ -71,6 +73,14 @@ public class SupervisorWindow extends javax.swing.JFrame {
 
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(419, 418));
         jTabbedPane1.addTab("Home", homePanel);
+        
+        /*Some piece of code*/
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            	homePanel.time.stopThread();
+            }
+        });
 
         inventorySubTabs.setBackground(new java.awt.Color(102, 102, 102));
         inventorySubTabs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
