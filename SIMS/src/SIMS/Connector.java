@@ -229,6 +229,5 @@ public class Connector {
     
     /** Java.sql.SQLExcpetion errors:
      * java.sql.SQLException: Access denied for user ....
-     * #identify error for failed login
      */
 }

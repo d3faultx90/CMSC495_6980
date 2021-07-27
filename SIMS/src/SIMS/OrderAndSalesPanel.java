@@ -13,16 +13,26 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-
-
-
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
     public OrderAndSalesPanel() {
         initComponents();
     }    
     
- // When pressed,checks if item is selected, quantity enter and adds the selected item along with its quantity to the other table
+    // Variables declaration
+    private javax.swing.JButton addToButton;
+    private javax.swing.JPanel completionPanel;
+    private javax.swing.JPanel filterPanel;
+    private javax.swing.JButton helpButton;
+    private SIMS.ItemFilterPanel itemFilterPanel;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable orderTable;
+    private javax.swing.JLabel quantityLabel;
+    private javax.swing.JTextField quantityTextfield;
+    private javax.swing.JButton removeFromButton;
+    // End of variables declaration
+    
+    // When pressed,checks if item is selected, quantity enter and adds the selected item along with its quantity to the other table
     private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
     	ArrayList<String> list = new ArrayList<String>();
@@ -228,16 +238,4 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>    
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addToButton;
-    private javax.swing.JPanel completionPanel;
-    private javax.swing.JPanel filterPanel;
-    private javax.swing.JButton helpButton;
-    private SIMS.ItemFilterPanel itemFilterPanel;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable orderTable;
-    private javax.swing.JLabel quantityLabel;
-    private javax.swing.JTextField quantityTextfield;
-    private javax.swing.JButton removeFromButton;
-    // End of variables declaration//GEN-END:variables
 }

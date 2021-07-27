@@ -17,6 +17,33 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
     	this.tableTitle = tableTitle;
         initComponents();
     }
+    
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        System.out.println("Pressed view button");
+    }                                          
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        System.out.println("Pressed edit button");
+    }                                          
+
+    private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        System.out.println("Pressed approve button");
+    }                                             
+
+    private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        System.out.println("Pressed deny button");
+    }     
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton approveButton;
+    private javax.swing.JButton denyButton;
+    private javax.swing.JButton editButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel requestLabel;
+    private javax.swing.JTable requestTable;
+    private javax.swing.JButton viewButton;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,30 +146,4 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>                        
 
-    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        System.out.println("Pressed view button");
-    }                                          
-
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        System.out.println("Pressed edit button");
-    }                                          
-
-    private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        System.out.println("Pressed approve button");
-    }                                             
-
-    private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        System.out.println("Pressed deny button");
-    }     
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton approveButton;
-    private javax.swing.JButton denyButton;
-    private javax.swing.JButton editButton;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel requestLabel;
-    private javax.swing.JTable requestTable;
-    private javax.swing.JButton viewButton;
-    // End of variables declaration//GEN-END:variables
 }

@@ -28,6 +28,36 @@ public class OrderFilterPanel extends javax.swing.JPanel {
         addOrderAndIdToTable();
         
     }
+    
+    
+    private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filterFieldKeyReleased
+    	// This needs to be updated with stuff from the order query
+    	GeneralGuiFunctions.filterTable(itemTable, filterField);
+    }//GEN-LAST:event_filterFieldKeyReleased
+
+    private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_filterFieldActionPerformed
+    
+
+    // Given a 2D list, add the item and the quantity of the list to the selected table
+    private void addOrderAndIdToTable() {
+    
+    	DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
+    	// 0 is pending
+    	// 1 is approved
+    	// 2 is denied
+        for (List l : SupervisorWindow.getOrderTable()) {
+        	model.addRow(new Object[]{l.get(1), l.get(9), l.get(10)});
+        }
+    }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField filterField;
+    private javax.swing.JLabel filterLabel;
+    private javax.swing.JScrollPane itemScrollPane;
+    public javax.swing.JTable itemTable;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,32 +137,4 @@ public class OrderFilterPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>                        
 
-  
-    private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_filterFieldKeyReleased
-    	// This needs to be updated with stuff from the order query
-    	GeneralGuiFunctions.filterTable(itemTable, filterField);
-    }//GEN-LAST:event_filterFieldKeyReleased
-
-    private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_filterFieldActionPerformed
-    
-
-    // Given a 2D list, add the item and the quantity of the list to the selected table
-    private void addOrderAndIdToTable() {
-    
-    	DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
-    	// 0 is pending
-    	// 1 is approved
-    	// 2 is denied
-        for (List l : SupervisorWindow.getOrderTable()) {
-        	model.addRow(new Object[]{l.get(1), l.get(9), l.get(10)});
-        }
-    }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField filterField;
-    private javax.swing.JLabel filterLabel;
-    private javax.swing.JScrollPane itemScrollPane;
-    public javax.swing.JTable itemTable;
-    // End of variables declaration//GEN-END:variables
 }

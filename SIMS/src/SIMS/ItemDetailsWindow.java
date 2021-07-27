@@ -20,6 +20,20 @@ public class ItemDetailsWindow extends javax.swing.JFrame {
         quantityText.setText(quantity);
         pack();
     }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel categoryLabel;
+    private javax.swing.JLabel categoryText;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JLabel descriptionText;
+    private javax.swing.JLabel itemNameLabel;
+    private javax.swing.JLabel quantityLabel;
+    private javax.swing.JLabel quantityText;
+    private javax.swing.JLabel retailPriceLabel;
+    private javax.swing.JLabel retailPriceText;
+    private javax.swing.JLabel wholesalePriceLabel;
+    private javax.swing.JLabel wholesalePriceText;
+    // End of variables declaration//GEN-END:variables
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -128,17 +142,4 @@ public class ItemDetailsWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>    
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel categoryLabel;
-    private javax.swing.JLabel categoryText;
-    private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JLabel descriptionText;
-    private javax.swing.JLabel itemNameLabel;
-    private javax.swing.JLabel quantityLabel;
-    private javax.swing.JLabel quantityText;
-    private javax.swing.JLabel retailPriceLabel;
-    private javax.swing.JLabel retailPriceText;
-    private javax.swing.JLabel wholesalePriceLabel;
-    private javax.swing.JLabel wholesalePriceText;
-    // End of variables declaration//GEN-END:variables
 }

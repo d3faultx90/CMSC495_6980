@@ -27,6 +27,13 @@ public class ItemFilterPanel extends javax.swing.JPanel {
     private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
     	GeneralGuiFunctions.filterTable(itemTable, filterField);
     }
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField filterField;
+    private javax.swing.JLabel filterLabel;
+    private javax.swing.JScrollPane itemScrollPane;
+    public javax.swing.JTable itemTable;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,11 +110,4 @@ public class ItemFilterPanel extends javax.swing.JPanel {
         
     }// </editor-fold>//GEN-END:initComponents
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField filterField;
-    private javax.swing.JLabel filterLabel;
-    private javax.swing.JScrollPane itemScrollPane;
-    public javax.swing.JTable itemTable;
-    // End of variables declaration//GEN-END:variables
 }
