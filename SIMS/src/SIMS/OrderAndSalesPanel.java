@@ -32,52 +32,67 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
     private javax.swing.JButton removeFromButton;
     // End of variables declaration
     
-    // When pressed, checks if item is selected, quantity enter and adds the selected item along with its quantity to the other table
+   // When pressed,checks if item is selected, quantity entered and adds the selected item along with its quantity to the order table
     private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
         
     	ArrayList<String> list = new ArrayList<String>();
+    	
     	try {
-    			int quantity = (Integer.parseInt(quantityTextfield.getText()));
+    		
     		
     			for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
             
     				list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
     			}
+    			
 
     			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
     			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
         
-       
-    			if(selectedCellValue.isEmpty()) {GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
-    			}else if(quantityTextfield.getText().isEmpty())
+    			
+    			if(quantityTextfield.getText().isEmpty())
     			{
+    				
     				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
         	
-    			}//else if(!(Integer.parseInt(quantityTextfield.getText())>0)){}
-    			else if(list.contains(selectedCellValue)) {
+    			}else if(!(Integer.parseInt(quantityTextfield.getText())>=1))
+    			{
+    				
+    				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
         	
+    			}
+    			else if(list.contains(selectedCellValue)) {
+    				
+    	
     				GeneralGuiFunctions.displayErrorPane("That item is already in the order list");
         	
     			}else {
         	 
     					DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-    					//model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
-    					model.addRow(new Object[]{selectedCellValue, quantity});
+    					model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
+    					System.out.println(selectedCellValue + " " +  quantityTextfield.getText());
+        				
+    					
     			}	
     	}catch(NumberFormatException d) {
     		
     		GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
     		
-    	}catch(Exception e) {
+    	}catch(ArrayIndexOutOfBoundsException e){
     		
     		GeneralGuiFunctions.displayErrorPane("Please select an item");
+    		
+    		}catch(Exception f) {
+    		
+    		GeneralGuiFunctions.displayErrorPane("An error has occured");
+    		
     		
     	}
     	   
         
       }//end addToButtonActionPerformed
 
-    // Checks if item is selected then removes the selected row from the table
+    // Checks if an item is selected then removes the selected row from the table
     private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromButtonActionPerformed
         
     	try{
@@ -85,16 +100,20 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
     		DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
             model.removeRow(orderTable.getSelectedRow());
             
-        }catch(Exception e) {
+        }catch(ArrayIndexOutOfBoundsException f){GeneralGuiFunctions.displayErrorPane("Please select an item");
+		}catch(Exception e) {
         	
-        	GeneralGuiFunctions.displayErrorPane("Please select an item to be removed");	
+        	GeneralGuiFunctions.displayErrorPane("An error has occured");	
         }
     }//end removeFromButtonActionPerformed
     
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-    	GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
-    }   
+      
+    	GeneralGuiFunctions.displayHelpPane("In this form you can:\n"
+    										+"Filter the current order list.\n"
+    			                            +"Select an item and quantity amount then add it to the order.\n"
+    										+"When finshed, click the Order button to send the order.");
+    }//end helpButtonActionPerformed   
 
     /**
      * This method is called from within the constructor to initialize the form.
