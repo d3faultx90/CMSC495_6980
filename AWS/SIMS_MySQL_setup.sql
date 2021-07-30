@@ -2,7 +2,7 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/20/2021
+Last edited: 07/30/2021
 Created for: CMSC495
 Tested platform(s): 
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
@@ -117,11 +117,10 @@ CREATE TABLE IF NOT EXISTS  inventory(
 COMMENT="The inventory table is used for managing inventory items."
 ;
 
--- OrderID will be the complete to track all items related to single order
--- OrderID Random GUID assigned by Java Function .... 
+-- Orders tables
 CREATE TABLE IF NOT EXISTS orders(
     OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-    OrderEventID INT NOT NULL, 
+    OrderEventID VARCHAR(130) NOT NULL,
     EmployeeID INT NOT NULL,
     ApproverID INT,
     ItemID INT NOT NULL,
@@ -139,10 +138,10 @@ CREATE TABLE IF NOT EXISTS orders(
 COMMENT="The orders table is used for managing whole sale orders placed."
 ;
 
---
+-- Sales tables
 CREATE TABLE IF NOT EXISTS sales(
     SalesID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    SalesEventID INT NOT NULL,
+    SalesEventID VARCHAR(130) NOT NULL,
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
     SalesPrice DECIMAL(8,2) NOT NULL,
@@ -153,6 +152,27 @@ CREATE TABLE IF NOT EXISTS sales(
     FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
 )
 COMMENT="The sales table is used for tracking customer sales."
+;
+
+-- Waste tables
+CREATE TABLE IF NOT EXISTS waste(
+    WasteID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+    WasteEventID VARCHAR(130) NOT NULL,
+    EmployeeID INT NOT NULL,
+    ApproverID INT,
+    ItemID INT NOT NULL,
+    SalesTax DECIMAL(5,4) NOT NULL,
+    WholeSaleUnitPrice DECIMAL(8,2) NOT NULL,
+    WholeSaleTotalPrice DECIMAL(10,2) AS (((WholeSaleUnitPrice * Quantity) *
+	       	SalesTax ) + (WholeSaleUnitPrice * Quantity)),
+    Quantity INT NOT NULL, 
+    WasteDate DATETIME NOT NULL,
+    Status INT DEFAULT 0 CHECK (Status = 0 OR Status = 1 OR Status = 2),
+    FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
+    FOREIGN KEY (ApproverID) REFERENCES users(UserID),
+    FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
+)
+COMMENT="The waste table is used for managing waste request placed."
 ;
 
 SELECT ' [+] tables built:' as '';
