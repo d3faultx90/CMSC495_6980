@@ -18,7 +18,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
     }  
 
     private void helpButtoonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+    	GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
