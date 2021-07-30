@@ -249,20 +249,20 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 						.addComponent(completionPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
 
-		orderTable.getModel().addTableModelListener(new TableModelListener() {
-			@Override
-			public void tableChanged(TableModelEvent e) {
-				int selectedColumn = orderTable.getSelectedRow();
-				String selectedCellValue = (String) orderTable.getValueAt(selectedColumn, 0);
-				try {
-					Integer.parseInt((String) orderTable.getValueAt(orderTable.getSelectedRow(), 0));
-				} catch (NumberFormatException d) {
-					//orderTable.setValueAt(selectedCellValue, selectedColumn, 0);
-					GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
-				}
-				System.out.println("Change has occured");
-			}
-		});
+//		orderTable.getModel().addTableModelListener(new TableModelListener() {
+//			@Override
+//			public void tableChanged(TableModelEvent e) {
+//				int selectedColumn = orderTable.getSelectedRow();
+//				String selectedCellValue = (String) orderTable.getValueAt(selectedColumn, 0);
+//				try {
+//					Integer.parseInt((String) orderTable.getValueAt(orderTable.getSelectedRow(), 0));
+//				} catch (NumberFormatException d) {
+//					//orderTable.setValueAt(selectedCellValue, selectedColumn, 0);
+//					GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
+//				}
+//				System.out.println("Change has occured");
+//			}
+//		});
 
 	}// </editor-fold>
 

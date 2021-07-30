@@ -17,7 +17,7 @@ public class Date {
          
     } // end of getDate()
     
-    protected String formatDate() {
+    protected static String formatDate() {
         /**
          * Method to format local system date
          * 
