@@ -2,7 +2,7 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/18/2021
+Last edited: 07/30/2021
 Created for: CMSC495
 Tested platform(s): 
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
@@ -22,7 +22,7 @@ SHOW DATABASES;
 USE SIMS_app_data;
 
 SELECT ' [+] Adding users ...' as '';
-INSERT INTO users(Username, Fname, Lname, Role) VALUES ("zyoung", "Zachary", "Young", 0);
+INSERT INTO users(Username, Fname, Lname, Role) VALUES ("zyoung5", "Zachary", "Young", 0);
 INSERT INTO users(Username, Fname, Lname, Role) VALUES ("guhlan", "Gary", "Uhland", 2);
 INSERT INTO users(Username, Fname, Lname, Role) VALUES ("bsutte", "Benjamin", "Sutter", 2);
 INSERT INTO users(Username, Fname, Lname, Role) VALUES ("stetan", "Sophia", "Tetang", 1);
@@ -42,20 +42,29 @@ SELECT ' [+] inventory items added:' as '';
 SELECT InventoryID, Name, Quantity FROM SIMS_app_data.inventory;
 
 
--- purchase history
+-- orders
 SELECT ' [+] Adding orders ...' as '';
-INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES (274514745, 2, 1, 0.08, 0.25, 100, '2020-06-19 19:34:02', 1);
-INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES (274514733, 3, 1, 0.08, 0.30, 200, '2021-06-19 17:34:02', 1);
-INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES (274514776, 3, 2, 0.08, 0.15, 1000, '2021-07-02 10:18:35', 0);
-INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES (274514776, 2, 4, 0.08, 5.15, 175, '2021-07-02 10:18:35', 0);
+INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES ("6c311225-1c87-4df8-9dce-aee66af12b97", 2, 1, 0.08, 0.25, 100, '2020-06-19 19:34:02', 1);
+INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES ("5ac4aa66-6716-41f9-a6a3-dbe76f8eaae4", 3, 1, 0.08, 0.30, 200, '2021-06-19 17:34:02', 1);
+INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES ("3610d758-ae4d-416e-975c-0829aa6ac00a", 3, 2, 0.08, 0.15, 1000, '2021-07-02 10:18:35', 0);
+INSERT INTO orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES ("3610d758-ae4d-416e-975c-0829aa6ac00a", 2, 4, 0.08, 5.15, 175, '2021-07-02 10:18:35', 0);
 SELECT ' [+] orders added:' as '';
 SELECT OrderID, OrderEventID, OrderDate FROM SIMS_app_data.orders;
 
--- purchase history
+-- sales
 SELECT ' [+] Adding sales ...' as '';
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES (274154745, 2, 1, 1.50, 12, '2020-06-19 19:34:02');
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES (274154745, 3, 2, 2.99, 48, '2021-06-19 17:34:02');
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES (274154746, 3, 2, 2.99, 24, '2021-07-02 10:18:35');
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES (274154746, 2, 4, 18.99, 1, '2021-07-02 10:18:35');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("78087753-b86c-45a0-974a-abe65827a27d", 2, 1, 1.50, 12, '2020-06-19 19:34:02');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("78087753-b86c-45a0-974a-abe65827a27d", 3, 2, 2.99, 48, '2021-06-19 17:34:02');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("e3bbf41a-a9d2-4e39-8546-11beecba6c01", 3, 2, 2.99, 24, '2021-07-02 10:18:35');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("1ad6afbf-8ca1-453f-baf6-7be400f02595", 2, 4, 18.99, 1, '2021-07-02 10:18:35');
 SELECT ' [+] orders added:' as '';
 SELECT SalesID, SalesEventID, SalesDate FROM SIMS_app_data.sales;
+
+-- waste
+SELECT ' [+] Adding waste ...' as '';
+INSERT INTO waste(WasteEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, WasteDate, Status) VALUES ("6c311225-1c87-4df8-9dce-aee66af12b97", 2, 1, 0.08, 0.25, 100, '2020-06-19 19:34:02', 1);
+INSERT INTO waste(WasteEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, WasteDate, Status) VALUES ("5ac4aa66-6716-41f9-a6a3-dbe76f8eaae4", 3, 1, 0.08, 0.30, 200, '2021-06-19 17:34:02', 1);
+INSERT INTO waste(WasteEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, WasteDate, Status) VALUES ("3610d758-ae4d-416e-975c-0829aa6ac00a", 3, 2, 0.08, 0.15, 1000, '2021-07-02 10:18:35', 0);
+INSERT INTO waste(WasteEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, WasteDate, Status) VALUES ("3610d758-ae4d-416e-975c-0829aa6ac00a", 2, 4, 0.08, 5.15, 175, '2021-07-02 10:18:35', 0);
+SELECT ' [+] waste added:' as '';
+SELECT WasteID, WasteEventID, WasteDate FROM SIMS_app_data.waste;
