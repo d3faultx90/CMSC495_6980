@@ -10,251 +10,260 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-
 
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
-    public OrderAndSalesPanel() {
-        initComponents();
-    }    
-    
-    // Variables declaration
-    private javax.swing.JButton addToButton;
-    private javax.swing.JPanel completionPanel;
-    private javax.swing.JPanel filterPanel;
-    private javax.swing.JButton helpButton;
-    private SIMS.ItemFilterPanel itemFilterPanel;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable orderTable;
-    private javax.swing.JLabel quantityLabel;
-    private javax.swing.JTextField quantityTextfield;
-    private javax.swing.JButton removeFromButton;
-    // End of variables declaration
-    
-   // When pressed,checks if item is selected, quantity entered and adds the selected item along with its quantity to the order table
-    private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    	ArrayList<String> list = new ArrayList<String>();
-    	
-    	try {
-    		
-    		
-    			for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
-            
-    				list.add((String) orderTable.getModel().getValueAt(i, 0)); //get the all row values at column index 0
-    			}
-    			
+	public OrderAndSalesPanel() {
+		initComponents();
+	}
 
-    			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
-    			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
-        
-    			
-    			if(quantityTextfield.getText().isEmpty())
-    			{
-    				
-    				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
-        	
-    			}else if(!(Integer.parseInt(quantityTextfield.getText())>=1))
-    			{
-    				
-    				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
-        	
-    			}
-    			else if(list.contains(selectedCellValue)) {
-    				
-    	
-    				GeneralGuiFunctions.displayErrorPane("That item is already in the order list");
-        	
-    			}else {
-        	 
-    					DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-    					model.addRow(new Object[]{selectedCellValue, quantityTextfield.getText()});
-    					System.out.println(selectedCellValue + " " +  quantityTextfield.getText());
-        				
-    					
-    			}	
-    	}catch(NumberFormatException d) {
-    		
-    		GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
-    		
-    	}catch(ArrayIndexOutOfBoundsException e){
-    		
-    		GeneralGuiFunctions.displayErrorPane("Please select an item");
-    		
-    		}catch(Exception f) {
-    		
-    		GeneralGuiFunctions.displayErrorPane("An error has occured");
-    		
-    		
-    	}
-    	   
-        
-      }//end addToButtonActionPerformed
+	// Variables declaration
+	private javax.swing.JButton addToButton;
+	private javax.swing.JPanel completionPanel;
+	private javax.swing.JPanel filterPanel;
+	private javax.swing.JButton helpButton;
+	private SIMS.ItemFilterPanel itemFilterPanel;
+	private javax.swing.JScrollPane jScrollPane6;
+	private javax.swing.JTable orderTable;
+	private javax.swing.JLabel quantityLabel;
+	private javax.swing.JTextField quantityTextfield;
+	private javax.swing.JButton removeFromButton;
+	// End of variables declaration
 
-    // Checks if an item is selected then removes the selected row from the table
-    private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromButtonActionPerformed
-        
-    	try{
-    		
-    		DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
-            model.removeRow(orderTable.getSelectedRow());
-            
-        }catch(ArrayIndexOutOfBoundsException f){GeneralGuiFunctions.displayErrorPane("Please select an item");
-		}catch(Exception e) {
-        	
-        	GeneralGuiFunctions.displayErrorPane("An error has occured");	
-        }
-    }//end removeFromButtonActionPerformed
-    
-    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-      
-    	GeneralGuiFunctions.displayHelpPane("In this form you can:\n"
-    										+"Filter the current order list.\n"
-    			                            +"Select an item and quantity amount then add it to the order.\n"
-    										+"When finshed, click the Order button to send the order.");
-    }//end helpButtonActionPerformed   
+	// When pressed,checks if item is selected, quantity entered and adds the
+	// selected item along with its quantity to the order table
+	private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() {
+		ArrayList<String> list = new ArrayList<String>();
 
-        filterPanel = new javax.swing.JPanel();
-        quantityLabel = new javax.swing.JLabel();
-        quantityTextfield = new javax.swing.JTextField();
-        addToButton = new javax.swing.JButton();
-        helpButton = new javax.swing.JButton();
-        itemFilterPanel = new SIMS.ItemFilterPanel();
-        completionPanel = new javax.swing.JPanel();
-        removeFromButton = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        orderTable = new javax.swing.JTable();
+		try {
 
-        filterPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			for (int i = 0; i < orderTable.getModel().getRowCount(); i++) {
 
-        quantityLabel.setText("Quantity");
+				list.add((String) orderTable.getModel().getValueAt(i, 0)); // get the all row values at column index 0
+			}
 
-        addToButton.setText("Add to order");
-        addToButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addToButtonActionPerformed(evt);
-            }
-        });
+			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
+			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
 
-        helpButton.setBackground(new java.awt.Color(255, 255, 153));
-        helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        helpButton.setText("?");
-        helpButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpButtonActionPerformed(evt);
-            }
-        });
+			if (quantityTextfield.getText().isEmpty()) {
 
-        javax.swing.GroupLayout filterPanelLayout = new javax.swing.GroupLayout(filterPanel);
-        filterPanel.setLayout(filterPanelLayout);
-        filterPanelLayout.setHorizontalGroup(
-            filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(filterPanelLayout.createSequentialGroup()
-                .addComponent(helpButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(filterPanelLayout.createSequentialGroup()
-                        .addComponent(quantityLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addToButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        filterPanelLayout.setVerticalGroup(
-            filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(filterPanelLayout.createSequentialGroup()
-                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(helpButton)
-                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addToButton)
-                    .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(quantityLabel))
-                .addContainerGap())
-        );
+				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
 
-        completionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			} else if (!(Integer.parseInt(quantityTextfield.getText()) >= 1)) {
 
-        removeFromButton.setBackground(new java.awt.Color(153, 0, 0));
-        removeFromButton.setText("Remove from order");
-        removeFromButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeFromButtonActionPerformed(evt);
-            }
-        });
+				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
 
-        orderTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Fake Item", "3"}
-            },
-            new String [] {
-                "Item", "Quantity"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
+			} else if (list.contains(selectedCellValue)) {
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane6.setViewportView(orderTable);
+				GeneralGuiFunctions.displayErrorPane("That item is already in the order list");
 
-        javax.swing.GroupLayout completionPanelLayout = new javax.swing.GroupLayout(completionPanel);
-        completionPanel.setLayout(completionPanelLayout);
-        completionPanelLayout.setHorizontalGroup(
-            completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(completionPanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(removeFromButton, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(completionPanelLayout.createSequentialGroup()
-                    .addGap(43, 43, 43)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(16, Short.MAX_VALUE)))
-        );
-        completionPanelLayout.setVerticalGroup(
-            completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, completionPanelLayout.createSequentialGroup()
-                .addContainerGap(91, Short.MAX_VALUE)
-                .addComponent(removeFromButton)
-                .addContainerGap())
-            .addGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(completionPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(34, Short.MAX_VALUE)))
-        );
+			} else {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(filterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(completionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(completionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-    }// </editor-fold>    
+				DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+				model.addRow(new Object[] { selectedCellValue, quantityTextfield.getText() });
+				System.out.println(selectedCellValue + " " + quantityTextfield.getText());
+
+			}
+		} catch (NumberFormatException d) {
+
+			GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+
+			GeneralGuiFunctions.displayErrorPane("Please select an item");
+
+		} catch (Exception f) {
+
+			GeneralGuiFunctions.displayErrorPane("An error has occured");
+
+		}
+
+	} // end addToButtonActionPerformed
+
+	// Checks if an item is selected then removes the selected row from the table
+	private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) { // GEN-FIRST:event_removeFromButtonActionPerformed
+
+		try {
+
+			DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+			model.removeRow(orderTable.getSelectedRow());
+
+		} catch (ArrayIndexOutOfBoundsException f) {
+			GeneralGuiFunctions.displayErrorPane("Please select an item");
+		} catch (Exception e) {
+
+			GeneralGuiFunctions.displayErrorPane("An error has occured");
+		}
+	} // end removeFromButtonActionPerformed
+
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
+		GeneralGuiFunctions.displayHelpPane("In this form you can:\n" + "Filter the current order list.\n"
+				+ "Select an item and quantity amount then add it to the order.\n"
+				+ "When finshed, click the Order button to send the order.");
+	} // end helpButtonActionPerformed
+
+	private void orderTableKeyPressed(java.awt.event.KeyEvent evt) {
+		System.out.println("pressed");
+	}
+
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">
+	private void initComponents() {
+
+		filterPanel = new javax.swing.JPanel();
+		quantityLabel = new javax.swing.JLabel();
+		quantityTextfield = new javax.swing.JTextField();
+		addToButton = new javax.swing.JButton();
+		helpButton = new javax.swing.JButton();
+		itemFilterPanel = new SIMS.ItemFilterPanel();
+		completionPanel = new javax.swing.JPanel();
+		removeFromButton = new javax.swing.JButton();
+		jScrollPane6 = new javax.swing.JScrollPane();
+		orderTable = new javax.swing.JTable();
+
+		filterPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+		quantityLabel.setText("Quantity");
+
+		addToButton.setText("Add to order");
+		addToButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				addToButtonActionPerformed(evt);
+			}
+		});
+
+		helpButton.setBackground(new java.awt.Color(255, 255, 153));
+		helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+		helpButton.setText("?");
+		helpButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				helpButtonActionPerformed(evt);
+			}
+		});
+
+		javax.swing.GroupLayout filterPanelLayout = new javax.swing.GroupLayout(filterPanel);
+		filterPanel.setLayout(filterPanelLayout);
+		filterPanelLayout
+				.setHorizontalGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(filterPanelLayout.createSequentialGroup().addComponent(helpButton)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(filterPanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+										.addGroup(filterPanelLayout.createSequentialGroup().addComponent(quantityLabel)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE,
+														34, javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(addToButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addComponent(itemFilterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 338,
+												Short.MAX_VALUE))
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		filterPanelLayout.setVerticalGroup(filterPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(filterPanelLayout.createSequentialGroup()
+						.addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(helpButton).addComponent(itemFilterPanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE, 139,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(addToButton)
+								.addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(quantityLabel))
+						.addContainerGap()));
+
+		completionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+		removeFromButton.setBackground(new java.awt.Color(153, 0, 0));
+		removeFromButton.setText("Remove from order");
+		removeFromButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				removeFromButtonActionPerformed(evt);
+			}
+		});
+
+		orderTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { { "Fake Item", "3" } },
+				new String[] { "Item", "Quantity" }) {
+			boolean[] canEdit = new boolean[] { false, true };
+
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return canEdit[columnIndex];
+			}
+		});
+		orderTable.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				orderTableKeyPressed(evt);
+			}
+		});
+		jScrollPane6.setViewportView(orderTable);
+
+		javax.swing.GroupLayout completionPanelLayout = new javax.swing.GroupLayout(completionPanel);
+		completionPanel.setLayout(completionPanelLayout);
+		completionPanelLayout
+				.setHorizontalGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(completionPanelLayout.createSequentialGroup().addGap(43, 43, 43)
+								.addComponent(removeFromButton, javax.swing.GroupLayout.PREFERRED_SIZE, 338,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(17, Short.MAX_VALUE))
+						.addGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(completionPanelLayout.createSequentialGroup().addGap(43, 43, 43)
+										.addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 339,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(16, Short.MAX_VALUE))));
+		completionPanelLayout
+				.setVerticalGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+								completionPanelLayout.createSequentialGroup().addContainerGap(91, Short.MAX_VALUE)
+										.addComponent(removeFromButton).addContainerGap())
+						.addGroup(completionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(completionPanelLayout.createSequentialGroup().addContainerGap()
+										.addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 79,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(34, Short.MAX_VALUE))));
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(filterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+						Short.MAX_VALUE)
+				.addComponent(completionPanel, javax.swing.GroupLayout.Alignment.TRAILING,
+						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(completionPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+
+		orderTable.getModel().addTableModelListener(new TableModelListener() {
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				int selectedColumn = orderTable.getSelectedRow();
+				String selectedCellValue = (String) orderTable.getValueAt(selectedColumn, 0);
+				try {
+					Integer.parseInt((String) orderTable.getValueAt(orderTable.getSelectedRow(), 0));
+				} catch (NumberFormatException d) {
+					//orderTable.setValueAt(selectedCellValue, selectedColumn, 0);
+					GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
+				}
+				System.out.println("Change has occured");
+			}
+		});
+
+	}// </editor-fold>
 
 }

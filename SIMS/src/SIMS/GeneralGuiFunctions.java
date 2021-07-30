@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.RowFilter;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -72,6 +74,20 @@ public class GeneralGuiFunctions {
         	displayErrorPane("That is not a number");
         }
         return parsedPrice;
+    }
+    
+    static void thing(javax.swing.JTable table) {
+        table.getModel().addTableModelListener(new TableModelListener()
+		{
+			@Override
+			public void tableChanged(TableModelEvent e)
+			{
+
+				int col = e.getColumn();
+				int row = e.getFirstRow();
+
+			}
+		});
     }
     
 //    static List<String> determineCategories(List<List> items){
