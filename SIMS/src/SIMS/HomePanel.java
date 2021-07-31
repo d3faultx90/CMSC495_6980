@@ -75,7 +75,7 @@ public class HomePanel extends javax.swing.JPanel {
 
         currentTimeLabel.setText("");
 
-        currentDateLabel.setText(Date.formatDate());
+        currentDateLabel.setText(Date.getTodaysDateUser());
 
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);

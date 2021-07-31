@@ -17,19 +17,40 @@ public class Date {
          
     } // end of getDate()
     
-    protected static String formatDate() {
+    protected static String getTodaysDateUser() {
+        return formatDateForUser(LocalDateTime.now());
+    } // end of formatDate()
+    
+    protected static String getTodaysDateSql() {
+        return formatDateForSql(LocalDateTime.now());
+    } // end of formatDate()
+    
+    protected static String formatDateForUser(LocalDateTime date) {
         /**
          * Method to format local system date
          * 
          * @return dateToString as String object
          */
 
-    	LocalDateTime df = getDateTime();
-
         // convert 'df' variable to String and format like MM-dd-yyyy
-        String dateToString = df.format(DateTimeFormatter.ofPattern("MM-dd-YYYY"));
+        String dateToString = date.format(DateTimeFormatter.ofPattern("MM-dd-YYYY"));
         return dateToString;
     } // end of formatDate()
+    
+    //Make it universal?????
+    protected static String formatDateForSql(LocalDateTime date) {
+        /**
+         * Method to format local system date
+         * 
+         * @return dateToString as String object
+         */
+
+        // convert 'df' variable to String and format like YYYY-MM-dd
+        String dateToString = date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
+        return dateToString;
+    } // end of formatDate()
+    
+
     
     protected String formatDateTime() {
         /**
