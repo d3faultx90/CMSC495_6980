@@ -7,11 +7,14 @@
 package SIMS;
 
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableColumnModel;
 
 public class ReportPanel extends javax.swing.JPanel {
 
     public ReportPanel() {
         initComponents();
+        TableColumnModel columnModel = yearAndProfitTable.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(20);
     }
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
