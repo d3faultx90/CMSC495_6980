@@ -82,17 +82,20 @@ public class LoginWindow extends javax.swing.JFrame {
     }
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
+    private javax.swing.JLabel addressLabel;
+    private javax.swing.JTextField addressTextfield;
     private javax.swing.JButton changePasswordButton;
     private javax.swing.JButton loginButton;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JPasswordField passwordTextfield;
+    private javax.swing.JLabel portLabel;
+    private javax.swing.JTextField portTextfield;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTextfield;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration    
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
@@ -102,15 +105,17 @@ public class LoginWindow extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
         passwordTextfield = new javax.swing.JPasswordField();
+        portLabel = new javax.swing.JLabel();
+        addressLabel = new javax.swing.JLabel();
+        portTextfield = new javax.swing.JTextField();
+        addressTextfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sales Inventory Management System (SIMS) - Login");
 
         usernameLabel.setText("Username");
-        usernameTextfield.setText("bsutte");
 
         passwordLabel.setText("Password");
-        passwordTextfield.setText("P@ssw0rd");
 
         usernameTextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,32 +137,47 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
+        portLabel.setText("Port");
+
+        addressLabel.setText("SQL Address");
+
+        portTextfield.setText("3306");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(changePasswordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(passwordLabel)
-                            .addComponent(usernameLabel))
+                            .addComponent(usernameLabel)
+                            .addComponent(portLabel)
+                            .addComponent(addressLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(usernameTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(passwordTextfield)))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(changePasswordButton, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                            .addComponent(usernameTextfield)
+                            .addComponent(passwordTextfield)
+                            .addComponent(portTextfield)
+                            .addComponent(addressTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addressLabel)
+                    .addComponent(addressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(portLabel)
+                    .addComponent(portTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameLabel)
                     .addComponent(usernameTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,7 +189,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addComponent(loginButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(changePasswordButton)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,6 +205,6 @@ public class LoginWindow extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>   
+    }// </editor-fold>  
 
 }
