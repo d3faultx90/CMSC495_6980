@@ -7,6 +7,8 @@
 
 package SIMS;
 
+import java.util.Map;
+
 public class SalesPanel extends javax.swing.JPanel {
 
 	/**
@@ -16,8 +18,24 @@ public class SalesPanel extends javax.swing.JPanel {
 		initComponents();
 	}
 
+	
+	// (int employeeID, int itemID, double saleTax, int quantity)
 	private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		System.out.println(jDateChooser1.getDate());
+//		System.out.println(DateHandler.formatDateForSql(jDateChooser1.getDate()));
+//		System.out.println(jDateChooser1.getDate().getClass().getSimpleName());
+		
+		javax.swing.JTable saleTable = salesPanel.orderTable;
+		Map <String, Integer> itemIds = SupervisorWindow.getItemIdMap();
+
+		int employeeId = 3;
+		for (int i = 0; i < saleTable.getRowCount(); i++) {
+			int itemID = itemIds.get(saleTable.getValueAt(i, 0));
+			System.out.println(itemID);
+			int quantity = GeneralGuiFunctions.castSqlObjectToInteger(saleTable.getValueAt(i, 1));
+			double salesTax = .08;
+			SupervisorWindow.getConnector().createSales(employeeId, itemID, salesTax, quantity);
+			System.out.println("Sale happened for " + quantity + " items");
+		}
 	}
 
 	// Variables declaration - do not modify

@@ -46,6 +46,10 @@ public class GeneralGuiFunctions {
         table.setRowSorter(sorter);
     }
     
+    static int castSqlObjectToInteger(Object obj) {
+    	return Integer.parseInt((String) obj);
+    }
+    
     //Display this JOptionpane whenever a field is missing input or has negative values
     static void displayErrorPane(String errorMessage) {
         JOptionPane.showMessageDialog(null, errorMessage,

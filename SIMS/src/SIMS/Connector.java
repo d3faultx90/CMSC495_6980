@@ -36,12 +36,10 @@ public class Connector {
      * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore" -Djavax.net.ssl.keyStorePassword="password"
      */ 
     
-	private Connection buildJDBCConnecter() throws SQLException {
+	private Connection buildJDBCConnecter() {
 		/**
 		 * Method creates connection to AWS cloud using 
 		 * 	Connector object properites. 
-		 * 
-		 * Caller must use try-catch to handle SQLException
 		 * 
 		 * @ return Connection object for sql queries
 		 */
@@ -52,8 +50,14 @@ public class Connector {
     	
     	Connection con = null;
     	
-       	con = DriverManager.getConnection(mySqlPath, this.user, pass);
+        try {
+  
+        	con = DriverManager.getConnection(mySqlPath, this.user, pass);
         	
+        } catch (SQLException e) {
+        	// handle and stop print for production
+            e.printStackTrace();
+        }
         
         return con;
         
@@ -140,7 +144,7 @@ public class Connector {
          * @return result This returns a boolean value based on whether the user can log in. 
          */
     	
-    	Boolean result = false;
+    	Boolean result = true;
                                         
         try {
         	
@@ -232,7 +236,7 @@ public class Connector {
 	    	// connect to database via JDBC
 	    	Connection con = buildJDBCConnecter();
 	    	
-	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.inventory WHERE name = ?");
+	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.users WHERE name = ?");
 	    	st.setString(1, itemName);
 	        ResultSet rs = st.executeQuery();
         	
@@ -440,7 +444,7 @@ public class Connector {
     
     	List<List> results = new ArrayList<List>();
     	String salesEventID = UUID.randomUUID().toString();
-    	String salesDate = Date.sqlDateTime();
+    	String salesDate = DateHandler.getTodaysDateSql();
     
     	// 
         try {
@@ -613,7 +617,7 @@ public class Connector {
 
         // 
         try {
-        	
+		
         	time = time + "%";
         	
         	// connect to database via JDBC
@@ -627,8 +631,6 @@ public class Connector {
         	
         	ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();  
-            
-            System.out.println("here 1");
             
             while (rs.next()) {
             
@@ -646,15 +648,11 @@ public class Connector {
 			st.close();
 			con.close();
             
-            System.out.println("here 2");
-			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
-            // handle not locating anything
         }
 
-        System.out.println("here 3");
         return results;
         
     } // end of retrieveSalesByDate()
@@ -770,6 +768,5 @@ public class Connector {
     
     /** Java.sql.SQLExcpetion errors:
      * java.sql.SQLException: Access denied for user ....
-     * java.sql.SQLException: Parameter index out of range ....
      */
 }
