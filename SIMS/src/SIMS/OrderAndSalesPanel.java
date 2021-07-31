@@ -65,7 +65,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 
 				DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
 				model.addRow(new Object[] { selectedCellValue, quantityTextfield.getText() });
-				System.out.println(selectedCellValue + " " + quantityTextfield.getText());
+				// System.out.println(selectedCellValue + " " + quantityTextfield.getText());
 
 			}
 		} catch (NumberFormatException d) {
@@ -195,7 +195,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 			}
 		});
 
-		orderTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { { "Fake Item", "3" } },
+		orderTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] { },
 				new String[] { "Item", "Quantity" }) {
 			boolean[] canEdit = new boolean[] { false, true };
 
