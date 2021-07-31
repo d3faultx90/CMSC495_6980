@@ -6,6 +6,10 @@
  */
 package SIMS;
 
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
 public class RequestsPanel extends javax.swing.JPanel {
 
 	/**
@@ -18,7 +22,7 @@ public class RequestsPanel extends javax.swing.JPanel {
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
 	}
-
+	
 	// Variables declaration - do not modify
 	private javax.swing.JButton helpButton;
 	private SIMS.OrderOrWasteRequestPanel orderRequestPanel;
@@ -32,8 +36,9 @@ public class RequestsPanel extends javax.swing.JPanel {
 
 		requestPanel = new javax.swing.JPanel();
 		helpButton = new javax.swing.JButton();
-		orderRequestPanel = new SIMS.OrderOrWasteRequestPanel("Order Requests");
-		wasteRequestPanel = new SIMS.OrderOrWasteRequestPanel("Waste Requests");
+		// Need to filter this to hide approved/denied orders
+		orderRequestPanel = new SIMS.OrderOrWasteRequestPanel("Order Requests", SupervisorWindow.getOrderTable());
+		wasteRequestPanel = new SIMS.OrderOrWasteRequestPanel("Waste Requests", SupervisorWindow.getWasteTable());
 
 		helpButton.setBackground(new java.awt.Color(255, 255, 153));
 		helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N

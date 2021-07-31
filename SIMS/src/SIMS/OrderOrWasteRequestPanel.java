@@ -6,12 +6,17 @@
  */
 package SIMS;
 
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
 public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 	String tableTitle = "";
-    public OrderOrWasteRequestPanel(String tableTitle) {
+    public OrderOrWasteRequestPanel(String tableTitle, List<List> resultsFromQuery) {
     	this.tableTitle = tableTitle;
         initComponents();
+    	addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel(), resultsFromQuery);
     }
     
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
@@ -29,6 +34,13 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
     private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         System.out.println("Pressed deny button");
     }     
+    
+    // Given a 2D list, add the item and the quantity of the list to the selected table
+    static void addIdAndRequestingUserToTable(DefaultTableModel model, List<List> resultsFromQuery) {
+        for (List l : resultsFromQuery) {
+        	model.addRow(new Object[]{l.get(9), l.get(2)});
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton approveButton;
@@ -58,12 +70,8 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
         denyButton = new javax.swing.JButton();
 
         requestTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"<date>", "<user>"}
-            },
-            new String [] {
-                "Date", "Requesting User"
-            }
+            new Object [][] {},
+            new String [] {"Date", "Requesting User"}
         ));
         jScrollPane1.setViewportView(requestTable);
 
