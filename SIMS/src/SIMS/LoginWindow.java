@@ -114,8 +114,10 @@ public class LoginWindow extends javax.swing.JFrame {
         setTitle("Sales Inventory Management System (SIMS) - Login");
 
         usernameLabel.setText("Username");
-
+        usernameTextfield.setText("bsutte");
+        
         passwordLabel.setText("Password");
+        passwordTextfield.setText("P@ssw0rd");
 
         usernameTextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
