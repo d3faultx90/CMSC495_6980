@@ -617,12 +617,14 @@ public class Connector {
 
         // 
         try {
+		
+        	time = time + "%";
         	
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
         	
         	// preferred format 2020-06-19%
-	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate LIKE \"?%\"");
+	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate LIKE ?");
 	    	st.setString(1, time);
         	
             ResultSet rs = st.executeQuery();
