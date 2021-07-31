@@ -17,12 +17,12 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         initComponents();
     }  
 
-    private void helpButtoonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
     	GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton helpButtoon;
+    private javax.swing.JButton helpButton;
     private SIMS.ItemFilterPanel itemFilterPanel;
     private javax.swing.JPanel panel;
     private javax.swing.JButton viewDetailButton;
@@ -34,7 +34,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
 
         panel = new javax.swing.JPanel();
         viewDetailButton = new javax.swing.JButton();
-        helpButtoon = new javax.swing.JButton();
+        helpButton = new javax.swing.JButton();
         itemFilterPanel = new SIMS.ItemFilterPanel();
 
         panel.setPreferredSize(new java.awt.Dimension(436, 234));
@@ -46,12 +46,12 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
             }
         });
 
-        helpButtoon.setBackground(new java.awt.Color(255, 255, 153));
-        helpButtoon.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        helpButtoon.setText("?");
-        helpButtoon.addActionListener(new java.awt.event.ActionListener() {
+        helpButton.setBackground(new java.awt.Color(255, 255, 153));
+        helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        helpButton.setText("?");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpButtoonActionPerformed(evt);
+                helpButtonActionPerformed(evt);
             }
         });
 
@@ -60,7 +60,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addComponent(helpButtoon)
+                .addComponent(helpButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(viewDetailButton, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
@@ -72,7 +72,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
             .addGroup(panelLayout.createSequentialGroup()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(helpButtoon)
+                        .addComponent(helpButton)
                         .addGap(0, 248, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)

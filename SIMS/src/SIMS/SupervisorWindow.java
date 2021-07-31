@@ -32,6 +32,9 @@ public class SupervisorWindow extends javax.swing.JFrame {
 		username = user;
 		initialize();
 		initComponents();
+		//System.out.println(connector.retrieveSalesOnDate("2020-06-19"));
+		//System.out.println(resultsFromSalesQuery);
+        //System.out.println(connector.retrieveSalesOnDate(Date.getTodaysDateSql()));
 	}
 
 	private void initialize() {

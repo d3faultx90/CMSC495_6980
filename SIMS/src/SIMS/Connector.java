@@ -232,7 +232,7 @@ public class Connector {
 	    	// connect to database via JDBC
 	    	Connection con = buildJDBCConnecter();
 	    	
-	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.users WHERE name = ?");
+	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.inventory WHERE name = ?");
 	    	st.setString(1, itemName);
 	        ResultSet rs = st.executeQuery();
         	
