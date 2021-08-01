@@ -30,13 +30,13 @@ public class Database {
 	public Database(Connector connector) {
 		this.connector = connector;
 		initialize();
-//		System.out.println(connector.retrieveSalesByDateRange("2020-01-01", "2021-12-31"));
-//
+		//System.out.println(connector.retrieveSalesOnDate("2021"));
+		System.out.println(connector.retrieveSalesByDateRange("2020-01-01", "2021-12-31"));
 //		System.out.println(connector.retrieveSalesOnDate("2020-06-19"));
 //		System.out.println(connector.retrieveSalesSinceDate("2021-01-01"));
-		//System.out.println(resultsFromSalesQuery);
-		// System.out.println(resultsFromSalesQuery);
-		// System.out.println(connector.retrieveSalesOnDate(Date.getTodaysDateSql()));
+//		System.out.println(resultsFromSalesQuery);
+//		System.out.println(resultsFromSalesQuery);
+//		System.out.println(connector.retrieveSalesOnDate(DateHandler.getTodaysDateSql()));
 	}
 	
 	private void initialize() {

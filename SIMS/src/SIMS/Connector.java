@@ -584,7 +584,6 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.waste SET status = ? WHERE WasteEventID = ?");
 	    	st.setInt(1, status);
 	    	st.setString(2, wasteEventID);
-	    	System.out.println(st);
 	        int rs = st.executeUpdate();
         	
 			// close con, rs, and st
@@ -603,28 +602,7 @@ public class Connector {
 		return results;
 			
 	} // end of updateWasteStatus()
-    
-//    private List<List> executeUpdateHelper(Connection con, PreparedStatement st, String table){
-//		List<List> results = new ArrayList<List>();
-//		
-//	    try {
-//	        int rs = st.executeUpdate();
-//        	
-//			// close con, rs, and st
-//			st.close();
-//			con.close();
-//            
-//			//if (rs != 1) throw SQLException("Failed to update waste status.");
-//			
-//	    } catch (SQLException e) {
-//	    	// handle and stop print for production
-//	        e.printStackTrace();
-//	    }
-//			
-//		results = getResultsofQuery(table);
-//	    
-//		return results;
-//    }
+
     
     protected List<List> retrieveSalesOnDate(String time) {
     	/**
@@ -634,7 +612,49 @@ public class Connector {
     	 * 
     	 * @return results List of List of all sales that occurred on that date.
     	 */
-    	return executeQueryHelper("SELECT * FROM SIMS_app_data.sales WHERE SalesDate LIKE '" + time + "%'");
+    	
+    	List<List> results = new ArrayList<List>();
+
+        try {
+        	
+        	time = time + "%";
+        	
+        	// connect to database via JDBC
+        	Connection con = buildJDBCConnecter();
+        	
+        	// preferred format 2020-06-19%
+	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate LIKE ?");
+	    	st.setString(1, time);
+        	
+            ResultSet rs = st.executeQuery();
+        	
+        	ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();  
+            
+            while (rs.next()) {
+            
+            	ArrayList<String> row = new ArrayList<String>();
+            	
+            	for (int i = 1; i <= columnsNumber; i++) {
+            		row.add(rs.getString(i));
+                }
+            	
+            	results.add(row);
+            }
+            
+			// close con, rs, and st
+			rs.close();
+			st.close();
+			con.close();
+			
+        } catch (SQLException e) {
+        	// handle and stop print for production
+            e.printStackTrace();
+            // handle not locating anything
+        }
+
+        return results;
+        
     } // end of retrieveSalesByDate()
 
     
@@ -647,40 +667,17 @@ public class Connector {
     	 * @return results List of List of all sales within the range (since start)
     	 */
     	
-    	return executeQueryHelper("SELECT * FROM SIMS_app_data.sales WHERE SalesDate >= '" + time + "'");
-    } // end of retrieveSalesByDate()
-
-    
-    protected List<List> retrieveSalesByDateRange(String startTime, String endTime) {
-    	/**
-    	 * Given a range, returns all sales that occurred in that time period.
-    	 * 
-    	 * @param startTime - Where the date range should begin
-    	 * @param endTime - Where the date range should end
-    	 * 
-    	 * @return results List of List of all sales within the range
-    	 */
-    	
-        return executeQueryHelper("SELECT * FROM SIMS_app_data.sales WHERE SalesDate BETWEEN '"+ startTime + "' AND '" + endTime + "'");
-    } // end of retrieveSalesByDate()
-    
-    private List<List> executeQueryHelper(String statement){
-    	/**
-    	 * Helps execute a query given a statement to execute.
-    	 * 
-    	 * @param statement This is the statement that will be executed
-    	 * 
-    	 * @return results List of List of the results of the query
-    	 */
-    	
     	List<List> results = new ArrayList<List>();
 
+        // 
         try {
         	
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
         	
-        	PreparedStatement st = con.prepareStatement(statement);
+
+	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate >= ? ");
+	    	st.setString(1, time);
         	
             ResultSet rs = st.executeQuery();
         	
@@ -710,7 +707,61 @@ public class Connector {
 
         return results;
         
-    }
+    } // end of retrieveSalesByDate()
+
+    
+    protected List<List> retrieveSalesByDateRange(String startTime, String endTime) {
+    	/**
+    	 * Given a range, returns all sales that occurred in that time period.
+    	 * 
+    	 * @param startTime - Where the date range should begin
+    	 * @param endTime - Where the date range should end
+    	 * 
+    	 * @return results List of List of all sales within the range
+    	 */
+    	
+    	List<List> results = new ArrayList<List>();
+
+        // 
+        try {
+        	
+        	// connect to database via JDBC
+        	Connection con = buildJDBCConnecter();
+        	
+	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate BETWEEN ? AND ?");
+	    	st.setString(1, startTime);
+	    	st.setString(2, endTime);
+        	
+            ResultSet rs = st.executeQuery();
+        	
+        	ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();  
+            
+            while (rs.next()) {
+            
+            	ArrayList<String> row = new ArrayList<String>();
+            	
+            	for (int i = 1; i <= columnsNumber; i++) {
+            		row.add(rs.getString(i));
+                }
+            	
+            	results.add(row);
+            }
+            
+			// close con, rs, and st
+			rs.close();
+			st.close();
+			con.close();
+            
+        } catch (SQLException e) {
+        	// handle and stop print for production
+            e.printStackTrace();
+        }
+
+        return results;
+        
+    } // end of retrieveSalesByDate()
+    
     
     /** Java.sql.SQLExcpetion errors:
      * java.sql.SQLException: Access denied for user ....

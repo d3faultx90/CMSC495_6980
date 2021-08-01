@@ -6,6 +6,8 @@
  */
 package SIMS;
 
+import java.util.List;
+
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumnModel;
 
@@ -15,7 +17,25 @@ public class ReportPanel extends javax.swing.JPanel {
         initComponents();
         TableColumnModel columnModel = yearAndProfitTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(20);
+        //System.out.println(Database.getSalesTable());
+        parseSales(getYearsProfits("2021"));
+		System.out.println(Months.JANUARY.getNumericalRepresentation());
     }
+    
+	enum Months{
+		JANUARY("01"), FEBRUARY("02"), MARCH("03"), APRIL("04"), MAY("05"), JUNE("06"), 
+		JULY("07"), AUGUST("08"), SEPTEMBER("09"), OCTOBER("10"), NOVEMBER("11"), DECEMBER("12");
+
+		private String numericalRepresentation;
+		
+		Months(String numericalRepresentation){
+			this.numericalRepresentation = numericalRepresentation;
+		}
+		
+		public String getNumericalRepresentation() {
+			return numericalRepresentation;
+		}
+	}
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
         GeneralGuiFunctions.displayHelpPane("All years with sale data will be displayed here. "
@@ -27,9 +47,25 @@ public class ReportPanel extends javax.swing.JPanel {
     	new MonthViewWindow().setVisible(true);
     }     
     
+    private double parseSales(List<List> sales) {
+    	double totalProfit = 0;
+        for (List l : sales) {
+        	totalProfit += Double.parseDouble((String) l.get(5));
+        }
+        System.out.println(totalProfit);
+    	return totalProfit;
+    }
+    
     private String getMonthsProfits(String year, int month) {
     	return "wow";
     }
+    
+    private List<List> getYearsProfits(String year) {
+    	String start = year + "-01-01";
+    	String end = year + "-12-31";
+    	return Database.getConnector().retrieveSalesByDateRange(start, end);
+    }
+    
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton helpButton;
