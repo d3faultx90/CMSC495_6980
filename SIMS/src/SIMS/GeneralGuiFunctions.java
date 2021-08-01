@@ -98,7 +98,7 @@ public class GeneralGuiFunctions {
         for (List l : sales) {
         	totalProfit += Double.parseDouble((String) l.get(5));
         }
-        System.out.println(totalProfit);
+        //System.out.println(totalProfit);
     	return totalProfit;
     }
     

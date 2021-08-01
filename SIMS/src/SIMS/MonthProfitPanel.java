@@ -12,7 +12,6 @@ import java.util.List;
 public class MonthProfitPanel extends javax.swing.JPanel {
 
     String month;
-    // Need to be int?
     String profits;
     
     public MonthProfitPanel(Months month, String year) {

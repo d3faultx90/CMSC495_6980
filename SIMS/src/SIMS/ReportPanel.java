@@ -49,7 +49,7 @@ public class ReportPanel extends javax.swing.JPanel {
         for (List l : sales) {
         	String year = l.get(7).toString().substring(0, 4);
         	if (!uniqueYears.contains(year)) {
-        		System.out.println(year);
+        		//System.out.println(year);
         		uniqueYears.add(year);
         	}
         }

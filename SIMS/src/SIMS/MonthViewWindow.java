@@ -48,6 +48,7 @@ public class MonthViewWindow extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(417, 396));
         setResizable(false);
 
+        yearLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         yearLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         yearLabel.setText(year);
 
