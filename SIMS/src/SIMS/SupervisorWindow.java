@@ -4,6 +4,7 @@
  * Date: July 19th, 2021
  * Purpose: Master GUI that holds many of the elements
  */
+
 package SIMS;
 
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SupervisorWindow extends javax.swing.JFrame {
-
 
 	static String username;
 	static int userID; // THIS NEEDS TO GET FILLED OUT FOR USE IN SALES/ORDER/WASTE panel.

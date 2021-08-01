@@ -1,3 +1,10 @@
+/*
+ * File: Database.java
+ * Author: Ben Sutter
+ * Date: July 31st, 2021
+ * Purpose: Data object that imitates/replicates the SQL database so limited connections are required.
+ */
+
 package SIMS;
 
 import java.util.List;
@@ -7,11 +14,10 @@ import java.util.HashMap;
 
 public class Database {
 
-	
 	/*
 	 * These are used to hold results of the queries so only one connection is
 	 * needed. Once the connection is made, these are filled with the various
-	 * queries (item, sales, and orders)
+	 * queries (item, sales, waste and orders)
 	 */
 	static List<String> itemNames = new ArrayList<String>();
 	static List<List> resultsFromItemQuery = new ArrayList<List>();
@@ -24,13 +30,16 @@ public class Database {
 	public Database(Connector connector) {
 		this.connector = connector;
 		initialize();
-		System.out.println(resultsFromSalesQuery);
+		//System.out.println(resultsFromSalesQuery);
 		// System.out.println(connector.retrieveSalesOnDate("2020-06-19"));
 		// System.out.println(resultsFromSalesQuery);
 		// System.out.println(connector.retrieveSalesOnDate(Date.getTodaysDateSql()));
 	}
 	
 	private void initialize() {
+		/**
+		 * Initializes all of the tables.
+		 */
 		resultsFromItemQuery = connector.getResultsofQuery("inventory");
 		resultsFromOrderQuery = connector.getResultsofQuery("orders");
 		resultsFromWasteQuery = connector.getResultsofQuery("waste");
@@ -39,6 +48,10 @@ public class Database {
 	}
 
 	private void populateItemIdMap() {
+		/**
+		 * Creates a dictionary where the item name is the key, 
+		 * and its ID is the value 
+		 */
 		try {
 			for (List l : resultsFromItemQuery) {
 				itemIds.put((String) l.get(1), Integer.parseInt((String) l.get(0)));
@@ -48,6 +61,7 @@ public class Database {
 		}
 	}
 	
+	// Accessor methods
 	static Connector getConnector() {
 		return connector;
 	}
@@ -71,5 +85,6 @@ public class Database {
 	static List<List> getSalesTable() {
 		return resultsFromSalesQuery;
 	}
+	// End of accessor methods
 	
 }

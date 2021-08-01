@@ -18,7 +18,9 @@ public class ReportPanel extends javax.swing.JPanel {
     }
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+        GeneralGuiFunctions.displayHelpPane("All years with sale data will be displayed here. "
+        		+ "\nSelect a year and press the button to view the monthly breakdown of sales."
+        		+ "\nPress the month button in the new window to view even further details (FEATURE MAY BE CUT)");
     }
 
     private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                       
