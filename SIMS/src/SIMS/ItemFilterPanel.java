@@ -23,7 +23,7 @@ public class ItemFilterPanel extends javax.swing.JPanel {
 		initComponents();
 		// Initializes the table to show item and quantity from the SQL table
 		GeneralGuiFunctions.addItemAndQuantityToTable((DefaultTableModel) itemTable.getModel(),
-				SupervisorWindow.getItemTable());
+				Database.getItemTable());
 	}
 
 	// Filters the table based on the text field

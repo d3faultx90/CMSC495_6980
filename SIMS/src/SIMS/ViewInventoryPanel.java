@@ -108,7 +108,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         JTable table = itemFilterPanel.itemTable;
         String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
         
-        for (List l : SupervisorWindow.getItemTable()) {
+        for (List l : Database.getItemTable()) {
         	if (l.get(1) == selectedCellValue) {
         		// https://www.codermag.net/2016/07/how-to-convert-list-to-list.html
         		List<String> stringList = (List<String>)(Object)l;

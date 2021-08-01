@@ -459,12 +459,9 @@ public class Connector {
 	    	st.setDouble(4, saleTax);
 	    	st.setInt(5, quantity);
 	    	st.setString(6, salesDate);
-	        ResultSet rs = st.executeQuery();
-        	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
+	        int rs = st.executeUpdate();
             
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
             

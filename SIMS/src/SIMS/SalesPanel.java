@@ -8,34 +8,37 @@
 package SIMS;
 
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SalesPanel extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form SalesPanel
-	 */
+	
 	public SalesPanel() {
 		initComponents();
 	}
 
-	
-	// (int employeeID, int itemID, double saleTax, int quantity)
 	private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {
 //		System.out.println(DateHandler.formatDateForSql(jDateChooser1.getDate()));
 //		System.out.println(jDateChooser1.getDate().getClass().getSimpleName());
 		
 		javax.swing.JTable saleTable = salesPanel.orderTable;
-		Map <String, Integer> itemIds = SupervisorWindow.getItemIdMap();
+		Map <String, Integer> itemIds = Database.getItemIdMap();
 
 		int employeeId = 3;
+		List<List> itemIdsAndQuantity = new ArrayList<List>();
 		for (int i = 0; i < saleTable.getRowCount(); i++) {
+			List<Integer> list = new ArrayList<Integer>();
 			int itemID = itemIds.get(saleTable.getValueAt(i, 0));
-			System.out.println(itemID);
 			int quantity = GeneralGuiFunctions.castSqlObjectToInteger(saleTable.getValueAt(i, 1));
+			list.add(itemID);
+			list.add(quantity);
+			itemIdsAndQuantity.add(list);
 			double salesTax = .08;
-			SupervisorWindow.getConnector().createSales(employeeId, itemID, salesTax, quantity);
-			System.out.println("Sale happened for " + quantity + " items");
+			//Database.getConnector().createSales(employeeId, itemID, salesTax, quantity);
+			System.out.println("Sale happened for " + quantity + " items with the id of " + itemID);
 		}
+		System.out.println(itemIdsAndQuantity);
 	}
 
 	// Variables declaration - do not modify
