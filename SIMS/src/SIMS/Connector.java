@@ -248,13 +248,15 @@ public class Connector {
 	    	st.setString(1, itemName);
 	        ResultSet rs = st.executeQuery();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();  
-            
-            if (columnsNumber != 1) {
-            	exists = false;
-            } else {
+	        rs.next();
+
+            String returnedName = rs.getString("name");
+            System.out.println(returnedName);
+
+            if (returnedName.equals(returnedName)) {
             	exists = true;
+            } else {
+            	exists = false;
             }
 	                    
 	        // close con, rs, and st

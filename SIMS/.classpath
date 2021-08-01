@@ -7,6 +7,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.25.jar"/>
-	<classpathentry kind="lib" path="D:/munki/Downloads/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Gary/Downloads/jcalendar-1.4 (1).jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
