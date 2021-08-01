@@ -24,9 +24,18 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	
+    	String serverAddress = addressTextfield.getText();
+    	// need verify this is numbers 1-65535
+    	int serverPort = Integer.parseInt(portTextfield.getText());
+    	    	
         String username = usernameTextfield.getText();
         char[] password =  passwordTextfield.getPassword(); //Risk
-        Connector connector = new Connector(username, password); //Will accept trustStoreFilePath,trustStorePassword,mySqlPath
+        String trustStorePath = trustStorePathTextfield.getText();
+        char[] trustStorePassword =  trustStorePasswordTextfield.getPassword(); //Risk
+        
+        Connector connector = new Connector(username, password, serverAddress, serverPort, 
+        		trustStorePath, trustStorePassword); //Will accept trustStoreFilePath,trustStorePassword,mySqlPath
+        
         boolean result = connector.verifyUser();
         // If the user is valid, then get their role
         if (result == true) {
@@ -83,40 +92,60 @@ public class LoginWindow extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify                     
+    private javax.swing.JPanel panel;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JTextField addressTextfield;
-    private javax.swing.JButton changePasswordButton;
-    private javax.swing.JButton loginButton;
-    private javax.swing.JPanel panel;
-    private javax.swing.JLabel passwordLabel;
-    private javax.swing.JPasswordField passwordTextfield;
     private javax.swing.JLabel portLabel;
     private javax.swing.JTextField portTextfield;
+    private javax.swing.JLabel trustStorePathLabel;
+    private javax.swing.JTextField trustStorePathTextfield;
+    private javax.swing.JLabel trustStorePasswordLabel;
+    private javax.swing.JPasswordField trustStorePasswordTextfield;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTextfield;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JPasswordField passwordTextfield;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JButton changePasswordButton;
     // End of variables declaration    
 
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
+        addressLabel = new javax.swing.JLabel();
+        addressTextfield = new javax.swing.JTextField();
+        portLabel = new javax.swing.JLabel();
+        portTextfield = new javax.swing.JTextField();
+        trustStorePathLabel = new javax.swing.JLabel();
+        trustStorePathTextfield = new javax.swing.JTextField();
+        trustStorePasswordLabel = new javax.swing.JLabel();
+        trustStorePasswordTextfield = new javax.swing.JPasswordField();
         usernameLabel = new javax.swing.JLabel();
-        passwordLabel = new javax.swing.JLabel();
         usernameTextfield = new javax.swing.JTextField();
+        passwordLabel = new javax.swing.JLabel();
+        passwordTextfield = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
-        passwordTextfield = new javax.swing.JPasswordField();
-        portLabel = new javax.swing.JLabel();
-        addressLabel = new javax.swing.JLabel();
-        portTextfield = new javax.swing.JTextField();
-        addressTextfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sales Inventory Management System (SIMS) - Login");
 
-        usernameLabel.setText("Username");
+        addressLabel.setText("Server Address:");
+        addressTextfield.setText("sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com");
+        
+        portLabel.setText("Port:");
+        portTextfield.setText("3306");
+
+        trustStorePathLabel.setText("TrustStore Path:");
+        trustStorePathTextfield.setText("C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore");
+        
+        trustStorePasswordLabel.setText("TrustStore Password:");
+        trustStorePasswordTextfield.setText("password");
+        
+        usernameLabel.setText("Username:");
         usernameTextfield.setText("bsutte");
         
-        passwordLabel.setText("Password");
+        passwordLabel.setText("Password:");
         passwordTextfield.setText("P@ssw0rd");
 
         usernameTextfield.addActionListener(new java.awt.event.ActionListener() {
@@ -139,12 +168,6 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
-        portLabel.setText("Port");
-
-        addressLabel.setText("SQL Address");
-
-        portTextfield.setText("3306");
-
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -158,12 +181,16 @@ public class LoginWindow extends javax.swing.JFrame {
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(passwordLabel)
                             .addComponent(usernameLabel)
+                            .addComponent(trustStorePasswordLabel)
+                            .addComponent(trustStorePathLabel)
                             .addComponent(portLabel)
                             .addComponent(addressLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(usernameTextfield)
                             .addComponent(passwordTextfield)
+                            .addComponent(trustStorePasswordTextfield)
+                            .addComponent(trustStorePathTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                             .addComponent(portTextfield)
                             .addComponent(addressTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -179,6 +206,14 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(portLabel)
                     .addComponent(portTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(trustStorePathLabel)
+                    .addComponent(trustStorePathTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(trustStorePasswordLabel)
+                        .addComponent(trustStorePasswordTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameLabel)
