@@ -6,9 +6,14 @@
  */
 package SIMS;
 
-public class MonthViewWindow extends javax.swing.JFrame {
+import java.util.ArrayList;
 
-    public MonthViewWindow() {
+public class MonthViewWindow extends javax.swing.JFrame {
+	
+	String year;
+
+    public MonthViewWindow(String year) {
+    	this.year = year;
         initComponents();
     }
 
@@ -22,29 +27,29 @@ public class MonthViewWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         yearLabel = new javax.swing.JLabel();
-        januaryPanel = new SIMS.MonthProfitPanel("January", "$10,000,000");
-        februaryPanel = new SIMS.MonthProfitPanel("February", "$100,000,000,000.00");
-        marchPanel = new SIMS.MonthProfitPanel("March", "$10,000,000,000");
-        aprilPanel = new SIMS.MonthProfitPanel("April", "$10,000,000,000");
-        mayPanel = new SIMS.MonthProfitPanel("May", "$10");
-        junePanel = new SIMS.MonthProfitPanel("June", "$10,000,000,000");
-        julyPanel = new SIMS.MonthProfitPanel("July", "$10,000,000,000");
-        augustPanel = new SIMS.MonthProfitPanel("August", "$10,000,000,000");
-        septemberPanel = new SIMS.MonthProfitPanel("September", "$10,000,000,000");
-        octoberPanel = new SIMS.MonthProfitPanel("October", "$10,000,000,000");
-        novemberPanel = new SIMS.MonthProfitPanel("November", "$10,000,000,000");
-        decemberPanel = new SIMS.MonthProfitPanel("December", "$10,000,000,000");
+        januaryPanel = new SIMS.MonthProfitPanel(Months.January, year);
+        februaryPanel = new SIMS.MonthProfitPanel(Months.February, year);
+        marchPanel = new SIMS.MonthProfitPanel(Months.March, year);
+        aprilPanel = new SIMS.MonthProfitPanel(Months.April, year);
+        mayPanel = new SIMS.MonthProfitPanel(Months.May, year);
+        junePanel = new SIMS.MonthProfitPanel(Months.June, year);
+        julyPanel = new SIMS.MonthProfitPanel(Months.July, year);
+        augustPanel = new SIMS.MonthProfitPanel(Months.August, year);
+        septemberPanel = new SIMS.MonthProfitPanel(Months.September, year);
+        octoberPanel = new SIMS.MonthProfitPanel(Months.October, year);
+        novemberPanel = new SIMS.MonthProfitPanel(Months.November, year);
+        decemberPanel = new SIMS.MonthProfitPanel(Months.December, year);
         
         
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("<title here>");
+        setTitle(year + " monthly breakdown");
         setMaximumSize(new java.awt.Dimension(417, 396));
         setMinimumSize(new java.awt.Dimension(417, 396));
         setResizable(false);
 
         yearLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        yearLabel.setText("<year>");
+        yearLabel.setText(year);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

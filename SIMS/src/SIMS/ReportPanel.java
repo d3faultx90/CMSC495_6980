@@ -6,36 +6,28 @@
  */
 package SIMS;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public class ReportPanel extends javax.swing.JPanel {
+	
+	ArrayList<String> uniqueYears = new ArrayList<String>();
 
     public ReportPanel() {
         initComponents();
         TableColumnModel columnModel = yearAndProfitTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(20);
         //System.out.println(Database.getSalesTable());
-        parseSales(getYearsProfits("2021"));
-		System.out.println(Months.JANUARY.getNumericalRepresentation());
+        GeneralGuiFunctions.parseSales(getYearsProfits("2021"));
+        getUniqueYears(Database.resultsFromSalesQuery);
+        populateTable();
+		//System.out.println(Months.JANUARY.getNumericalRepresentation());
     }
-    
-	enum Months{
-		JANUARY("01"), FEBRUARY("02"), MARCH("03"), APRIL("04"), MAY("05"), JUNE("06"), 
-		JULY("07"), AUGUST("08"), SEPTEMBER("09"), OCTOBER("10"), NOVEMBER("11"), DECEMBER("12");
-
-		private String numericalRepresentation;
-		
-		Months(String numericalRepresentation){
-			this.numericalRepresentation = numericalRepresentation;
-		}
-		
-		public String getNumericalRepresentation() {
-			return numericalRepresentation;
-		}
-	}
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
         GeneralGuiFunctions.displayHelpPane("All years with sale data will be displayed here. "
@@ -43,27 +35,34 @@ public class ReportPanel extends javax.swing.JPanel {
         		+ "\nPress the month button in the new window to view even further details (FEATURE MAY BE CUT)");
     }
 
-    private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                       
-    	new MonthViewWindow().setVisible(true);
+    private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {      
+		String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
+    	new MonthViewWindow(selectedCellValue).setVisible(true);
     }     
     
-    private double parseSales(List<List> sales) {
-    	double totalProfit = 0;
-        for (List l : sales) {
-        	totalProfit += Double.parseDouble((String) l.get(5));
-        }
-        System.out.println(totalProfit);
-    	return totalProfit;
-    }
-    
-    private String getMonthsProfits(String year, int month) {
-    	return "wow";
-    }
-    
     private List<List> getYearsProfits(String year) {
-    	String start = year + "-01-01";
-    	String end = year + "-12-31";
-    	return Database.getConnector().retrieveSalesByDateRange(start, end);
+    	return Database.getConnector().retrieveSalesOnDate(year);
+    }
+    
+    private void getUniqueYears(List<List> sales) {
+    	ArrayList<String> uniqueYears = new ArrayList<String>();
+        for (List l : sales) {
+        	String year = l.get(7).toString().substring(0, 4);
+        	if (!uniqueYears.contains(year)) {
+        		System.out.println(year);
+        		uniqueYears.add(year);
+        	}
+        }
+    	this.uniqueYears = uniqueYears;
+    }
+    
+    private void populateTable() {
+    	DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
+    	for (String year : uniqueYears) {
+    		double profits = GeneralGuiFunctions.parseSales(getYearsProfits(year));
+    		model.addRow(new Object[] {year, GeneralGuiFunctions.stringToPrice(profits)});
+    	}
+    	
     }
     
 
@@ -107,7 +106,6 @@ public class ReportPanel extends javax.swing.JPanel {
 
         yearAndProfitTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"<year>", "$100,000,000,000,000,000.00"}
             },
             new String [] {
                 "Year", "Profits"

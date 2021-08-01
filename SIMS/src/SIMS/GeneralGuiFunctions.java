@@ -64,20 +64,19 @@ public class GeneralGuiFunctions {
     
     //Display this JOptionpane whenever a field is missing input or has negative values
     static String stringToPrice(String unparsedPrice) {
-    	String parsedPrice = "";
         try {
         	double price = Double.parseDouble(unparsedPrice);  
         	NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-        	String finalAmount = formatter.format(price);
-        	if (price < 1) {
-        		parsedPrice = "¢" + price;
-        	} else {
-        		parsedPrice = "$" + price;
-        	}
+        	return formatter.format(price);
         } catch (Exception e) {
         	displayErrorPane("That is not a number");
         }
-        return parsedPrice;
+        return "ERROR";
+    }
+    
+    static String stringToPrice(Double price) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+        return formatter.format(price);
     }
     
     static void thing(javax.swing.JTable table) {
@@ -92,6 +91,15 @@ public class GeneralGuiFunctions {
 
 			}
 		});
+    }
+    
+    static double parseSales(List<List> sales) {
+    	double totalProfit = 0;
+        for (List l : sales) {
+        	totalProfit += Double.parseDouble((String) l.get(5));
+        }
+        System.out.println(totalProfit);
+    	return totalProfit;
     }
     
 //    static List<String> determineCategories(List<List> items){
