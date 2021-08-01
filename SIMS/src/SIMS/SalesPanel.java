@@ -8,34 +8,46 @@
 package SIMS;
 
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SalesPanel extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form SalesPanel
-	 */
+	
 	public SalesPanel() {
 		initComponents();
 	}
 
-	
-	// (int employeeID, int itemID, double saleTax, int quantity)
 	private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {
-//		System.out.println(DateHandler.formatDateForSql(jDateChooser1.getDate()));
-//		System.out.println(jDateChooser1.getDate().getClass().getSimpleName());
+		/**
+		 * Method grabs values from the JTable and gives them to createSales() 
+		 * to create a sale on the SQL database.
+		 */
 		
+		// Copy variables here for easier reading
 		javax.swing.JTable saleTable = salesPanel.orderTable;
-		Map <String, Integer> itemIds = SupervisorWindow.getItemIdMap();
-
+		Map <String, Integer> itemIds = Database.getItemIdMap();
+		
+		// DELETE THIS AND GRAB IT FROM ELSEWHERE
 		int employeeId = 3;
+		// 2D list that is passed into createSale() index 0 = itemID, index 1 = quantity
+		List<List> itemIdsAndQuantity = new ArrayList<List>();
+		// Iterates through the whole table to grab each row
 		for (int i = 0; i < saleTable.getRowCount(); i++) {
+			
+			List<Integer> list = new ArrayList<Integer>();
 			int itemID = itemIds.get(saleTable.getValueAt(i, 0));
-			System.out.println(itemID);
 			int quantity = GeneralGuiFunctions.castSqlObjectToInteger(saleTable.getValueAt(i, 1));
-			double salesTax = .08;
-			SupervisorWindow.getConnector().createSales(employeeId, itemID, salesTax, quantity);
-			System.out.println("Sale happened for " + quantity + " items");
+			list.add(itemID);
+			list.add(quantity);
+			itemIdsAndQuantity.add(list);
+			
+			double salesTax = .08; // Don't hardcode
+			System.out.println("Sale happened for " + quantity + " items with the id of " + itemID);
 		}
+		System.out.println(itemIdsAndQuantity);
+		// Pass the 2D list here once method is updated
+		//Database.getConnector().createSales(employeeId, itemID, salesTax, quantity);
 	}
 
 	// Variables declaration - do not modify
@@ -43,8 +55,8 @@ public class SalesPanel extends javax.swing.JPanel {
 	private SIMS.OrderAndSalesPanel salesPanel;
 	private javax.swing.JPanel salesTab;
 	private javax.swing.JButton saveSaleButton;
-
 	// End of variables declaration
+	
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {

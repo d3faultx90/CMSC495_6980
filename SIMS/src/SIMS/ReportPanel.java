@@ -6,24 +6,65 @@
  */
 package SIMS;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public class ReportPanel extends javax.swing.JPanel {
+	
+	ArrayList<String> uniqueYears = new ArrayList<String>();
 
     public ReportPanel() {
         initComponents();
         TableColumnModel columnModel = yearAndProfitTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(20);
+        //System.out.println(Database.getSalesTable());
+        GeneralGuiFunctions.parseSales(getYearsProfits("2021"));
+        getUniqueYears(Database.resultsFromSalesQuery);
+        populateTable();
+		//System.out.println(Months.JANUARY.getNumericalRepresentation());
     }
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+        GeneralGuiFunctions.displayHelpPane("All years with sale data will be displayed here. "
+        		+ "\nSelect a year and press the button to view the monthly breakdown of sales."
+        		+ "\nPress the month button in the new window to view even further details (FEATURE MAY BE CUT)");
     }
 
-    private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                       
-    	new MonthViewWindow().setVisible(true);
-    }                                                      
+    private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {      
+		String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
+    	new MonthViewWindow(selectedCellValue).setVisible(true);
+    }     
+    
+    private List<List> getYearsProfits(String year) {
+    	return Database.getConnector().retrieveSalesOnDate(year);
+    }
+    
+    private void getUniqueYears(List<List> sales) {
+    	ArrayList<String> uniqueYears = new ArrayList<String>();
+        for (List l : sales) {
+        	String year = l.get(7).toString().substring(0, 4);
+        	if (!uniqueYears.contains(year)) {
+        		//System.out.println(year);
+        		uniqueYears.add(year);
+        	}
+        }
+    	this.uniqueYears = uniqueYears;
+    }
+    
+    private void populateTable() {
+    	DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
+    	for (String year : uniqueYears) {
+    		double profits = GeneralGuiFunctions.parseSales(getYearsProfits(year));
+    		model.addRow(new Object[] {year, GeneralGuiFunctions.stringToPrice(profits)});
+    	}
+    	
+    }
+    
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton helpButton;
@@ -65,7 +106,6 @@ public class ReportPanel extends javax.swing.JPanel {
 
         yearAndProfitTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"<year>", "$100,000,000,000,000,000.00"}
             },
             new String [] {
                 "Year", "Profits"

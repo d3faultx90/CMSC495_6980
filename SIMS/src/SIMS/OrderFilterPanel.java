@@ -47,7 +47,7 @@ public class OrderFilterPanel extends javax.swing.JPanel {
     	// 0 is pending
     	// 1 is approved
     	// 2 is denied
-        for (List l : SupervisorWindow.getOrderTable()) {
+        for (List l : Database.getOrderTable()) {
         	model.addRow(new Object[]{l.get(1), l.get(9), l.get(10)});
         }
     }

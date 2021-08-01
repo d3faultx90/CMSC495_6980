@@ -24,7 +24,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	// Given the ItemTable, find all unique categories.
 	private void parseCategories() {
     	ArrayList<String> categoryArrayList = new ArrayList<String>();
-        for (List l : SupervisorWindow.getItemTable()) {
+        for (List l : Database.getItemTable()) {
         	// If category hasn't been added yet, then add it
         	if (!categoryArrayList.contains(l.get(3))) {
         		categoryArrayList.add(l.get(3).toString());

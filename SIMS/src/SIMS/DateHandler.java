@@ -49,7 +49,7 @@ public class DateHandler {
          */
 
         // convert 'df' variable to String and format like YYYY-MM-dd
-        String dateToString = date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd"));
+        String dateToString = date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"));
         return dateToString;
     } // end of formatDate()
     
@@ -62,7 +62,7 @@ public class DateHandler {
          */
 
         // convert 'df' variable to String and format like YYYY-MM-dd
-    	DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");  
+    	DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");  
         return dateFormat.format(date);  
     } // end of formatDate()
     

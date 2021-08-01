@@ -7,16 +7,23 @@
 
 package SIMS;
 
+import java.util.List;
+
 public class MonthProfitPanel extends javax.swing.JPanel {
 
     String month;
-    // Need to be int?
     String profits;
     
-    public MonthProfitPanel(String month, String profits) {
-        this.month = month;
+    public MonthProfitPanel(Months month, String year) {
+        this.month = month.name();
+        Double value = GeneralGuiFunctions.parseSales(getMonthsProfits(year, month.getNumericalRepresentation()));
+        String profits = GeneralGuiFunctions.stringToPrice(value);
         this.profits = profits;
         initComponents();
+    }
+    
+    private List<List> getMonthsProfits(String year, String month) {
+    	return Database.getConnector().retrieveSalesOnDate(year + "-" + month);
     }
 
     /**
