@@ -17,24 +17,30 @@ public class Connector {
 	protected String user;
 	private char[] password;
 	private String trustStoreFilePath;
-	private String trustStorePassword;
+	private char[] trustStorePassword;
 	private String mySqlPath;	
 	protected int role;
 	
 	// constructor
-	protected Connector(String user, char[] password) {
+	protected Connector(String user, char[] password, String serverAddress, 
+			int serverPort, String trustStoreFilePath, char[] trustStorePassword) {
+		
+		// full example: jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/
+		String mySqlPath = "jdbc:mysql://";
+		// example: sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com
+		mySqlPath = mySqlPath + serverAddress;
+		mySqlPath = mySqlPath + ":";
+		mySqlPath = mySqlPath + serverPort;
+		mySqlPath = mySqlPath + "/";
+		
 		this.user = user;
 		this.password = password;
-		this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore";
-		this.trustStorePassword = "password";
-		this.mySqlPath = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
+		this.trustStoreFilePath = trustStoreFilePath;
+		this.trustStorePassword = trustStorePassword;
+		this.mySqlPath = mySqlPath;
+		
 	}
     
-    // This key store has only the prod root ca.
-    /* This should be started with
-     * 
-     * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore" -Djavax.net.ssl.keyStorePassword="password"
-     */ 
     
 	private Connection buildJDBCConnecter() throws SQLException {
 		/**
@@ -46,14 +52,20 @@ public class Connector {
 		 * @ return Connection object for sql queries
 		 */
 		
-		System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
-        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+	    // This key store has only the prod root ca.
+	    /* This should be started with
+	     * 
+	     * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore" -Djavax.net.ssl.keyStorePassword="password"
+	     */ 
+		
+		System.setProperty("javax.net.ssl.trustStore", this.trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", String.valueOf(this.trustStorePassword));
+        
     	String pass = String.valueOf(this.password);
     	
     	Connection con = null;
     	
-       	con = DriverManager.getConnection(mySqlPath, this.user, pass);
-        	
+       	con = DriverManager.getConnection(this.mySqlPath, this.user, pass);
         
         return con;
         
@@ -295,15 +307,14 @@ public class Connector {
 	    	st.setDouble(4, wholeSalePrice);
 	    	st.setDouble(5, retailPrice);
 	    	st.setInt(6, quantity);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
             
+			//if (rs != 1) throw SQLException("Failed to create new inventory item.");
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
@@ -350,14 +361,13 @@ public class Connector {
 	    	st.setInt(6, quantity);
 	    	st.setString(7, date);
 	    	st.setInt(8, status);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
+            
+			//if (rs != 1) throw SQLException("Failed to create new order item.");
             
         } catch (SQLException e) {
         	// handle and stop print for production
@@ -405,14 +415,13 @@ public class Connector {
 	    	st.setInt(6, quantity);
 	    	st.setString(7, date);
 	    	st.setInt(8, status);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
+            
+			//if (rs != 1) throw SQLException("Failed to create new waste item.");
             
         } catch (SQLException e) {
         	// handle and stop print for production
@@ -440,7 +449,7 @@ public class Connector {
     
     	List<List> results = new ArrayList<List>();
     	String salesEventID = UUID.randomUUID().toString();
-    	String salesDate = DateHandler.getTodaysDateSql();
+    	String salesDate = Date.sqlDateTime();
     
     	// 
         try {
@@ -455,15 +464,14 @@ public class Connector {
 	    	st.setDouble(4, saleTax);
 	    	st.setInt(5, quantity);
 	    	st.setString(6, salesDate);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
             
+			//if (rs != 1) throw SQLException("Failed to create new sales item.");
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
@@ -496,15 +504,14 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.inventory SET quantity = quantity + ? WHERE name = ?");
 	    	st.setInt(1, updateQuantity);
 	    	st.setString(2, name);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
             
+			//if (rs != 1) throw SQLException("Failed to update inventory item.");
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
@@ -537,15 +544,14 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.orders SET status = ? WHERE OrderEventID = ?");
 	    	st.setInt(1, status);
 	    	st.setString(2, orderEventID);
-	        ResultSet rs = st.executeQuery();
-	    	
-	    	ResultSetMetaData rsmd = rs.getMetaData(); 
-	        
+	        int rs = st.executeUpdate();
+        	
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
-	        
+            
+			//if (rs != 1) throw SQLException("Failed to update order status.");
+			
 	    } catch (SQLException e) {
 	    	// handle and stop print for production
 	        e.printStackTrace();
@@ -578,15 +584,14 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.waste SET status = ? WHERE WasteEventID = ?");
 	    	st.setInt(1, status);
 	    	st.setString(2, wasteEventID);
-	        ResultSet rs = st.executeQuery();
-	    	
-	    	ResultSetMetaData rsmd = rs.getMetaData(); 
-	        
+	        int rs = st.executeUpdate();
+        	
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
-		        
+            
+			//if (rs != 1) throw SQLException("Failed to update waste status.");
+			
 	    } catch (SQLException e) {
 	    	// handle and stop print for production
 	        e.printStackTrace();
@@ -628,8 +633,6 @@ public class Connector {
         	ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();  
             
-            System.out.println("here 1");
-            
             while (rs.next()) {
             
             	ArrayList<String> row = new ArrayList<String>();
@@ -645,8 +648,6 @@ public class Connector {
 			rs.close();
 			st.close();
 			con.close();
-            
-            System.out.println("here 2");
 			
         } catch (SQLException e) {
         	// handle and stop print for production
@@ -654,7 +655,6 @@ public class Connector {
             // handle not locating anything
         }
 
-        System.out.println("here 3");
         return results;
         
     } // end of retrieveSalesByDate()
@@ -771,5 +771,8 @@ public class Connector {
     /** Java.sql.SQLExcpetion errors:
      * java.sql.SQLException: Access denied for user ....
      * java.sql.SQLException: Parameter index out of range ....
+     * com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+     * The last packet sent successfully to the server was 0 milliseconds ago. 
+     *  java.net.UnknownHostException: No such host is known
      */
 }
