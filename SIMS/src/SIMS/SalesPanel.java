@@ -77,6 +77,9 @@ public class SalesPanel extends javax.swing.JPanel {
 				saveSaleButtonActionPerformed(evt);
 			}
 		});
+		
+		java.util.Date date = new java.util.Date();
+		jDateChooser1.setDate(date);
 
 		javax.swing.GroupLayout salesTabLayout = new javax.swing.GroupLayout(salesTab);
 		salesTab.setLayout(salesTabLayout);

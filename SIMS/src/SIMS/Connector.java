@@ -20,6 +20,7 @@ public class Connector {
 	private char[] trustStorePassword;
 	private String mySqlPath;	
 	protected int role;
+	protected int userID;
 	
 	// constructor
 	protected Connector(String user, char[] password, String serverAddress, 
@@ -159,17 +160,20 @@ public class Connector {
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
         	
-        	PreparedStatement st = con.prepareStatement("SELECT Username FROM SIMS_app_data.users WHERE Username = ?");
+        	PreparedStatement st = con.prepareStatement("SELECT Username,UserID FROM SIMS_app_data.users WHERE Username = ?");
         	st.setString(1, this.user);
             ResultSet rs = st.executeQuery();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();  
-            
-            if (columnsNumber != 1) {
-            	result = false;
-            } else {
+        	rs.next();
+        	
+        	String returnedName = rs.getString("Username");
+        	
+            if ((this.user).equals(returnedName)) {
             	result = true;
+            	this.userID = rs.getInt("UserID");
+            	this.user = returnedName;
+            } else {
+            	result = false;
             }
             
 			// close con, rs, and st
@@ -257,7 +261,7 @@ public class Connector {
             } else {
             	exists = false;
             }
-	                    
+                
 	        // close con, rs, and st
 	        rs.close();
 	        st.close();
@@ -607,15 +611,17 @@ public class Connector {
     
     protected List<List> retrieveSalesOnDate(String time) {
     	/**
-    	 * Given a date, returns all sales that occurred on that date.
+    	 * DESCRIPTION
     	 * 
-    	 * @param time - The date of the sale
+    	 * @param time
     	 * 
-    	 * @return results List of List of all sales that occurred on that date.
+    	 * @return results List of List
     	 */
+    	
     	
     	List<List> results = new ArrayList<List>();
 
+        // 
         try {
         	
         	time = time + "%";
@@ -661,12 +667,13 @@ public class Connector {
     
     protected List<List> retrieveSalesSinceDate(String time) {
     	/**
-    	 * Given a start date, returns all sales since that date.
+    	 * DESCRIPTION
     	 * 
-    	 * @param time - Where the date range should begin
+    	 * @param time
     	 * 
-    	 * @return results List of List of all sales within the range (since start)
+    	 * @return results List of List
     	 */
+    	
     	
     	List<List> results = new ArrayList<List>();
 
@@ -713,13 +720,14 @@ public class Connector {
     
     protected List<List> retrieveSalesByDateRange(String startTime, String endTime) {
     	/**
-    	 * Given a range, returns all sales that occurred in that time period.
+    	 * DESCRIPTION
     	 * 
-    	 * @param startTime - Where the date range should begin
-    	 * @param endTime - Where the date range should end
+    	 * @param startTime
+    	 * @param endTime
     	 * 
-    	 * @return results List of List of all sales within the range
+    	 * @return results List of List
     	 */
+    	
     	
     	List<List> results = new ArrayList<List>();
 
@@ -729,6 +737,7 @@ public class Connector {
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
         	
+
 	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate BETWEEN ? AND ?");
 	    	st.setString(1, startTime);
 	    	st.setString(2, endTime);
