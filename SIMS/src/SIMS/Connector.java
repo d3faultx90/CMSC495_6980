@@ -17,47 +17,55 @@ public class Connector {
 	protected String user;
 	private char[] password;
 	private String trustStoreFilePath;
-	private String trustStorePassword;
+	private char[] trustStorePassword;
 	private String mySqlPath;	
 	protected int role;
 	
 	// constructor
-	protected Connector(String user, char[] password) {
+	protected Connector(String user, char[] password, String serverAddress, 
+			int serverPort, String trustStoreFilePath, char[] trustStorePassword) {
+		
+		// full example: jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/
+		String mySqlPath = "jdbc:mysql://";
+		// example: sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com
+		mySqlPath = mySqlPath + serverAddress;
+		mySqlPath = mySqlPath + ":";
+		mySqlPath = mySqlPath + serverPort;
+		mySqlPath = mySqlPath + "/";
+		
 		this.user = user;
 		this.password = password;
-		this.trustStoreFilePath = "C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore";
-		this.trustStorePassword = "password";
-		this.mySqlPath = "jdbc:mysql://sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com:3306/";
+		this.trustStoreFilePath = trustStoreFilePath;
+		this.trustStorePassword = trustStorePassword;
+		this.mySqlPath = mySqlPath;
+		
 	}
     
-    // This key store has only the prod root ca.
-    /* This should be started with
-     * 
-     * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore" -Djavax.net.ssl.keyStorePassword="password"
-     */ 
     
-	private Connection buildJDBCConnecter() {
+	private Connection buildJDBCConnecter() throws SQLException {
 		/**
 		 * Method creates connection to AWS cloud using 
 		 * 	Connector object properites. 
 		 * 
+		 * Caller must use try-catch to handle SQLException
+		 * 
 		 * @ return Connection object for sql queries
 		 */
 		
-		System.setProperty("javax.net.ssl.trustStore", trustStoreFilePath);
-        System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+	    // This key store has only the prod root ca.
+	    /* This should be started with
+	     * 
+	     * -Djavax.net.ssl.keyStore="C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore" -Djavax.net.ssl.keyStorePassword="password"
+	     */ 
+		
+		System.setProperty("javax.net.ssl.trustStore", this.trustStoreFilePath);
+        System.setProperty("javax.net.ssl.trustStorePassword", String.valueOf(this.trustStorePassword));
+        
     	String pass = String.valueOf(this.password);
     	
     	Connection con = null;
     	
-        try {
-  
-        	con = DriverManager.getConnection(mySqlPath, this.user, pass);
-        	
-        } catch (SQLException e) {
-        	// handle and stop print for production
-            e.printStackTrace();
-        }
+       	con = DriverManager.getConnection(this.mySqlPath, this.user, pass);
         
         return con;
         
@@ -144,7 +152,7 @@ public class Connector {
          * @return result This returns a boolean value based on whether the user can log in. 
          */
     	
-    	Boolean result = true;
+    	Boolean result = false;
                                         
         try {
         	
@@ -236,7 +244,7 @@ public class Connector {
 	    	// connect to database via JDBC
 	    	Connection con = buildJDBCConnecter();
 	    	
-	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.users WHERE name = ?");
+	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.inventory WHERE name = ?");
 	    	st.setString(1, itemName);
 	        ResultSet rs = st.executeQuery();
         	
@@ -299,15 +307,14 @@ public class Connector {
 	    	st.setDouble(4, wholeSalePrice);
 	    	st.setDouble(5, retailPrice);
 	    	st.setInt(6, quantity);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
             
+			//if (rs != 1) throw SQLException("Failed to create new inventory item.");
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
@@ -354,14 +361,13 @@ public class Connector {
 	    	st.setInt(6, quantity);
 	    	st.setString(7, date);
 	    	st.setInt(8, status);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
+            
+			//if (rs != 1) throw SQLException("Failed to create new order item.");
             
         } catch (SQLException e) {
         	// handle and stop print for production
@@ -409,14 +415,13 @@ public class Connector {
 	    	st.setInt(6, quantity);
 	    	st.setString(7, date);
 	    	st.setInt(8, status);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
+            
+			//if (rs != 1) throw SQLException("Failed to create new waste item.");
             
         } catch (SQLException e) {
         	// handle and stop print for production
@@ -460,11 +465,13 @@ public class Connector {
 	    	st.setInt(5, quantity);
 	    	st.setString(6, salesDate);
 	        int rs = st.executeUpdate();
-            
+        	
 			// close con, rs, and st
 			st.close();
 			con.close();
             
+			//if (rs != 1) throw SQLException("Failed to create new sales item.");
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
@@ -497,15 +504,14 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.inventory SET quantity = quantity + ? WHERE name = ?");
 	    	st.setInt(1, updateQuantity);
 	    	st.setString(2, name);
-	        ResultSet rs = st.executeQuery();
+	        int rs = st.executeUpdate();
         	
-        	ResultSetMetaData rsmd = rs.getMetaData(); 
-            
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
             
+			//if (rs != 1) throw SQLException("Failed to update inventory item.");
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
@@ -538,15 +544,14 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.orders SET status = ? WHERE OrderEventID = ?");
 	    	st.setInt(1, status);
 	    	st.setString(2, orderEventID);
-	        ResultSet rs = st.executeQuery();
-	    	
-	    	ResultSetMetaData rsmd = rs.getMetaData(); 
-	        
+	        int rs = st.executeUpdate();
+        	
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
-	        
+            
+			//if (rs != 1) throw SQLException("Failed to update order status.");
+			
 	    } catch (SQLException e) {
 	    	// handle and stop print for production
 	        e.printStackTrace();
@@ -579,15 +584,15 @@ public class Connector {
 	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.waste SET status = ? WHERE WasteEventID = ?");
 	    	st.setInt(1, status);
 	    	st.setString(2, wasteEventID);
-	        ResultSet rs = st.executeQuery();
-	    	
-	    	ResultSetMetaData rsmd = rs.getMetaData(); 
-	        
+	    	System.out.println(st);
+	        int rs = st.executeUpdate();
+        	
 			// close con, rs, and st
-			rs.close();
 			st.close();
 			con.close();
-		        
+            
+			//if (rs != 1) throw SQLException("Failed to update waste status.");
+			
 	    } catch (SQLException e) {
 	    	// handle and stop print for production
 	        e.printStackTrace();
@@ -598,139 +603,84 @@ public class Connector {
 		return results;
 			
 	} // end of updateWasteStatus()
-
+    
+//    private List<List> executeUpdateHelper(Connection con, PreparedStatement st, String table){
+//		List<List> results = new ArrayList<List>();
+//		
+//	    try {
+//	        int rs = st.executeUpdate();
+//        	
+//			// close con, rs, and st
+//			st.close();
+//			con.close();
+//            
+//			//if (rs != 1) throw SQLException("Failed to update waste status.");
+//			
+//	    } catch (SQLException e) {
+//	    	// handle and stop print for production
+//	        e.printStackTrace();
+//	    }
+//			
+//		results = getResultsofQuery(table);
+//	    
+//		return results;
+//    }
     
     protected List<List> retrieveSalesOnDate(String time) {
     	/**
-    	 * DESCRIPTION
+    	 * Given a date, returns all sales that occurred on that date.
     	 * 
-    	 * @param time
+    	 * @param time - The date of the sale
     	 * 
-    	 * @return results List of List
+    	 * @return results List of List of all sales that occurred on that date.
     	 */
-    	
-    	
-    	List<List> results = new ArrayList<List>();
-
-        // 
-        try {
-		
-        	time = time + "%";
-        	
-        	// connect to database via JDBC
-        	Connection con = buildJDBCConnecter();
-        	
-        	// preferred format 2020-06-19%
-	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate LIKE ?");
-	    	st.setString(1, time);
-        	
-            ResultSet rs = st.executeQuery();
-        	
-        	ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();  
-            
-            while (rs.next()) {
-            
-            	ArrayList<String> row = new ArrayList<String>();
-            	
-            	for (int i = 1; i <= columnsNumber; i++) {
-            		row.add(rs.getString(i));
-                }
-            	
-            	results.add(row);
-            }
-            
-			// close con, rs, and st
-			rs.close();
-			st.close();
-			con.close();
-            
-        } catch (SQLException e) {
-        	// handle and stop print for production
-            e.printStackTrace();
-        }
-
-        return results;
-        
+    	return executeQueryHelper("SELECT * FROM SIMS_app_data.sales WHERE SalesDate LIKE '" + time + "%'");
     } // end of retrieveSalesByDate()
 
     
     protected List<List> retrieveSalesSinceDate(String time) {
     	/**
-    	 * DESCRIPTION
+    	 * Given a start date, returns all sales since that date.
     	 * 
-    	 * @param time
+    	 * @param time - Where the date range should begin
     	 * 
-    	 * @return results List of List
+    	 * @return results List of List of all sales within the range (since start)
     	 */
     	
-    	
-    	List<List> results = new ArrayList<List>();
-
-        // 
-        try {
-        	
-        	// connect to database via JDBC
-        	Connection con = buildJDBCConnecter();
-        	
-
-	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate >= ? ");
-	    	st.setString(1, time);
-        	
-            ResultSet rs = st.executeQuery();
-        	
-        	ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();  
-            
-            while (rs.next()) {
-            
-            	ArrayList<String> row = new ArrayList<String>();
-            	
-            	for (int i = 1; i <= columnsNumber; i++) {
-            		row.add(rs.getString(i));
-                }
-            	
-            	results.add(row);
-            }
-            
-			// close con, rs, and st
-			rs.close();
-			st.close();
-			con.close();
-            
-        } catch (SQLException e) {
-        	// handle and stop print for production
-            e.printStackTrace();
-        }
-
-        return results;
-        
+    	return executeQueryHelper("SELECT * FROM SIMS_app_data.sales WHERE SalesDate >= '" + time + "'");
     } // end of retrieveSalesByDate()
 
     
     protected List<List> retrieveSalesByDateRange(String startTime, String endTime) {
     	/**
-    	 * DESCRIPTION
+    	 * Given a range, returns all sales that occurred in that time period.
     	 * 
-    	 * @param startTime
-    	 * @param endTime
+    	 * @param startTime - Where the date range should begin
+    	 * @param endTime - Where the date range should end
     	 * 
-    	 * @return results List of List
+    	 * @return results List of List of all sales within the range
     	 */
     	
+        return executeQueryHelper("SELECT * FROM SIMS_app_data.sales WHERE SalesDate BETWEEN '"+ startTime + "' AND '" + endTime + "'");
+    } // end of retrieveSalesByDate()
+    
+    private List<List> executeQueryHelper(String statement){
+    	/**
+    	 * Helps execute a query given a statement to execute.
+    	 * 
+    	 * @param statement This is the statement that will be executed
+    	 * 
+    	 * @return results List of List of the results of the query
+    	 */
     	
     	List<List> results = new ArrayList<List>();
 
-        // 
         try {
         	
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
         	
-
-	    	PreparedStatement st = con.prepareStatement("SELECT * FROM SIMS_app_data.sales WHERE SalesDate BETWEEN startTime AND endTime");
-	    	st.setString(1, startTime);
-	    	st.setString(1, endTime);
+        	PreparedStatement st = con.prepareStatement(statement);
         	
             ResultSet rs = st.executeQuery();
         	
@@ -760,10 +710,13 @@ public class Connector {
 
         return results;
         
-    } // end of retrieveSalesByDate()
-    
+    }
     
     /** Java.sql.SQLExcpetion errors:
      * java.sql.SQLException: Access denied for user ....
+     * java.sql.SQLException: Parameter index out of range ....
+     * com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+     * The last packet sent successfully to the server was 0 milliseconds ago. 
+     *  java.net.UnknownHostException: No such host is known
      */
 }

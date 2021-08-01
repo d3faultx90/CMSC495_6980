@@ -25,7 +25,11 @@ public class ReportPanel extends javax.swing.JPanel {
 
     private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                       
     	new MonthViewWindow().setVisible(true);
-    }                                                      
+    }     
+    
+    private String getMonthsProfits(String year, int month) {
+    	return "wow";
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton helpButton;
