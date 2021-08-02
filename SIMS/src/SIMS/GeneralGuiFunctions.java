@@ -19,89 +19,102 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class GeneralGuiFunctions {
 
-    //https://www.youtube.com/watch?v=hFv2Uay0qj0
-    static void closeWindow(Window toClose, javax.swing.JFrame toOpen) {
-        WindowEvent closeWindow = new WindowEvent(toClose, WindowEvent.WINDOW_CLOSING);
-        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
-        toOpen.setVisible(true);
-    }
-    
-    // Given a 2D list, add the item and the quantity of the list to the selected table
-    static void addItemAndQuantityToTable(DefaultTableModel model, List<List> resultsFromItemQuery) {
-        for (List l : resultsFromItemQuery) {
-        	model.addRow(new Object[]{l.get(1), String.format("%,d", Integer.parseInt((String) l.get(6)))});
-        }
-    }
-    
-    // Method found from: https://stackoverflow.com/a/37989058
-    // Given a table, filter the results of the table based on input of the textfield
-    static void filterTable(javax.swing.JTable table, javax.swing.JTextField filterField) {
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(((DefaultTableModel) table.getModel()));
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterField.getText()));
+	// https://www.youtube.com/watch?v=hFv2Uay0qj0
+	static void closeWindow(Window toClose, javax.swing.JFrame toOpen) {
+		WindowEvent closeWindow = new WindowEvent(toClose, WindowEvent.WINDOW_CLOSING);
+		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+		toOpen.setVisible(true);
+	}
 
-        table.setRowSorter(sorter);
-    }
-    
-    static int castSqlObjectToInteger(Object obj) {
-    	return Integer.parseInt((String) obj);
-    }
-    
-    //Display this JOptionpane whenever a field is missing input or has negative values
-    static void displayErrorPane(String errorMessage) {
-        JOptionPane.showMessageDialog(null, errorMessage,
-                "Invalid Field Entry", JOptionPane.ERROR_MESSAGE);
-    }
-    
-    //Display this JOptionpane whenever a field is missing input or has negative values
-    static void displayHelpPane(String helpInformation) {
-        JOptionPane.showMessageDialog(null, helpInformation,
-                "Help", JOptionPane.QUESTION_MESSAGE);
-    }
-    
-    //Display this JOptionpane whenever a field is missing input or has negative values
-    static String stringToPrice(String unparsedPrice) {
-        try {
-        	double price = Double.parseDouble(unparsedPrice);  
-        	NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-        	return formatter.format(price);
-        } catch (Exception e) {
-        	displayErrorPane("That is not a number");
-        }
-        return "ERROR";
-    }
-    
-    static String stringToPrice(Double price) {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-        return formatter.format(price);
-    }
-    
-    static void thing(javax.swing.JTable table) {
-        table.getModel().addTableModelListener(new TableModelListener()
-		{
+	// Given a 2D list, add the item and the quantity of the list to the selected
+	// table
+	static void addItemAndQuantityToTable(DefaultTableModel model, List<List> resultsFromItemQuery) {
+		for (List l : resultsFromItemQuery) {
+			model.addRow(new Object[] { l.get(1), String.format("%,d", Integer.parseInt((String) l.get(6))) });
+		}
+	}
+
+	// Method found from: https://stackoverflow.com/a/37989058
+	// Given a table, filter the results of the table based on input of the
+	// textfield
+	static void filterTable(javax.swing.JTable table, javax.swing.JTextField filterField) {
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(((DefaultTableModel) table.getModel()));
+		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterField.getText()));
+
+		table.setRowSorter(sorter);
+	}
+
+	static int castSqlObjectToInteger(Object obj) {
+		return Integer.parseInt((String) obj);
+	}
+
+	// Display this JOptionpane whenever a field is missing input or has negative
+	// values
+	static void displayErrorPane(String errorMessage) {
+		JOptionPane.showMessageDialog(null, errorMessage, "Invalid Field Entry", JOptionPane.ERROR_MESSAGE);
+	}
+
+	// Display this JOptionpane whenever a field is missing input or has negative
+	// values
+	static void displayHelpPane(String helpInformation) {
+		JOptionPane.showMessageDialog(null, helpInformation, "Help", JOptionPane.QUESTION_MESSAGE);
+	}
+
+	// Display this JOptionpane whenever a field is missing input or has negative values
+	static void displayConfirmationPane(String confirmation) {
+		try {
+		ImageIcon icon = new ImageIcon("src/images/checkmark.png");
+		JOptionPane.showMessageDialog(null, confirmation, "Confirmation", JOptionPane.INFORMATION_MESSAGE, icon);
+		} catch (Exception e) {
+			//If image fails to load, just show generic icon
+			JOptionPane.showMessageDialog(null, confirmation, "Confirmation", JOptionPane.PLAIN_MESSAGE);
+		}
+	}
+
+	// Display this JOptionpane whenever a field is missing input or has negative
+	// values
+	static String stringToPrice(String unparsedPrice) {
+		try {
+			double price = Double.parseDouble(unparsedPrice);
+			NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+			return formatter.format(price);
+		} catch (Exception e) {
+			displayErrorPane("That is not a number");
+		}
+		return "ERROR";
+	}
+
+	static String stringToPrice(Double price) {
+		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+		return formatter.format(price);
+	}
+
+	static void thing(javax.swing.JTable table) {
+		table.getModel().addTableModelListener(new TableModelListener() {
 			@Override
-			public void tableChanged(TableModelEvent e)
-			{
+			public void tableChanged(TableModelEvent e) {
 
 				int col = e.getColumn();
 				int row = e.getFirstRow();
 
 			}
 		});
-    }
-    
-    static double parseSales(List<List> sales) {
-    	double totalProfit = 0;
-        for (List l : sales) {
-        	totalProfit += Double.parseDouble((String) l.get(5));
-        }
-        //System.out.println(totalProfit);
-    	return totalProfit;
-    }
-    
+	}
+
+	static double parseSales(List<List> sales) {
+		double totalProfit = 0;
+		for (List l : sales) {
+			totalProfit += Double.parseDouble((String) l.get(5));
+		}
+		// System.out.println(totalProfit);
+		return totalProfit;
+	}
+
 //    static List<String> determineCategories(List<List> items){
 //    	List<String> categories = new List<String>();
 //    	return items;

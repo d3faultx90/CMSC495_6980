@@ -74,6 +74,7 @@ public class ImportAndExportPanel extends javax.swing.JPanel {
 	        		writer.writeNext((String[])waste.toArray(new String[waste.size()]));
 	        	}
 	        	writer.close();
+	        	GeneralGuiFunctions.displayConfirmationPane("Data exported successfully!");
 	        	
 	        } 
 	        catch (IOException e) {
