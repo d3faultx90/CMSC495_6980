@@ -125,12 +125,12 @@ public class HomePanel extends javax.swing.JPanel {
         });
         
         LocalDateTime date = LocalDateTime.now();
-        String minusDay = Date.formatDateForSql(date.minusDays(1));
-        String minusWeek = Date.formatDateForSql(date.minusWeeks(1));
-        String minusMonth = Date.formatDateForSql(date.minusMonths(1));
-        String thisYear = Date.formatDateForSql(date).substring(0, 4);
-        String lastYear = Date.formatDateForSql(date.minusYears(1));
-        String today = Date.formatDateForSql(date);
+        String minusDay = DateHandler.formatDateForSql(date.minusDays(1));
+        String minusWeek = DateHandler.formatDateForSql(date.minusWeeks(1));
+        String minusMonth = DateHandler.formatDateForSql(date.minusMonths(1));
+        String thisYear = DateHandler.formatDateForSql(date).substring(0, 4);
+        String lastYear = DateHandler.formatDateForSql(date.minusYears(1));
+        String today = DateHandler.formatDateForSql(date);
         
         Connector c = Database.getConnector();
         List<List> sales = Database.getSalesTable();

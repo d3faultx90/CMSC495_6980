@@ -36,6 +36,9 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		System.out.println("Item added to database!");
+		
+		// createInventoryItem(String name, String description, String foodCategory, double wholeSalePrice, double retailPrice, int quantity){
+		//Gets hooke dup to createInventory item
 	}
 
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {

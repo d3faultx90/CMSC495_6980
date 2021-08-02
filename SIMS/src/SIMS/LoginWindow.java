@@ -129,6 +129,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sales Inventory Management System (SIMS) - Login");
+        setResizable(false);
 
         addressLabel.setText("Server Address:");
         addressTextfield.setText("sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com");

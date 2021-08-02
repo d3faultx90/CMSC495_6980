@@ -41,8 +41,7 @@ public class Connector {
 		this.mySqlPath = mySqlPath;
 		
 	}
-    
-    
+	
 	private Connection buildJDBCConnecter() throws SQLException {
 		/**
 		 * Method creates connection to AWS cloud using 

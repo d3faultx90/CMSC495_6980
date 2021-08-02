@@ -9,16 +9,69 @@ package SIMS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class WastePanel extends javax.swing.JPanel {
 
 	public WastePanel() {
 		initComponents();
+		
 	}
 
 	private void wasteButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
+
+		try {
+
+			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
+			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
+
+			if (quantityTextfield.getText().isEmpty()) {
+
+				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
+
+			} else if (!(Integer.parseInt(quantityTextfield.getText()) >= 1)) {
+
+				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
+
+			} else {
+				
+				System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
+				
+			}
+			
+			Connector connector = Database.getConnector();
+			//employeeId connecter.userID
+			Map <String, Integer> itemIds = Database.getItemIdMap();
+			int itemID = itemIds.get(selectedCellValue);
+			// status will come from enum
+			// quantity comes from textfield
+			// createWaste(int employeeID, int itemID, double saleTax, double wholeSalePrice, int quantity, String date, int status)
+			//Database.getConnector().createWaste();
+			
+		} catch (NumberFormatException d) {
+
+			GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+
+			GeneralGuiFunctions.displayErrorPane("Please select an item");
+
+		} catch (Exception f) {
+
+			GeneralGuiFunctions.displayErrorPane("An error has occured");
+
+		}
+
+	} // end wasteButtonActionPerformed
+		
+		
+		
+		
+		
+	
 
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
@@ -26,7 +79,7 @@ public class WastePanel extends javax.swing.JPanel {
 
 	// Variables declaration - do not modify
 	private javax.swing.JButton helpButton;
-	private SIMS.ItemFilterPanel itemFilterPanel1;
+	private SIMS.ItemFilterPanel itemFilterPanel;
 	private javax.swing.JPanel panel;
 	private javax.swing.JLabel quantityLabel;
 	private javax.swing.JTextField quantityTextfield;
@@ -42,7 +95,7 @@ public class WastePanel extends javax.swing.JPanel {
 		quantityLabel = new javax.swing.JLabel();
 		quantityTextfield = new javax.swing.JTextField();
 		helpButton = new javax.swing.JButton();
-		itemFilterPanel1 = new SIMS.ItemFilterPanel();
+		itemFilterPanel = new SIMS.ItemFilterPanel();
 
 		wasteButton.setText("Waste Item(s)");
 		wasteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,14 +132,14 @@ public class WastePanel extends javax.swing.JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addContainerGap())
 				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-						panelLayout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE).addComponent(itemFilterPanel1,
+						panelLayout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE).addComponent(itemFilterPanel,
 								javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)));
 		panelLayout.setVerticalGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(panelLayout.createSequentialGroup()
 						.addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(panelLayout.createSequentialGroup().addComponent(helpButton)
 										.addGap(216, 216, 216))
-								.addComponent(itemFilterPanel1, javax.swing.GroupLayout.Alignment.TRAILING,
+								.addComponent(itemFilterPanel, javax.swing.GroupLayout.Alignment.TRAILING,
 										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

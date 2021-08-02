@@ -8,81 +8,112 @@ package SIMS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OrderPanel extends javax.swing.JPanel {
-	
-    public OrderPanel() {
-        initComponents();
-    }  
 
-    private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+	public OrderPanel() {
+		initComponents();
+	}
 
+	private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private SIMS.OrderAndSalesPanel orderAndSalesPanel;
-    private javax.swing.JButton orderButton;
-    private javax.swing.JPanel panel;
-    // End of variables declaration//GEN-END:variables
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+		javax.swing.JTable orderedItems = orderAndSalesPanel.orderTable;
+		Map<String, Integer> itemNum = Database.getItemIdMap();
+		
+		List<List> bundled = new ArrayList<List>();
+		
+		if (orderedItems.getRowCount() == 0) {
+			GeneralGuiFunctions.displayErrorPane("Please select an item to order");
 
-        panel = new javax.swing.JPanel();
-        orderButton = new javax.swing.JButton();
-        orderAndSalesPanel = new SIMS.OrderAndSalesPanel();
+		} else {
 
-        orderButton.setBackground(new java.awt.Color(0, 102, 0));
-        orderButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        orderButton.setText("Order");
-        orderButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                orderButtonActionPerformed(evt);
-            }
-        });
+			for (int i = 0; i < orderedItems.getRowCount(); i++) {
 
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(orderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(orderAndSalesPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addComponent(orderAndSalesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+				List<Integer> list = new ArrayList<Integer>();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 417, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 354, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-    }// </editor-fold>//GEN-END:initComponents
+				int itemID = itemNum.get(orderedItems.getValueAt(i, 0));
+				int quantity = GeneralGuiFunctions.castSqlObjectToInteger(orderedItems.getValueAt(i, 1));
+
+				list.add(itemID);
+				list.add(quantity);
+				
+				bundled.add(list);
+
+				System.out.println("Item ID: " + itemID + " Item quantity: " + quantity);
+
+			} // end for
+
+		} // end else
+		
+		System.out.println(bundled);
+		int employeeID = Database.getConnector().userID;
+		double salesTax = .008;
+
+		// Database.getConnector().createOrder(employeeID, itemID, saleTax,
+		// wholeSalePrice, quantity, date, status);
+
+	}// end orderButtonActionPerformed
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private SIMS.OrderAndSalesPanel orderAndSalesPanel;
+	private javax.swing.JButton orderButton;
+	private javax.swing.JPanel panel;
+	// End of variables declaration//GEN-END:variables
+
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed" desc="Generated
+	// Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
+
+		panel = new javax.swing.JPanel();
+		orderButton = new javax.swing.JButton();
+		orderAndSalesPanel = new SIMS.OrderAndSalesPanel();
+
+		orderButton.setBackground(new java.awt.Color(0, 102, 0));
+		orderButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+		orderButton.setText("Order");
+		orderButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				orderButtonActionPerformed(evt);
+			}
+		});
+
+		javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+		panel.setLayout(panelLayout);
+		panelLayout.setHorizontalGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(panelLayout.createSequentialGroup().addContainerGap()
+						.addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+								.addComponent(orderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 400,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(orderAndSalesPanel, javax.swing.GroupLayout.Alignment.LEADING,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(0, 11, Short.MAX_VALUE)));
+		panelLayout.setVerticalGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(panelLayout.createSequentialGroup()
+						.addComponent(orderAndSalesPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(orderButton,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGap(0, 417, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE)
+								.addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, Short.MAX_VALUE))));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGap(0, 354, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE)
+								.addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, Short.MAX_VALUE))));
+	}// </editor-fold>//GEN-END:initComponents
 
 }
