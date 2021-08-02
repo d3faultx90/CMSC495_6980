@@ -32,7 +32,6 @@ public class HomePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }                                                 
 
-
     // Variables declaration - do not modify                     
     private javax.swing.JLabel annualSalesLabel;
     private javax.swing.JLabel currentDateLabel;
@@ -46,10 +45,12 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel monthlySalesLabel;
     private javax.swing.JButton refreshDataButton;
     private javax.swing.JLabel refreshLabel;
-    private javax.swing.JLabel todaysSaleslabel;
+    private javax.swing.JLabel todaysSalesLabel;
+    private javax.swing.JLabel todaysSalesLastYearLabel;
+    private javax.swing.JLabel totalRecordedSalesLabel;
     private javax.swing.JLabel yesterdaysSalesLabel;
-    // End of variables declaration   
-
+    // End of variables declaration 
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
@@ -64,10 +65,12 @@ public class HomePanel extends javax.swing.JPanel {
         annualSalesLabel = new javax.swing.JLabel();
         monthlySalesLabel = new javax.swing.JLabel();
         yesterdaysSalesLabel = new javax.swing.JLabel();
-        todaysSaleslabel = new javax.swing.JLabel();
+        todaysSalesLastYearLabel = new javax.swing.JLabel();
         lastWeekSaleLabel = new javax.swing.JLabel();
         refreshDataButton = new javax.swing.JButton();
         refreshLabel = new javax.swing.JLabel();
+        totalRecordedSalesLabel = new javax.swing.JLabel();
+        todaysSalesLabel = new javax.swing.JLabel();
 
         headerPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -76,7 +79,6 @@ public class HomePanel extends javax.swing.JPanel {
         currentTimeLabel.setText("");
 
         currentDateLabel.setText(DateHandler.getTodaysDateUser());
-
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -119,17 +121,22 @@ public class HomePanel extends javax.swing.JPanel {
             }
         });
 
-        annualSalesLabel.setText("Total sales for this year: $100,000");
+        annualSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        annualSalesLabel.setText("Total sales for this year:");
 
-        monthlySalesLabel.setText("Last month's <week range> sales: $40,000");
+        monthlySalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        monthlySalesLabel.setText("Last month's sales: ");
 
-        yesterdaysSalesLabel.setText("Yesterday's sales: (None registered)");
+        yesterdaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        yesterdaysSalesLabel.setText("Yesterday's sales: ");
 
-        todaysSaleslabel.setText("Today's <date> sales last year: $20 ");
+        todaysSalesLastYearLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        todaysSalesLastYearLabel.setText("Today's sales last year: ");
 
-        lastWeekSaleLabel.setText("Last week's sales");
+        lastWeekSaleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lastWeekSaleLabel.setText("Sales this week:");
 
-        refreshDataButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        refreshDataButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         refreshDataButton.setText("Refresh Data");
         refreshDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,30 +147,37 @@ public class HomePanel extends javax.swing.JPanel {
         refreshLabel.setForeground(new java.awt.Color(255, 0, 0));
         refreshLabel.setText("In case manual refresh is needed ->");
 
+        totalRecordedSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalRecordedSalesLabel.setText("Total recorded sales:");
+
+        todaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        todaysSalesLabel.setText("Today's sales: ");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(helpButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(refreshLabel))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(yesterdaysSalesLabel)
-                            .addComponent(monthlySalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(todaysSaleslabel, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(annualSalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lastWeekSaleLabel))))
+                .addComponent(helpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(refreshLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(refreshDataButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(yesterdaysSalesLabel)
+                    .addComponent(monthlySalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(todaysSalesLastYearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(annualSalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lastWeekSaleLabel)
+                    .addComponent(totalRecordedSalesLabel)
+                    .addComponent(todaysSalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,8 +189,10 @@ public class HomePanel extends javax.swing.JPanel {
                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(helpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(refreshLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(todaysSaleslabel)
+                .addGap(32, 32, 32)
+                .addComponent(todaysSalesLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(todaysSalesLastYearLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(yesterdaysSalesLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,9 +201,11 @@ public class HomePanel extends javax.swing.JPanel {
                 .addComponent(monthlySalesLabel)
                 .addGap(8, 8, 8)
                 .addComponent(annualSalesLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalRecordedSalesLabel)
+                .addGap(18, 18, 18)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -203,13 +221,13 @@ public class HomePanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGap(0, 481, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-    }// </editor-fold>       
+    }// </editor-fold>    
   
 }
