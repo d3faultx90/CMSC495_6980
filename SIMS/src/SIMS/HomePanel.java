@@ -6,6 +6,9 @@
  */
 package SIMS;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.swing.SwingUtilities;
 
 public class HomePanel extends javax.swing.JPanel {
@@ -120,21 +123,39 @@ public class HomePanel extends javax.swing.JPanel {
                 logoutButtonActionPerformed(evt);
             }
         });
+        
+        LocalDateTime date = LocalDateTime.now();
+        String minusDay = Date.formatDateForSql(date.minusDays(1));
+        String minusWeek = Date.formatDateForSql(date.minusWeeks(1));
+        String minusMonth = Date.formatDateForSql(date.minusMonths(1));
+        String thisYear = Date.formatDateForSql(date).substring(0, 4);
+        String lastYear = Date.formatDateForSql(date.minusYears(1));
+        String today = Date.formatDateForSql(date);
+        
+        Connector c = Database.getConnector();
+        List<List> sales = Database.getSalesTable();
+        String salesMinusDay = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusDay)));
+        String salesMinusWeek = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesByDateRange(minusWeek, today)));
+        String salesMinusMonth = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusMonth.substring(0, 7))));
+        String salesLastYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
+        String salesThisYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
+        String total = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(sales));
+        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today)));
 
         annualSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        annualSalesLabel.setText("Total sales for this year:");
+        annualSalesLabel.setText("Total sales for this year: " + salesThisYear);
 
         monthlySalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        monthlySalesLabel.setText("Last month's sales: ");
+        monthlySalesLabel.setText("Last month's sales: " + salesMinusMonth);
 
         yesterdaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        yesterdaysSalesLabel.setText("Yesterday's sales: ");
+        yesterdaysSalesLabel.setText("Yesterday's sales: " + salesMinusDay);
 
         todaysSalesLastYearLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        todaysSalesLastYearLabel.setText("Today's sales last year: ");
+        todaysSalesLastYearLabel.setText("Today's sales last year: " + salesLastYear);
 
         lastWeekSaleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lastWeekSaleLabel.setText("Sales this week:");
+        lastWeekSaleLabel.setText("Sales this week: " + salesMinusWeek);
 
         refreshDataButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         refreshDataButton.setText("Refresh Data");
@@ -148,10 +169,10 @@ public class HomePanel extends javax.swing.JPanel {
         refreshLabel.setText("In case manual refresh is needed ->");
 
         totalRecordedSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        totalRecordedSalesLabel.setText("Total recorded sales:");
+        totalRecordedSalesLabel.setText("Total recorded sales: " + total);
 
         todaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        todaysSalesLabel.setText("Today's sales: ");
+        todaysSalesLabel.setText("Today's sales: " + salesToday);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
