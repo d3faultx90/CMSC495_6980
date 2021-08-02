@@ -9,6 +9,8 @@ package SIMS;
 
 import java.util.List;
 
+import enums.Months;
+
 public class MonthProfitPanel extends javax.swing.JPanel {
 
     String month;

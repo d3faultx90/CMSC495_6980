@@ -8,6 +8,8 @@ package SIMS;
 
 import java.util.ArrayList;
 
+import enums.Months;
+
 public class MonthViewWindow extends javax.swing.JFrame {
 	
 	String year;

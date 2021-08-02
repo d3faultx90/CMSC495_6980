@@ -24,7 +24,9 @@ public class Database {
 	static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	static List<List> resultsFromWasteQuery = new ArrayList<List>();
 	static List<List> resultsFromSalesQuery = new ArrayList<List>();
+	//static List<List> resultsFromUserQuery = new ArrayList<List>();
 	static Map<String, Integer> itemIds = new HashMap<String, Integer>();
+	static Map<Object, String> userIds = new HashMap<Object, String>();
 	static Connector connector;
 	
 	public Database(Connector connector) {
@@ -47,6 +49,7 @@ public class Database {
 		resultsFromOrderQuery = connector.getResultsofQuery("orders");
 		resultsFromWasteQuery = connector.getResultsofQuery("waste");
 		resultsFromSalesQuery = connector.getResultsofQuery("sales");
+		//resultsFromSalesQuery = connector.getResultsofQuery("users");
 		populateItemIdMap();
 	}
 
@@ -60,13 +63,31 @@ public class Database {
 				itemIds.put((String) l.get(1), Integer.parseInt((String) l.get(0)));
 			}
 		} catch (Exception e) {
-			GeneralGuiFunctions.displayErrorPane(e + "\nSomething went wrong in populateItemIDMap (SupervisorWindow)");
+			GeneralGuiFunctions.displayErrorPane(e + "\nSomething went wrong in populateItemIDMap (Database.java)");
 		}
 	}
+	
+//	private void populateUserIdMap() {
+//		/**
+//		 * Creates a dictionary where the userID is the key, 
+//		 * and their username is the value 
+//		 */
+//		try {
+//			for (List l : resultsFromUserQuery) {
+//				userIds.put(l.get(0), (String) l.get(1));
+//			}
+//		} catch (Exception e) {
+//			GeneralGuiFunctions.displayErrorPane(e + "\nSomething went wrong in populateUserIdMap (Database.java)");
+//		}
+//	}
 	
 	// Accessor methods
 	static Connector getConnector() {
 		return connector;
+	}
+	
+	static Map getUserIdMap() {
+		return itemIds;
 	}
 	
 	static Map getItemIdMap() {

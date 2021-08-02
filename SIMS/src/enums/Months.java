@@ -1,4 +1,4 @@
-package SIMS;
+package enums;
 
 public enum Months{
 	January("01"), February("02"), March("03"), April("04"), May("05"), June("06"), 
