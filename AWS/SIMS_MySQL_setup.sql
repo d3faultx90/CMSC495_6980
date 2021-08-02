@@ -2,7 +2,7 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/30/2021
+Last edited: 08/02/2021
 Created for: CMSC495
 Tested platform(s): 
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
@@ -144,8 +144,10 @@ CREATE TABLE IF NOT EXISTS sales(
     SalesEventID VARCHAR(130) NOT NULL,
     EmployeeID INT NOT NULL,
     ItemID INT NOT NULL,
-    SalesPrice DECIMAL(8,2) NOT NULL,
-    TotalSalePrice  DECIMAL(10,2) AS (SalesPrice * Quantity),
+    SalesUnitPrice DECIMAL(8,2) NOT NULL,
+    SalesTax DECIMAL(5,4) NOT NULL,
+    TotalSalePrice  DECIMAL(10,2) AS (((SalesUnitPrice * Quantity) *
+	       	SalesTax) + (SalesUnitPrice * Quantity)), 
     Quantity INT NOT NULL, 
     SalesDate DATETIME NOT NULL,
     FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
