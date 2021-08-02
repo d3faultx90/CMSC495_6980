@@ -6,6 +6,16 @@
  */
 package SIMS;
 
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.swing.JFileChooser;
+
 public class ImportAndExportPanel extends javax.swing.JPanel {
 
     public ImportAndExportPanel() {
@@ -21,7 +31,56 @@ public class ImportAndExportPanel extends javax.swing.JPanel {
     }                                          
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
+        List<List> sales = Database.getSalesTable();
+        List<List> items = Database.getItemTable();
+        List<List> orders = Database.getOrderTable();
+        List<List> wastes = Database.getWasteTable();
+        
+        LocalDateTime date = LocalDateTime.now();
+        String today = DateHandler.formatDateForSql(date);
+        today = today.substring(0, 10);
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setDialogTitle("Specify a folder to export the files");
+        fileChooser.setCurrentDirectory(new File(".\\"));
+        
+        int userSelection = fileChooser.showOpenDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+        
+	        try {
+	        	CSVWriter writer = new CSVWriter(new FileWriter(fileToSave.getAbsolutePath() + "\\" + today + "_sales.csv"));
+	        	for (List sale: sales) {
+	        		writer.writeNext((String[])sale.toArray(new String[sale.size()]));
+	        	}
+	        	writer.close();
+	        	
+	        	writer = new CSVWriter(new FileWriter(fileToSave.getAbsolutePath() + "\\" + today + "_items.csv"));
+	        	for (List item: items) {
+	        		writer.writeNext((String[])item.toArray(new String[item.size()]));
+	        	}
+	        	writer.close();
+	        	
+	        	writer = new CSVWriter(new FileWriter(fileToSave.getAbsolutePath() + "\\" + today + "_orders.csv"));
+	        	for (List order: orders) {
+	        		writer.writeNext((String[])order.toArray(new String[order.size()]));
+	        	}
+	        	writer.close();
+	        	
+	        	writer = new CSVWriter(new FileWriter(fileToSave.getAbsolutePath() + "\\" + today + "_waste.csv"));
+	        	for (List waste: wastes) {
+	        		writer.writeNext((String[])waste.toArray(new String[waste.size()]));
+	        	}
+	        	writer.close();
+	        	
+	        } 
+	        catch (IOException e) {
+	        	e.printStackTrace();
+	        	GeneralGuiFunctions.displayErrorPane("File IO Error");
+	        }
+        }
     }        
 
 
@@ -55,7 +114,7 @@ public class ImportAndExportPanel extends javax.swing.JPanel {
         exportButton.setText("Export");
         exportButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportButtonActionPerformed(evt);
+				exportButtonActionPerformed(evt);
             }
         });
 
