@@ -19,6 +19,35 @@ public class HomePanel extends javax.swing.JPanel {
         initComponents();
         time = new TimeThread(currentTimeLabel);
         time.start();
+        setSaleTextfields();
+    }
+    
+    public void setSaleTextfields() {
+        LocalDateTime date = LocalDateTime.now();
+        String minusDay = DateHandler.formatDateForSql(date.minusDays(1));
+        String minusWeek = DateHandler.formatDateForSql(date.minusWeeks(1));
+        String minusMonth = DateHandler.formatDateForSql(date.minusMonths(1));
+        String thisYear = DateHandler.formatDateForSql(date).substring(0, 4);
+        String lastYear = DateHandler.formatDateForSql(date.minusYears(1));
+        String today = DateHandler.formatDateForSql(date);
+        
+        Connector c = Database.getConnector();
+        List<List> sales = Database.getSalesTable();
+        String salesMinusDay = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusDay)));
+        String salesMinusWeek = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesByDateRange(minusWeek, today)));
+        String salesMinusMonth = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusMonth.substring(0, 7))));
+        String salesLastYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
+        String salesThisYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
+        String total = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(sales));
+        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today)));
+        
+		todaysSalesLabel.setText("Today's sales: " + salesToday);
+		yesterdaysSalesLabel.setText("Yesterday's sales: " + salesMinusDay);
+		todaysSalesLastYearLabel.setText("Today's sales last year: " + salesLastYear);
+		lastWeekSaleLabel.setText("Sales this week: " + salesMinusWeek);
+		monthlySalesLabel.setText("Last month's sales: " + salesMinusMonth);
+		annualSalesLabel.setText("Total sales for this year: " + salesThisYear);
+		totalRecordedSalesLabel.setText("Total recorded sales: " + total);
     }
     
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
@@ -82,6 +111,7 @@ public class HomePanel extends javax.swing.JPanel {
         currentTimeLabel.setText("");
 
         currentDateLabel.setText(DateHandler.getTodaysDateUser());
+        
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -123,39 +153,21 @@ public class HomePanel extends javax.swing.JPanel {
                 logoutButtonActionPerformed(evt);
             }
         });
-        
-        LocalDateTime date = LocalDateTime.now();
-        String minusDay = DateHandler.formatDateForSql(date.minusDays(1));
-        String minusWeek = DateHandler.formatDateForSql(date.minusWeeks(1));
-        String minusMonth = DateHandler.formatDateForSql(date.minusMonths(1));
-        String thisYear = DateHandler.formatDateForSql(date).substring(0, 4);
-        String lastYear = DateHandler.formatDateForSql(date.minusYears(1));
-        String today = DateHandler.formatDateForSql(date);
-        
-        Connector c = Database.getConnector();
-        List<List> sales = Database.getSalesTable();
-        String salesMinusDay = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusDay)));
-        String salesMinusWeek = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesByDateRange(minusWeek, today)));
-        String salesMinusMonth = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusMonth.substring(0, 7))));
-        String salesLastYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
-        String salesThisYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
-        String total = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(sales));
-        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today)));
 
         annualSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        annualSalesLabel.setText("Total sales for this year: " + salesThisYear);
+        annualSalesLabel.setText("Total sales for this year:");
 
         monthlySalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        monthlySalesLabel.setText("Last month's sales: " + salesMinusMonth);
+        monthlySalesLabel.setText("Last month's sales: ");
 
         yesterdaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        yesterdaysSalesLabel.setText("Yesterday's sales: " + salesMinusDay);
+        yesterdaysSalesLabel.setText("Yesterday's sales: ");
 
         todaysSalesLastYearLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        todaysSalesLastYearLabel.setText("Today's sales last year: " + salesLastYear);
+        todaysSalesLastYearLabel.setText("Today's sales last year: ");
 
         lastWeekSaleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lastWeekSaleLabel.setText("Sales this week: " + salesMinusWeek);
+        lastWeekSaleLabel.setText("Sales this week:");
 
         refreshDataButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         refreshDataButton.setText("Refresh Data");
@@ -169,36 +181,35 @@ public class HomePanel extends javax.swing.JPanel {
         refreshLabel.setText("In case manual refresh is needed ->");
 
         totalRecordedSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        totalRecordedSalesLabel.setText("Total recorded sales: " + total);
+        totalRecordedSalesLabel.setText("Total recorded sales:");
 
         todaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        todaysSalesLabel.setText("Today's sales: " + salesToday);
+        todaysSalesLabel.setText("Today's sales: ");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addComponent(helpButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(refreshLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(refreshDataButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(yesterdaysSalesLabel)
-                    .addComponent(monthlySalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(todaysSalesLastYearLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(annualSalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lastWeekSaleLabel)
-                    .addComponent(totalRecordedSalesLabel)
-                    .addComponent(todaysSalesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(todaysSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(helpButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(refreshLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(refreshDataButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(todaysSalesLastYearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(yesterdaysSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lastWeekSaleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(monthlySalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(annualSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(totalRecordedSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,6 +260,6 @@ public class HomePanel extends javax.swing.JPanel {
                     .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-    }// </editor-fold>    
+    }// </editor-fold>                        
   
 }
