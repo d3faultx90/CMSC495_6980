@@ -2,7 +2,7 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 07/30/2021
+Last edited: 08/02/2021
 Created for: CMSC495
 Tested platform(s): 
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
@@ -53,10 +53,10 @@ SELECT OrderID, OrderEventID, OrderDate FROM SIMS_app_data.orders;
 
 -- sales
 SELECT ' [+] Adding sales ...' as '';
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("78087753-b86c-45a0-974a-abe65827a27d", 2, 1, 1.50, 12, '2020-06-19 19:34:02');
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("78087753-b86c-45a0-974a-abe65827a27d", 3, 2, 2.99, 48, '2021-06-19 17:34:02');
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("e3bbf41a-a9d2-4e39-8546-11beecba6c01", 3, 2, 2.99, 24, '2021-07-02 10:18:35');
-INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES ("1ad6afbf-8ca1-453f-baf6-7be400f02595", 2, 4, 18.99, 1, '2021-07-02 10:18:35');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesUnitPrice, SalesTax, Quantity, SalesDate) VALUES ("78087753-b86c-45a0-974a-abe65827a27d", 2, 1, 1.50, 0.08, 12, '2020-06-19 19:34:02');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesUnitPrice, SalesTax, Quantity, SalesDate) VALUES ("78087753-b86c-45a0-974a-abe65827a27d", 3, 2, 2.99, 0.08, 48, '2021-06-19 17:34:02');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesUnitPrice, SalesTax, Quantity, SalesDate) VALUES ("e3bbf41a-a9d2-4e39-8546-11beecba6c01", 3, 2, 2.99, 0.08, 24, '2021-07-02 10:18:35');
+INSERT INTO sales(SalesEventID, EmployeeID, ItemID, SalesUnitPrice, SalesTax, Quantity, SalesDate) VALUES ("1ad6afbf-8ca1-453f-baf6-7be400f02595", 2, 4, 18.99, 0.08, 1, '2021-07-02 10:18:35');
 SELECT ' [+] orders added:' as '';
 SELECT SalesID, SalesEventID, SalesDate FROM SIMS_app_data.sales;
 
