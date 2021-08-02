@@ -24,8 +24,9 @@ public class Database {
 	static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	static List<List> resultsFromWasteQuery = new ArrayList<List>();
 	static List<List> resultsFromSalesQuery = new ArrayList<List>();
-	//static List<List> resultsFromUserQuery = new ArrayList<List>();
-	static Map<String, Integer> itemIds = new HashMap<String, Integer>();
+	static List<List> resultsFromUserQuery = new ArrayList<List>();
+	static Map<Object, Object> itemIds = new HashMap<Object, Object>();
+	static Map<Object, Object> itemPrices = new HashMap<Object, Object>();
 	static Map<Object, String> userIds = new HashMap<Object, String>();
 	static Connector connector;
 	
@@ -49,7 +50,8 @@ public class Database {
 		resultsFromOrderQuery = connector.getResultsofQuery("orders");
 		resultsFromWasteQuery = connector.getResultsofQuery("waste");
 		resultsFromSalesQuery = connector.getResultsofQuery("sales");
-		//resultsFromSalesQuery = connector.getResultsofQuery("users");
+		resultsFromUserQuery = connector.getResultsofQuery("users");
+		System.out.println(resultsFromUserQuery);
 		populateItemIdMap();
 	}
 
@@ -60,7 +62,9 @@ public class Database {
 		 */
 		try {
 			for (List l : resultsFromItemQuery) {
-				itemIds.put((String) l.get(1), Integer.parseInt((String) l.get(0)));
+				itemIds.put(l.get(1), l.get(0));
+				itemPrices.put(l.get(1), l.get(5));
+				
 			}
 		} catch (Exception e) {
 			GeneralGuiFunctions.displayErrorPane(e + "\nSomething went wrong in populateItemIDMap (Database.java)");
@@ -91,6 +95,10 @@ public class Database {
 	}
 	
 	static Map getItemIdMap() {
+		return itemIds;
+	}
+	
+	static Map getItemPricesMap() {
 		return itemIds;
 	}
 
