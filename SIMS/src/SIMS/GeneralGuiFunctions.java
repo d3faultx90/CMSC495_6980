@@ -109,7 +109,7 @@ public class GeneralGuiFunctions {
 	static double parseSales(List<List> sales) {
 		double totalProfit = 0;
 		for (List l : sales) {
-			totalProfit += Double.parseDouble((String) l.get(5));
+			totalProfit += Double.parseDouble((String) l.get(6));
 		}
 		// System.out.println(totalProfit);
 		return totalProfit;

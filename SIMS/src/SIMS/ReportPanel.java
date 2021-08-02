@@ -24,6 +24,7 @@ public class ReportPanel extends javax.swing.JPanel {
         columnModel.getColumn(0).setPreferredWidth(20);
         //System.out.println(Database.getSalesTable());
         GeneralGuiFunctions.parseSales(getYearsProfits("2021"));
+        System.out.println(Database.resultsFromSalesQuery);
         getUniqueYears(Database.resultsFromSalesQuery);
         populateTable();
 		//System.out.println(Months.JANUARY.getNumericalRepresentation());
@@ -47,7 +48,7 @@ public class ReportPanel extends javax.swing.JPanel {
     private void getUniqueYears(List<List> sales) {
     	ArrayList<String> uniqueYears = new ArrayList<String>();
         for (List l : sales) {
-        	String year = l.get(7).toString().substring(0, 4);
+        	String year = l.get(8).toString().substring(0, 4);
         	if (!uniqueYears.contains(year)) {
         		//System.out.println(year);
         		uniqueYears.add(year);
