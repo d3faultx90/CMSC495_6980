@@ -1,0 +1,5 @@
+"InventoryID","Name","Description","FoodCategory","WholeSalePrice","RetailPrice","Quantity"
+"1","Green Apples","Savory, stem and all.","Fruit","0.25","1.50","125"
+"2","Idaho Potato","Mash it, bake it, fry it, grill it.","Vegitable","0.30","2.99","1214"
+"3","Green Bell Pepper","Freshest bell pepper this side of the Atlantic.","Vegitable","0.25","0.60","180"
+"4","Dozen Toilet Paper","Softest brand around, double ply.","Other","5.15","18.99","35"

@@ -6,6 +6,7 @@
  */
 package SIMS;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,29 +24,68 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 	// Given the ItemTable, find all unique categories.
 	private void parseCategories() {
-    	ArrayList<String> categoryArrayList = new ArrayList<String>();
-        for (List l : Database.getItemTable()) {
-        	// If category hasn't been added yet, then add it
-        	if (!categoryArrayList.contains(l.get(3))) {
-        		categoryArrayList.add(l.get(3).toString());
-        	}
-        }
-        // Convert to an Array because that is what the JComboBox expects
-    	categories = categoryArrayList.toArray(String[]::new);
-    }
-	
+		ArrayList<String> categoryArrayList = new ArrayList<String>();
+		categoryArrayList.add("New Category"); // Category field must be filled in
+		for (List l : Database.getItemTable()) {
+			System.out.println(l);
+			// If category hasn't been added yet, then add it
+			if (!categoryArrayList.contains(l.get(3))) {
+				categoryArrayList.add(l.get(3).toString());
+			}
+		}
+		// Convert to an Array because that is what the JComboBox expects
+		categories = categoryArrayList.toArray(String[]::new);
+	}
+
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		System.out.println("Item added to database!");
-		
-		// createInventoryItem(String name, String description, String foodCategory, double wholeSalePrice, double retailPrice, int quantity){
-		//Gets hooke dup to createInventory item
+
+		// createInventoryItem(String name, String description, String foodCategory,
+		// double wholeSalePrice, double retailPrice, int quantity){
+		// Gets hooke dup to createInventory item
 	}
 
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
 	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private void categoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+		System.out.println("Did thing");
+		if (categoryComboBox.getSelectedIndex() != 0) {
+			newCategoryLabel.setVisible(false);
+			newCategoryTextfield.setVisible(false);
+		} else {
+			newCategoryLabel.setVisible(true);
+			newCategoryTextfield.setVisible(true);
+		}
+	}
+	
+	private void ensureValidDoubleInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textfield) {
+		char c = evt.getKeyChar();
+		if ((!Character.isDigit(c) && c != '.') || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
+			evt.consume();
+		} else if (sellPriceTextfield.getText().contains(".") && c == '.') {
+			evt.consume();
+		}
+	}
+
+	private void purchasePriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
+		ensureValidDoubleInput(evt, purchasePriceTextfield);
+	}
+
+	private void sellPriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
+		ensureValidDoubleInput(evt, sellPriceTextfield);
+	}
+
+	private void quantityTextFieldKeyTyped(java.awt.event.KeyEvent evt) {
+		char c = evt.getKeyChar();
+		System.out.println(c);
+		if (!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
+			evt.consume();
+		}
+	}
+
+	// Variables declaration - do not modify
 	private javax.swing.JButton addItemButton;
 	private javax.swing.JLabel barcodeLabel;
 	private javax.swing.JComboBox<String> categoryComboBox;
@@ -57,13 +97,15 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private javax.swing.JPanel mainPanel;
 	private javax.swing.JLabel nameLabel;
 	private javax.swing.JTextField nameTextfield;
+	private javax.swing.JLabel newCategoryLabel;
+	private javax.swing.JTextField newCategoryTextfield;
 	private javax.swing.JLabel purchasePriceLabel;
 	private javax.swing.JTextField purchasePriceTextfield;
 	private javax.swing.JLabel quantityLabel;
 	private javax.swing.JTextField quantityTextField;
 	private javax.swing.JLabel sellPriceLabel;
 	private javax.swing.JTextField sellPriceTextfield;
-	// End of variables declaration//GEN-END:variables
+	// End of variables declaration
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -91,7 +133,10 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		helpButton = new javax.swing.JButton();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jTextArea1 = new javax.swing.JTextArea();
+		newCategoryLabel = new javax.swing.JLabel();
+		newCategoryTextfield = new javax.swing.JTextField();
 
+		addItemButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 		addItemButton.setText("Add Item");
 		addItemButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,19 +155,40 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		barcodeLabel.setText("Description");
 
 		descriptionlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+		descriptionlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		descriptionlabel.setText("Add New Item To Database");
 
 		categoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(categories));
+		categoryComboBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				categoryComboBoxActionPerformed(evt);
+			}
+		});
 
 		purchasePriceTextfield.setText(".50");
+		purchasePriceTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyTyped(java.awt.event.KeyEvent evt) {
+				purchasePriceTextfieldKeyTyped(evt);
+			}
+		});
 
 		sellPriceTextfield.setText("1.25");
+		sellPriceTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyTyped(java.awt.event.KeyEvent evt) {
+				sellPriceTextfieldKeyTyped(evt);
+			}
+		});
 
 		nameTextfield.setText("Red Apple");
 
 		quantityLabel.setText("Quantity");
 
 		quantityTextField.setText("10");
+		quantityTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyTyped(java.awt.event.KeyEvent evt) {
+				quantityTextFieldKeyTyped(evt);
+			}
+		});
 
 		helpButton.setBackground(new java.awt.Color(255, 255, 153));
 		helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -140,76 +206,68 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		jTextArea1.setMaximumSize(new java.awt.Dimension(13, 20));
 		jScrollPane1.setViewportView(jTextArea1);
 
+		newCategoryLabel.setText("New Category");
+
 		javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
 		mainPanel.setLayout(mainPanelLayout);
 		mainPanelLayout.setHorizontalGroup(mainPanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
 						.addGap(0, 0, Short.MAX_VALUE).addComponent(helpButton)
-						.addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(mainPanelLayout.createSequentialGroup().addGap(76, 76, 76).addComponent(
-										descriptionlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 195,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGroup(mainPanelLayout.createSequentialGroup()
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(mainPanelLayout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-												.addGroup(mainPanelLayout.createSequentialGroup()
+						.addGroup(mainPanelLayout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+										javax.swing.GroupLayout.Alignment.TRAILING,
+										mainPanelLayout.createSequentialGroup().addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(descriptionlabel, javax.swing.GroupLayout.PREFERRED_SIZE,
+														361, javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGroup(mainPanelLayout.createSequentialGroup().addGroup(mainPanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(mainPanelLayout.createSequentialGroup()
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(mainPanelLayout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
 														.addGroup(mainPanelLayout
 																.createParallelGroup(
+																		javax.swing.GroupLayout.Alignment.LEADING)
+																.addComponent(purchasePriceLabel)
+																.addComponent(sellPriceLabel,
 																		javax.swing.GroupLayout.Alignment.TRAILING)
-																.addGroup(mainPanelLayout.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.LEADING)
-																		.addComponent(purchasePriceLabel).addComponent(
-																				sellPriceLabel,
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																		.addComponent(categoryLabel,
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																		.addComponent(nameLabel,
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																		.addComponent(barcodeLabel,
-																				javax.swing.GroupLayout.Alignment.TRAILING))
-																.addComponent(quantityLabel))
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addGroup(mainPanelLayout
-																.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.LEADING)
-																.addComponent(quantityTextField,
-																		javax.swing.GroupLayout.PREFERRED_SIZE, 234,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addGroup(mainPanelLayout.createParallelGroup(
-																		javax.swing.GroupLayout.Alignment.LEADING,
-																		false)
-																		.addComponent(categoryComboBox, 0,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addComponent(nameTextfield)
-																		.addComponent(sellPriceTextfield)
-																		.addComponent(purchasePriceTextfield,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				234,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-																.addComponent(jScrollPane1,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)))
-												.addGroup(mainPanelLayout.createSequentialGroup().addGap(31, 31, 31)
-														.addComponent(addItemButton,
-																javax.swing.GroupLayout.PREFERRED_SIZE, 286,
-																javax.swing.GroupLayout.PREFERRED_SIZE)))))
-						.addContainerGap(50, Short.MAX_VALUE)));
+																.addComponent(categoryLabel,
+																		javax.swing.GroupLayout.Alignment.TRAILING)
+																.addComponent(nameLabel,
+																		javax.swing.GroupLayout.Alignment.TRAILING)
+																.addComponent(barcodeLabel,
+																		javax.swing.GroupLayout.Alignment.TRAILING)
+																.addComponent(newCategoryLabel,
+																		javax.swing.GroupLayout.Alignment.TRAILING))
+														.addComponent(quantityLabel))
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(mainPanelLayout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+																false)
+														.addComponent(quantityTextField)
+														.addComponent(categoryComboBox, 0,
+																javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(nameTextfield).addComponent(sellPriceTextfield)
+														.addComponent(purchasePriceTextfield).addComponent(jScrollPane1)
+														.addComponent(newCategoryTextfield)))
+										.addGroup(mainPanelLayout.createSequentialGroup().addGap(37, 37, 37)
+												.addComponent(addItemButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+														286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+										.addGap(0, 0, Short.MAX_VALUE)))
+						.addContainerGap()));
 		mainPanelLayout.setVerticalGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(mainPanelLayout.createSequentialGroup()
 						.addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(helpButton)
 								.addGroup(mainPanelLayout.createSequentialGroup().addContainerGap()
 										.addComponent(descriptionlabel)
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(mainPanelLayout
 												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(nameLabel)
-												.addComponent(nameTextfield, javax.swing.GroupLayout.PREFERRED_SIZE,
+												.addComponent(nameLabel).addComponent(nameTextfield,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,6 +277,14 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 														javax.swing.GroupLayout.PREFERRED_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(mainPanelLayout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(newCategoryTextfield,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(newCategoryLabel))
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(mainPanelLayout
 												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -235,32 +301,29 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(sellPriceLabel))
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(mainPanelLayout
 												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(barcodeLabel)
 												.addGroup(mainPanelLayout.createSequentialGroup()
+														.addComponent(jScrollPane1,
+																javax.swing.GroupLayout.PREFERRED_SIZE, 48,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addComponent(barcodeLabel).addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-														mainPanelLayout.createSequentialGroup().addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-																.addComponent(jScrollPane1,
+																javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+														.addGroup(mainPanelLayout
+																.createParallelGroup(
+																		javax.swing.GroupLayout.Alignment.BASELINE)
+																.addComponent(quantityTextField,
 																		javax.swing.GroupLayout.PREFERRED_SIZE,
 																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addGap(18, 18, 18)
-										.addGroup(mainPanelLayout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(quantityTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(quantityLabel))
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addComponent(addItemButton)))
-						.addGap(42, 42, 42)));
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
+																.addComponent(quantityLabel)))))
+								.addComponent(helpButton))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(addItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(49, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -273,7 +336,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(0, 6, Short.MAX_VALUE)));
+						.addGap(0, 0, Short.MAX_VALUE)));
 	}// </editor-fold>
 
 }
