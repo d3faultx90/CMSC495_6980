@@ -45,25 +45,28 @@ public class WastePanel extends javax.swing.JPanel {
 				System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
 
 			}
-			
+
 			// employeeId connecter.userID
-			Map<Object, Object> itemIds = new HashMap<Object, Object>();
-			Map<Object, Object> itemPrices = new HashMap<Object, Object>();
-			Object id = itemIds.get(selectedCellValue);
-			Object price = itemPrices.get(selectedCellValue);
+			//Map<Object, Object> itemIds = new HashMap<Object, Object>();
+			//Map<Object, Object> itemPrices = new HashMap<Object, Object>();
+			Object id = Database.itemIds.get(selectedCellValue);
+			Object price = Database.itemPrices.get(selectedCellValue);
 
 			int itemID = GeneralGuiFunctions.castObjectToInteger(id);
 			double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(price);
 			String quantity = quantityTextfield.getText();
 			int removalQuantity = GeneralGuiFunctions.castObjectToInteger(quantity);
-			String date = DateHandler.getTodaysDateUser();
+			String date = DateHandler.getTodaysDateSql();
 			int status = 0;
+			
+			System.out.println("waste");
 
 			// createWaste(int itemID, double wholeSalePrice, int removalQuantity,String
 			// date, int status)
 			Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
 
 		} catch (NumberFormatException d) {
+			GeneralGuiFunctions.displayErrorPane("I am really angry ... call and admin.");
 
 		} catch (ArrayIndexOutOfBoundsException e) {
 

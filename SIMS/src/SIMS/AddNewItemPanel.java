@@ -27,7 +27,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		ArrayList<String> categoryArrayList = new ArrayList<String>();
 		categoryArrayList.add("New Category"); // Category field must be filled in
 		for (List l : Database.getItemTable()) {
-			System.out.println(l);
+			//System.out.println(l);
 			// If category hasn't been added yet, then add it
 			if (!categoryArrayList.contains(l.get(3))) {
 				categoryArrayList.add(l.get(3).toString());
@@ -38,9 +38,14 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	}
 
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		System.out.println("Item added to database!");
-
-		// createInventoryItem(String name, String description, String foodCategory,
+		String name = nameTextfield.getText();
+		String description = descriptionTextArea.getText();
+		String category = categoryComboBox.getSelectedIndex() == 0 ? newCategoryTextfield.getText() : (String) categoryComboBox.getSelectedItem();
+		double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(purchasePriceTextfield.getText());
+		double retailPrice = GeneralGuiFunctions.castObjectToDouble(sellPriceTextfield.getText());
+		int quantity = GeneralGuiFunctions.castObjectToInteger(quantityTextfield.getText());
+		Database.getConnector().createInventoryItem(name, description, category, wholeSalePrice, retailPrice, quantity);
+		GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
 		// double wholeSalePrice, double retailPrice, int quantity){
 		// Gets hooke dup to createInventory item
 	}
@@ -50,7 +55,6 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	}
 
 	private void categoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
-		System.out.println("Did thing");
 		if (categoryComboBox.getSelectedIndex() != 0) {
 			newCategoryLabel.setVisible(false);
 			newCategoryTextfield.setVisible(false);
@@ -64,7 +68,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		char c = evt.getKeyChar();
 		if ((!Character.isDigit(c) && c != '.') || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
 			evt.consume();
-		} else if (sellPriceTextfield.getText().contains(".") && c == '.') {
+		} else if (textfield.getText().contains(".") && c == '.') {
 			evt.consume();
 		}
 	}
@@ -79,7 +83,6 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 	private void quantityTextFieldKeyTyped(java.awt.event.KeyEvent evt) {
 		char c = evt.getKeyChar();
-		System.out.println(c);
 		if (!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
 			evt.consume();
 		}
@@ -90,10 +93,10 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel barcodeLabel;
 	private javax.swing.JComboBox<String> categoryComboBox;
 	private javax.swing.JLabel categoryLabel;
-	private javax.swing.JLabel descriptionlabel;
+	private javax.swing.JLabel descriptionLabel;
 	private javax.swing.JButton helpButton;
 	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTextArea jTextArea1;
+	private javax.swing.JTextArea descriptionTextArea;
 	private javax.swing.JPanel mainPanel;
 	private javax.swing.JLabel nameLabel;
 	private javax.swing.JTextField nameTextfield;
@@ -102,7 +105,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel purchasePriceLabel;
 	private javax.swing.JTextField purchasePriceTextfield;
 	private javax.swing.JLabel quantityLabel;
-	private javax.swing.JTextField quantityTextField;
+	private javax.swing.JTextField quantityTextfield;
 	private javax.swing.JLabel sellPriceLabel;
 	private javax.swing.JTextField sellPriceTextfield;
 	// End of variables declaration
@@ -123,16 +126,16 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		purchasePriceLabel = new javax.swing.JLabel();
 		sellPriceLabel = new javax.swing.JLabel();
 		barcodeLabel = new javax.swing.JLabel();
-		descriptionlabel = new javax.swing.JLabel();
+		descriptionLabel = new javax.swing.JLabel();
 		categoryComboBox = new javax.swing.JComboBox<>();
 		purchasePriceTextfield = new javax.swing.JTextField();
 		sellPriceTextfield = new javax.swing.JTextField();
 		nameTextfield = new javax.swing.JTextField();
 		quantityLabel = new javax.swing.JLabel();
-		quantityTextField = new javax.swing.JTextField();
+		quantityTextfield = new javax.swing.JTextField();
 		helpButton = new javax.swing.JButton();
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jTextArea1 = new javax.swing.JTextArea();
+		descriptionTextArea = new javax.swing.JTextArea();
 		newCategoryLabel = new javax.swing.JLabel();
 		newCategoryTextfield = new javax.swing.JTextField();
 
@@ -154,9 +157,9 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 		barcodeLabel.setText("Description");
 
-		descriptionlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-		descriptionlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		descriptionlabel.setText("Add New Item To Database");
+		descriptionLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+		descriptionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		descriptionLabel.setText("Add New Item To Database");
 
 		categoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(categories));
 		categoryComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -183,8 +186,8 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 		quantityLabel.setText("Quantity");
 
-		quantityTextField.setText("10");
-		quantityTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+		quantityTextfield.setText("10");
+		quantityTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				quantityTextFieldKeyTyped(evt);
 			}
@@ -199,12 +202,12 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 			}
 		});
 
-		jTextArea1.setColumns(20);
-		jTextArea1.setLineWrap(true);
-		jTextArea1.setRows(5);
-		jTextArea1.setAutoscrolls(false);
-		jTextArea1.setMaximumSize(new java.awt.Dimension(13, 20));
-		jScrollPane1.setViewportView(jTextArea1);
+		descriptionTextArea.setColumns(20);
+		descriptionTextArea.setLineWrap(true);
+		descriptionTextArea.setRows(5);
+		descriptionTextArea.setAutoscrolls(false);
+		descriptionTextArea.setMaximumSize(new java.awt.Dimension(13, 20));
+		jScrollPane1.setViewportView(descriptionTextArea);
 
 		newCategoryLabel.setText("New Category");
 
@@ -220,7 +223,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 										mainPanelLayout.createSequentialGroup().addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
 												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(descriptionlabel, javax.swing.GroupLayout.PREFERRED_SIZE,
+												.addComponent(descriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
 														361, javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addGroup(mainPanelLayout.createSequentialGroup().addGroup(mainPanelLayout
 										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +250,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 												.addGroup(mainPanelLayout
 														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
 																false)
-														.addComponent(quantityTextField)
+														.addComponent(quantityTextfield)
 														.addComponent(categoryComboBox, 0,
 																javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 														.addComponent(nameTextfield).addComponent(sellPriceTextfield)
@@ -262,7 +265,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 				.addGroup(mainPanelLayout.createSequentialGroup()
 						.addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(mainPanelLayout.createSequentialGroup().addContainerGap()
-										.addComponent(descriptionlabel)
+										.addComponent(descriptionLabel)
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addGroup(mainPanelLayout
 												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -314,7 +317,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 														.addGroup(mainPanelLayout
 																.createParallelGroup(
 																		javax.swing.GroupLayout.Alignment.BASELINE)
-																.addComponent(quantityTextField,
+																.addComponent(quantityTextfield,
 																		javax.swing.GroupLayout.PREFERRED_SIZE,
 																		javax.swing.GroupLayout.DEFAULT_SIZE,
 																		javax.swing.GroupLayout.PREFERRED_SIZE)
