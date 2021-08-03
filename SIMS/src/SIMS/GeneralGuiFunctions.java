@@ -33,7 +33,8 @@ public class GeneralGuiFunctions {
 
 	// Given a 2D list, add the item and the quantity of the list to the selected
 	// table
-	static void addItemAndQuantityToTable(DefaultTableModel model, List<List> resultsFromItemQuery) {
+	static void addItemAndQuantityToTable(javax.swing.JTable table, List<List> resultsFromItemQuery) {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		for (List l : resultsFromItemQuery) {
 			model.addRow(new Object[] { l.get(1), String.format("%,d", Integer.parseInt((String) l.get(6))) });
 		}

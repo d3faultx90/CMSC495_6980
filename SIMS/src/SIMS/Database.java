@@ -29,23 +29,28 @@ public class Database {
 	static Map<Object, Object> itemPrices = new HashMap<Object, Object>();
 	static Map<Object, String> userIds = new HashMap<Object, String>();
 	static Connector connector;
+	private int role;
 	
 	public Database(Connector connector) {
 		this.connector = connector;
+		role = connector.role;
 		initialize();
 	}
 	
 	private void initialize() {
-		/**
-		 * Initializes all of the tables.
-		 */
-		resultsFromItemQuery = connector.getResultsofQuery("inventory");
-		resultsFromOrderQuery = connector.getResultsofQuery("orders");
-		resultsFromWasteQuery = connector.getResultsofQuery("waste");
-		resultsFromSalesQuery = connector.getResultsofQuery("sales");
-		resultsFromUserQuery = connector.getResultsofQuery("users");
-		populateItemIdMap();
-		populateUserIdMap();
+		// Only Admins and Supervisors need the user table
+		if (role < 2) {
+			resultsFromUserQuery = connector.getResultsofQuery("users");
+		}
+		if (role > 0) {
+			resultsFromItemQuery = connector.getResultsofQuery("inventory");
+			resultsFromOrderQuery = connector.getResultsofQuery("orders");
+			resultsFromWasteQuery = connector.getResultsofQuery("waste");
+			resultsFromSalesQuery = connector.getResultsofQuery("sales");;
+			populateItemIdMap();
+			populateUserIdMap();
+		}
+
 	}
 
 	private void populateItemIdMap() {
@@ -109,6 +114,10 @@ public class Database {
 
 	static List<List> getSalesTable() {
 		return resultsFromSalesQuery;
+	}
+	
+	static List<List> getUsersTable() {
+		return resultsFromUserQuery;
 	}
 	// End of accessor methods
 	

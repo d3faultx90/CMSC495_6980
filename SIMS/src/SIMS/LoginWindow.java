@@ -37,7 +37,7 @@ public class LoginWindow extends javax.swing.JFrame {
         if (result == true) {
             connector.getUserRole(); // Based on their role, show them their appropriate window
             if (connector.role == 0) {
-                GeneralGuiFunctions.closeWindow(this, new AdminWindow());
+                GeneralGuiFunctions.closeWindow(this, new AdminWindow(connector, username));
             }
             else if (connector.role == 1) {
                 GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));

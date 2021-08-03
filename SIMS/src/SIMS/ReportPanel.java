@@ -7,6 +7,7 @@
 package SIMS;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -54,6 +55,8 @@ public class ReportPanel extends javax.swing.JPanel {
         		uniqueYears.add(year);
         	}
         }
+        Collections.sort(uniqueYears); // Sort the years
+        Collections.reverse(uniqueYears); // Reverse them (so recent year is first)
     	this.uniqueYears = uniqueYears;
     }
     
