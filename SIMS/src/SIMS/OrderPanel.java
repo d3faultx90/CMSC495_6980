@@ -31,13 +31,15 @@ public class OrderPanel extends javax.swing.JPanel {
 			for (int i = 0; i < orderedItems.getRowCount(); i++) {
 
 				// 2D List to pass to createOrder
-				List<Integer> list = new ArrayList<Integer>();
+				List<Object> list = new ArrayList<Object>();
 
 				// int employeeID = ;
-				int itemID = itemNum.get(orderedItems.getValueAt(i, 0));
+				Object itemID = itemNum.get(orderedItems.getValueAt(i, 0));
+				System.out.println(itemID);
 				// double salesTax =;
 				// double wholeSalePrice = ;
-				int quantity = GeneralGuiFunctions.castObjectToInteger(orderedItems.getValueAt(i, 1));
+				Object quantity = GeneralGuiFunctions.castObjectToInteger(orderedItems.getValueAt(i, 1));
+				System.out.println(quantity);
 				// String date = ;
 				// int status = ;
 
