@@ -49,9 +49,18 @@ public class GeneralGuiFunctions {
 		table.setRowSorter(sorter);
 	}
 
-	static int castSqlObjectToInteger(Object obj) {
+	static int castObjectToInteger(Object obj) {
 		return Integer.parseInt((String) obj);
 	}
+	
+	static double castObjectToDouble(Object obj) {
+		return Double.parseDouble((String) obj);
+	}
+	
+//	
+//	static int castSqlObjectToInteger(Object obj) {
+//		return Integer.parseInt((String) obj);
+//	}
 
 	// Display this JOptionpane whenever a field is missing input or has negative
 	// values

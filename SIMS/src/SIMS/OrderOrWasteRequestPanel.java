@@ -8,6 +8,7 @@ package SIMS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -21,7 +22,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		this.tableTitle = tableTitle + " Requests";
 		initComponents();
 		this.resultsFromQuery = resultsFromQuery;
-		addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
+		//addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
 	}
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,22 +61,23 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		}
 	}
 
-	// Given a 2D list, add the item and the quantity of the list to the selected
-	// table
-	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
-		for (List l : resultsFromQuery) {
-			if (GeneralGuiFunctions.castSqlObjectToInteger(l.get(10)) == 0) {
-				model.addRow(new Object[] { l.get(9), l.get(2) });
-			}
-		}
-	}
-	
-//	// IF SUPERVISORS CAN GET ACCESS TO USER TABLES DO THIS HERE!!!!!!!!!!!!
-//	static void addIdAndRequestingUserToTable(DefaultTableModel model, List<List> resultsFromQuery) {
-//		Map usernames = Database.getUserIdMap();
+//	// Given a 2D list, add the item and the quantity of the list to the selected
+//	// table
+//	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
 //		for (List l : resultsFromQuery) {
 //			if (GeneralGuiFunctions.castSqlObjectToInteger(l.get(10)) == 0) {
-//				model.addRow(new Object[] { l.get(9), usernames.get(l.get(2)) });
+//				model.addRow(new Object[] { l.get(9), l.get(2) });
+//			}
+//		}
+//	}
+	
+	// IF SUPERVISORS CAN GET ACCESS TO USER TABLES DO THIS HERE!!!!!!!!!!!!
+//	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
+//		Map usernames = Database.getUserIdMap();
+//		for (List l : resultsFromQuery) {
+//			if (GeneralGuiFunctions.castObjectToInteger(l.get(9)) == 0) {
+//				System.out.println(usernames);
+//				model.addRow(new Object[] { l.get(8), usernames.get(l.get(2)) });
 //			}
 //		}
 //	}

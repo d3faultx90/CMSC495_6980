@@ -26,28 +26,32 @@ public class SalesPanel extends javax.swing.JPanel {
 		
 		// Copy variables here for easier reading
 		javax.swing.JTable saleTable = salesPanel.orderTable;
-		Map <String, Integer> itemIds = Database.getItemIdMap();
+		Map <Object, Object> itemIds = Database.getItemIdMap();
+		Map <Object, Object> itemPrices = Database.getItemPricesMap();
 		
 		// DELETE THIS AND GRAB IT FROM ELSEWHERE
-		int employeeId = 3;
+		int employeeId = Database.getConnector().userID;
+		double salesTax = .08; // Don't hardcode
+		String date = DateHandler.formatDateForSql(jDateChooser1.getDate());
 		// 2D list that is passed into createSale() index 0 = itemID, index 1 = quantity
 		List<List> itemIdsAndQuantity = new ArrayList<List>();
 		// Iterates through the whole table to grab each row
 		for (int i = 0; i < saleTable.getRowCount(); i++) {
 			
-			List<Integer> list = new ArrayList<Integer>();
-			int itemID = itemIds.get(saleTable.getValueAt(i, 0));
-			int quantity = GeneralGuiFunctions.castSqlObjectToInteger(saleTable.getValueAt(i, 1));
+			List<Object> list = new ArrayList<Object>();
+			Object itemID = itemIds.get(saleTable.getValueAt(i, 0));
+			Object unitPrice = itemPrices.get(saleTable.getValueAt(i, 0));
+			Object quantity = saleTable.getValueAt(i, 1);
 			list.add(itemID);
+			list.add(unitPrice);
 			list.add(quantity);
 			itemIdsAndQuantity.add(list);
-			
-			double salesTax = .08; // Don't hardcode
-			System.out.println("Sale happened for " + quantity + " items with the id of " + itemID);
+
+			//System.out.println("Sale happened for " + quantity + " items with the id of " + itemID);
 		}
-		System.out.println(itemIdsAndQuantity);
+		//System.out.println(itemIdsAndQuantity);
 		// Pass the 2D list here once method is updated
-		//Database.getConnector().createSales(employeeId, itemID, salesTax, quantity);
+		Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
 	}
 
 	// Variables declaration - do not modify

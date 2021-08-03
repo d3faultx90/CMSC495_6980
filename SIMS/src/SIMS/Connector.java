@@ -42,6 +42,7 @@ public class Connector {
 		
 	}
 	
+	
 	private Connection buildJDBCConnecter() throws SQLException {
 		/**
 		 * Method creates connection to AWS cloud using 
@@ -119,6 +120,85 @@ public class Connector {
             while (rs.next()) {
             
             	ArrayList<String> row = new ArrayList<String>();
+            	
+            	for (int i = 1; i <= columnsNumber; i++) {
+            		row.add(rs.getString(i));
+                }
+            	
+            	results.add(row);
+            }
+            
+			// close con, rs, and st
+			rs.close();
+			st.close();
+			con.close();
+            
+        } catch (SQLException e) {
+        	// handle and stop print for production
+            e.printStackTrace();
+        }
+
+        return results;
+        
+    } // end of getAllInventoryItems()
+
+    
+    protected List<List> exportResultsofQuery(String tableName) {
+        /**
+         * Method returns List<List> containing MySQL SELECT query 
+         * 	with column names.
+         * 
+         * @param tableName This is the name of the table you wish to query.
+         * @return results 
+         */
+
+        List<List> results = new ArrayList<List>();
+        String query = null;
+
+        switch(tableName.toLowerCase())
+        {
+            case "inventory":
+            	query = "SELECT * FROM SIMS_app_data.inventory";
+                break;
+            case "users":
+            	query ="SELECT * FROM SIMS_app_data.users";
+                break;
+            case "orders":
+            	query = "SELECT * FROM SIMS_app_data.orders";
+                break;
+            case "sales":
+            	query = "SELECT * FROM SIMS_app_data.sales";
+                break;
+            case "waste":
+            	query = "SELECT * FROM SIMS_app_data.waste";
+                break;
+            default:
+                System.out.println("Table does not exist");
+                //return something else
+        }
+
+        // 
+        try {
+        	
+        	// connect to database via JDBC
+        	Connection con = buildJDBCConnecter();
+        	Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+        	
+        	ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();  
+            
+            // set column name
+        	ArrayList<String> row = new ArrayList<String>();
+        	for(int i = 1; i<=columnsNumber; i++) {
+        		row.add(rsmd.getColumnName(i));
+             }
+        	// add row containing column names
+        	results.add(row);
+            
+            while (rs.next()) {
+            
+            	row = new ArrayList<String>();
             	
             	for (int i = 1; i <= columnsNumber; i++) {
             		row.add(rs.getString(i));
@@ -276,7 +356,9 @@ public class Connector {
 	}  // end of verifyItemExists()
 
     
-    protected List<List> createInventoryItem(String name, String description, String foodCategory, double wholeSalePrice, double retailPrice, int quantity){
+    protected List<List> createInventoryItem(String name, String description, 
+    		String foodCategory, double wholeSalePrice, double retailPrice, 
+    		int quantity){
 	    /**
 	     * Method determines whether item exist in SIMS_app_data.inventory.
 	     * 
@@ -293,36 +375,44 @@ public class Connector {
     	List<List> results = new ArrayList<List>();
     	
 
-    	// if (verifyItemExists(name)) {
-    	// 		// results = updated 
-    	// 
-        // } else { ... 
-    	
-        // 
-        try {
-        	
-        	// connect to database via JDBC
-        	Connection con = buildJDBCConnecter();
-	    	
-	    	PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.inventory(Name, Description, FoodCategory , WholeSalePrice, RetailPrice, Quantity) VALUES (?, ?, ?, ?, ?, ?)");
-	    	st.setString(1, name);
-	    	st.setString(2, description);
-	    	st.setString(3, foodCategory);
-	    	st.setDouble(4, wholeSalePrice);
-	    	st.setDouble(5, retailPrice);
-	    	st.setInt(6, quantity);
-	        int rs = st.executeUpdate();
-        	
-			// close con, rs, and st
-			st.close();
-			con.close();
+    	Boolean itemExists = verifyItemExists(name);
+
+    	if (itemExists == false) {
+
+            // 
+            try {
+            	
+            	// connect to database via JDBC
+            	Connection con = buildJDBCConnecter();
+    	    	
+    	    	PreparedStatement st = con.prepareStatement("INSERT INTO "
+    	    			+ "SIMS_app_data.inventory(Name, Description, FoodCategory ,"
+    	    			+ " WholeSalePrice, RetailPrice, Quantity) VALUES "
+    	    			+ "(?, ?, ?, ?, ?, ?)");
+    	    	
+    	    	st.setString(1, name);
+    	    	st.setString(2, description);
+    	    	st.setString(3, foodCategory);
+    	    	st.setDouble(4, wholeSalePrice);
+    	    	st.setDouble(5, retailPrice);
+    	    	st.setInt(6, quantity);
+    	        int rs = st.executeUpdate();
+            	
+    	        // need to verify rs is success
+            	
+    			// close con, rs, and st
+    			st.close();
+    			con.close();
+                
+    			//if (rs != 1) throw SQLException("Failed to create new inventory item.");
+    			
+            } catch (SQLException e) {
+            	// handle and stop print for production
+                e.printStackTrace();
+            }
             
-			//if (rs != 1) throw SQLException("Failed to create new inventory item.");
-			
-        } catch (SQLException e) {
-        	// handle and stop print for production
-            e.printStackTrace();
-        }
+    	} // end of if-else
+    	
     	
         results = getResultsofQuery("inventory");
         
@@ -331,68 +421,143 @@ public class Connector {
     } // end of updatedInventory()
     
     
-    protected List<List> createOrder(int employeeID, int itemID, double saleTax, double wholeSalePrice, int quantity, String date, int status) {
-	    /**
-	     * Method determines whether item exist in SIMS_app_data.orders.
+    protected List<List> createOrder(List<List> orderRecord, String salesDate, 
+            int status) {
+        /**
+         * Method creates sales record based on list provided.
+         * 
+         * List inside of saleRecord need to contain the following:
+         *     int itemID, double salePrice, int quantity
+         * 
+         * @param orderRecord This is a List of List (2D). 
+         * 
+         * @return List of List which is new result of all order items.
+         */
+    
+        List<List> results = new ArrayList<List>();
+        String orderEventID = UUID.randomUUID().toString();
+    
+        // 
+        try {
+            
+            // connect to database via JDBC
+            Connection con = buildJDBCConnecter();
+            
+            // build and send query per item entry in list
+            for (List item : orderRecord) {
+        
+                PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.orders"
+                        + "(OrderEventID, EmployeeID, ItemID, WholeSaleUnitPrice, "
+                        + "Quantity, OrderDate, Status) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+                
+                // each list in saleRecord must be formated as ...
+                // int itemID, double salePrice, int quantity
+                st.setString(1, orderEventID);
+                st.setInt(2, this.userID);
+                st.setInt(3, (GeneralGuiFunctions.castObjectToInteger(item.get(0))));
+                st.setDouble(4, (GeneralGuiFunctions.castObjectToDouble(item.get(1))));
+                st.setInt(5, (GeneralGuiFunctions.castObjectToInteger(item.get(2))));
+                st.setString(6, salesDate);
+                st.setInt(7, status);
+                
+                int rs = st.executeUpdate();
+
+                //if (rs != 1) throw SQLException("Failed to create new sales item.");
+                
+                // close st
+                st.close();
+             
+            }
+                        
+            // close con
+            con.close();
+                        
+        } catch (SQLException e) {
+            // handle and stop print for production
+            e.printStackTrace();
+        }
+        
+        results = getResultsofQuery("order");
+        
+        return results;
+                
+    } // end of createOrder()
+    
+    
+    protected List<List> createSales(List<List> saleRecord, double salesTax, 
+    		String salesDate){
+    	/**
+	     * Method creates sales record based on list provided.
 	     * 
-	     * @param OrderEventID This is a String object to look up item in inventory.
-	     * @param employeeID This is a String object to look up item in inventory.
-	     * @param itemID This is a String object for the type of inventory items. 
-	     * @param saleTax This is a Double object for the price a company paid for a product. 
-	     * @param wholeSalePrice This is a Double object for the sale price of an object.
-	     * @param quantity This is an Integer object for the amount of new objects.
-	     * @param date This is an Integer object for the amount of new objects.
-	     * @param status This is an Integer object for the amount of new objects.
+	     * List inside of saleRecord need to contain the following:
+	     * 	int itemID, double salePrice, String salesDate
+	     * 
+	     * @param saleRecord This is a List of List (2D). 
 	     * 
 	     * @return List of List which is new result of all order items.
 	     */
     
     	List<List> results = new ArrayList<List>();
-    	String orderEventID = UUID.randomUUID().toString();
-    
+    	String salesEventID = UUID.randomUUID().toString();
+
     	// 
         try {
         	
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
-	    	
-	    	PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.orders(OrderEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, OrderDate, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-	    	st.setString(1, orderEventID);
-	    	st.setInt(2, employeeID);
-	    	st.setInt(3, itemID);
-	    	st.setDouble(4, saleTax);
-	    	st.setDouble(5, wholeSalePrice);
-	    	st.setInt(6, quantity);
-	    	st.setString(7, date);
-	    	st.setInt(8, status);
-	        int rs = st.executeUpdate();
+        	
+        	// build and send query per item entry in list
+        	for (List item : saleRecord) {
+	    	       	
+		    	PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.sales"
+		    			+ "(SalesEventID, EmployeeID, ItemID, SalesUnitPrice, SalesTax,"
+		    			+ "Quantity, SalesDate) "
+		    			+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
+		    	
+		    	// each list in saleRecord must be formated as ...
+		    	// int itemID, double salePrice, String salesDate
+		     	st.setString(1, salesEventID);
+		    	st.setInt(2, this.userID);
+		    	st.setInt(3, (GeneralGuiFunctions.castObjectToInteger(item.get(0))));
+		    	st.setDouble(4, (GeneralGuiFunctions.castObjectToDouble(item.get(1))));
+		    	st.setDouble(5, salesTax);
+		    	st.setInt(6, (GeneralGuiFunctions.castObjectToInteger(item.get(2))));
+		    	st.setString(7, salesDate);
+		    	
+		        int rs = st.executeUpdate();
+
+				//if (rs != 1) throw SQLException("Failed to create new sales item.");
+		        
+		        // close statement
+				st.close();
+		     
+        	}
         	
 			// close con, rs, and st
-			st.close();
 			con.close();
-            
-			//if (rs != 1) throw SQLException("Failed to create new order item.");
-            
+			
         } catch (SQLException e) {
         	// handle and stop print for production
             e.printStackTrace();
         }
     	
-        results = getResultsofQuery("order");
+        results = getResultsofQuery("sales");
         
     	return results;
     			
-	} // end of createOrder()
+	} // end of createSales() 
+
+
     
-    
-    protected List<List> createWaste(int employeeID, int itemID, double saleTax, double wholeSalePrice, int quantity, String date, int status){
+    protected List<List> createWaste(int itemID, double wholeSalePrice, int removalQuantity, 
+    		String date, int status){
 	    /**
-	     * Method determines whether item exist in SIMS_app_data.waste.
+	     * Method can only waste one item at a time. Record is added to 
+	     * SIMS_app_data.waste.
 	     * 
-	     * @param WasteEventID This is a String object to look up item in inventory.
 	     * @param employeeID This is a String object to look up item in inventory.
 	     * @param itemID This is a String object for the type of inventory items. 
-	     * @param saleTax This is a Double object for the price a company paid for a product. 
 	     * @param wholeSalePrice This is a Double object for the sale price of an object.
 	     * @param quantity This is an Integer object for the amount of new objects.
 	     * @param date This is an Integer object for the amount of new objects.
@@ -410,15 +575,14 @@ public class Connector {
         	// connect to database via JDBC
         	Connection con = buildJDBCConnecter();
 	    	
-	    	PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.waste(WasteEventID, EmployeeID, ItemID, SalesTax, WholeSaleUnitPrice, Quantity, WasteDate, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+	    	PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.waste(WasteEventID, EmployeeID, ItemID, WholeSaleUnitPrice, Quantity, WasteDate, Status) VALUES (?, ?, ?, ?, ?, ?, ?)");
 	    	st.setString(1, wasteEventID);
-	    	st.setInt(2, employeeID);
+	    	st.setInt(2, this.userID);
 	    	st.setInt(3, itemID);
-	    	st.setDouble(4, saleTax);
-	    	st.setDouble(5, wholeSalePrice);
-	    	st.setInt(6, quantity);
-	    	st.setString(7, date);
-	    	st.setInt(8, status);
+	    	st.setDouble(4, wholeSalePrice);
+	    	st.setInt(5, removalQuantity);
+	    	st.setString(6, date);
+	    	st.setInt(7, status);
 	        int rs = st.executeUpdate();
         	
 			// close con, rs, and st
@@ -438,59 +602,10 @@ public class Connector {
     			
 	} // end of createWaste()
     
-    
-    protected List<List> createSales(int employeeID, int itemID, double saleTax, int quantity){
-	    /**
-	     * Method determines whether item exist in SIMS_app_data.waste.
-	     * 
-	     * @param employeeID This is a int object for employee.
-	     * @param itemID This is a String object for the type of inventory items. 
-	     * @param saleTax This is a Double object for the price a company paid for a product.
-	     * @param quantity This is an Integer object for the amount of new objects.
-	     * 
-	     * @return List of List which is new result of all order items.
-	     */
-    
-    	List<List> results = new ArrayList<List>();
-    	String salesEventID = UUID.randomUUID().toString();
-    	String salesDate = DateHandler.getTodaysDateSql();
-    
-    	// 
-        try {
-        	
-        	// connect to database via JDBC
-        	Connection con = buildJDBCConnecter();
-	    	
-	    	PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.sales(SalesEventID, EmployeeID, ItemID, SalesPrice, Quantity, SalesDate) VALUES (?, ?, ?, ?, ?, ?)");
-	    	st.setString(1, salesEventID);
-	    	st.setInt(2, employeeID);
-	    	st.setInt(3, itemID);
-	    	st.setDouble(4, saleTax);
-	    	st.setInt(5, quantity);
-	    	st.setString(6, salesDate);
-	        int rs = st.executeUpdate();
-        	
-			// close con, rs, and st
-			st.close();
-			con.close();
-            
-			//if (rs != 1) throw SQLException("Failed to create new sales item.");
-			
-        } catch (SQLException e) {
-        	// handle and stop print for production
-            e.printStackTrace();
-        }
-    	
-        results = getResultsofQuery("sales");
         
-    	return results;
-    			
-	} // end of createSales() 
- 
-    
-    protected List<List> updatedInventory(int updateQuantity, String name){
+    protected List<List> updateItemQuantity(int updateQuantity, String name){
 	    /**
-	     * Method adds to existing quantity in inventory. 
+	     * Method modifies existing quantity in inventory. 
 	     * 
 	     * @param updateQuantity This is an integer object update the inventory item quantity.
 	     * @param name This is a String object to look up item in inventory.
@@ -500,26 +615,32 @@ public class Connector {
    
     	List<List> results = new ArrayList<List>();
     	
-        try {
-        	
-        	// connect to database via JDBC
-        	Connection con = buildJDBCConnecter();
-	    	
-	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.inventory SET quantity = quantity + ? WHERE name = ?");
-	    	st.setInt(1, updateQuantity);
-	    	st.setString(2, name);
-	        int rs = st.executeUpdate();
-        	
-			// close con, rs, and st
-			st.close();
-			con.close();
-            
-			//if (rs != 1) throw SQLException("Failed to update inventory item.");
-			
-        } catch (SQLException e) {
-        	// handle and stop print for production
-            e.printStackTrace();
-        }
+    	Boolean itemExists = verifyItemExists(name);
+
+    	if (itemExists == false) {
+    		
+            try {
+            	
+            	// connect to database via JDBC
+            	Connection con = buildJDBCConnecter();
+    	    	
+    	    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.inventory SET quantity = quantity + ? WHERE name = ?");
+    	    	st.setInt(1, updateQuantity);
+    	    	st.setString(2, name);
+    	        int rs = st.executeUpdate();
+            	
+    	        // need to verify rs is success
+    	        
+    			// close con, rs, and st
+    			st.close();
+    			con.close();
+                			
+            } catch (SQLException e) {
+            	// handle and stop print for production
+                e.printStackTrace();
+            }
+    		
+    	}
     	
     	results = getResultsofQuery("inventory");
         
@@ -527,6 +648,73 @@ public class Connector {
     		
     } // end of updatedInventory()//
    
+
+    protected List<List> updateInventoryItem(String oldName, String newName, 
+    		String newDescription, String newFoodCategory, double newWholeSalePrice, 
+    		double newRetailPrice, int newQuantity){
+	    /**
+	     * Method updated old inventory record. If item doesn't exist, it creates. 
+	     * 	Any value can stay the same, including the name.
+	     * 
+	     * @param oldName
+	     * @param newName This is a String object to look up item in inventory.
+	     * @param newDescription This is a String object to look up item in inventory.
+	     * @param newFoodCategory This is a String object for the type of inventory items. 
+	     * @param newWholeSalePrice This is a Double object for the price a company paid for a product. 
+	     * @param newRetailPrice This is a Double object for the sale price of an object.
+	     * @param newQuantity This is an Integer object for the amount of new objects.
+	     * 
+	     * @return List of List which is new result of all inventory items.
+	     */
+    
+    	List<List> results = new ArrayList<List>();
+    	
+    	Boolean itemExists = verifyItemExists(oldName);
+
+    	if (itemExists == false) {
+    		createInventoryItem(newName, newDescription, newFoodCategory, newWholeSalePrice, newRetailPrice, newQuantity);
+    	} else {
+    		 
+	        try {
+	        	
+	        	// connect to database via JDBC
+	        	Connection con = buildJDBCConnecter();
+	        	
+		    	PreparedStatement st = con.prepareStatement("UPDATE SIMS_app_data.inventory "
+		    			+ "SET name = ?, "
+		    			+ "Description = ?, "
+		    			+ "FoodCategory = ?, "
+		    			+ "WholeSalePrice = ?, "
+		    			+ "RetailPrice = ?, "
+		    			+ "quantity = ? "		    			
+		    			+ "WHERE name = ?");
+		    	st.setString(1, newName);
+		    	st.setString(2, newDescription);
+		    	st.setString(3, newFoodCategory);
+		    	st.setDouble(4, newWholeSalePrice);
+		    	st.setDouble(5, newRetailPrice);
+		    	st.setInt(6, newQuantity);
+		    	st.setString(7, oldName);
+		        int rs = st.executeUpdate();
+	        	
+				// close con, rs, and st
+				st.close();
+				con.close();
+	            
+				//if (rs != 1) throw SQLException("Failed to create new inventory item.");
+				
+	        } catch (SQLException e) {
+	        	// handle and stop print for production
+	            e.printStackTrace();
+	        }
+    	} // end of if-else
+    	
+        results = getResultsofQuery("inventory");
+        
+    	return results;
+    			
+    } // end of updatedInventory()
+    
     
     protected List<List> updateOrderStatus(int status, String orderEventID) {
 	    /**
@@ -549,6 +737,8 @@ public class Connector {
 	    	st.setInt(1, status);
 	    	st.setString(2, orderEventID);
 	        int rs = st.executeUpdate();
+        	
+	        // need to verify rs is success
         	
 			// close con, rs, and st
 			st.close();
@@ -589,6 +779,8 @@ public class Connector {
 	    	st.setInt(1, status);
 	    	st.setString(2, wasteEventID);
 	        int rs = st.executeUpdate();
+        	
+	        // need to verify rs is success
         	
 			// close con, rs, and st
 			st.close();

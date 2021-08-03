@@ -47,11 +47,11 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 		DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
 
 		for (List l : Database.getOrderTable()) {
-			int status = GeneralGuiFunctions.castSqlObjectToInteger(l.get(10)); // Index 10 = Status
+			int status = GeneralGuiFunctions.castObjectToInteger(l.get(9)); // Index 10 = Status
 			// 0 = pending, so if it is not pending (Approved/Denied) then show it
 			if (status > 0) {
 				// Index 1 = EventId, Index 9 = OrderDate
-				model.addRow(new Object[] { l.get(1), l.get(9), OrderStatus.values()[status] });
+				model.addRow(new Object[] { l.get(1), l.get(8), OrderStatus.values()[status] });
 			}
 		}
 	}

@@ -51,7 +51,6 @@ public class Database {
 		resultsFromWasteQuery = connector.getResultsofQuery("waste");
 		resultsFromSalesQuery = connector.getResultsofQuery("sales");
 		resultsFromUserQuery = connector.getResultsofQuery("users");
-		System.out.println(resultsFromUserQuery);
 		populateItemIdMap();
 	}
 
