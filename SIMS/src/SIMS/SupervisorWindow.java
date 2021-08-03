@@ -81,6 +81,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
 
 		boolean isMac = (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0);
 		if (isMac) {
+			System.out.println("Get a better computer, Marsha - From Gary");
 			inventorySubTabs.addTab("View Inventory", viewInventoryPanel1);
 			inventorySubTabs.addTab("Waste Item(s)", wastePanel1);
 			inventorySubTabs.addTab("Order", orderPanel1);
@@ -107,11 +108,11 @@ public class SupervisorWindow extends javax.swing.JFrame {
 								javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addGap(0, 0, Short.MAX_VALUE)));
 		if (isMac) {
-			inventorySubTabs.addTab("View Inventory", viewInventoryPanel1);
-			inventorySubTabs.addTab("Waste Item(s)", wastePanel1);
-			inventorySubTabs.addTab("Order", orderPanel1);
-			inventorySubTabs.addTab("Reorder", reorderPanel);
-			inventorySubTabs.addTab("Add New Item", addNewItemPanel1);
+	        jTabbedPane1.addTab("Inventory", inventoryTab);
+	        jTabbedPane1.addTab("Sales", salesPanel);
+	        jTabbedPane1.addTab("Reports", reportPanel);
+	        jTabbedPane1.addTab("Export", importAndExportPanel);
+	        jTabbedPane1.addTab("Requests", requestsPanel);
 		} else {
 			jTabbedPane1.addTab("  Inventory  ", inventoryTab);
 			jTabbedPane1.addTab("  Sales  ", salesPanel);
