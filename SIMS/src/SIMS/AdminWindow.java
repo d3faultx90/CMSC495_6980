@@ -12,81 +12,61 @@ public class AdminWindow extends javax.swing.JFrame {
     public AdminWindow() {
         initComponents();
     }
-
-
-    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
-    }                                          
-
-    private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
         // TODO add your handling code here:
-    }                                              
+    }//GEN-LAST:event_helpButtonActionPerformed
 
-    private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-    }                                             
+    private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
+    	new ViewOrAddUserWindow().setVisible(true);
+    }//GEN-LAST:event_editUserButtonActionPerformed
 
-    private void removeUserButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        // TODO add your handling code here:
-    }    
+    private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
+    	new ViewOrAddUserWindow().setVisible(true);
+    }//GEN-LAST:event_addUserButtonActionPerformed
 
+    private void removeUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserButtonActionPerformed
+        // Confirmation
+    }//GEN-LAST:event_removeUserButtonActionPerformed
+    
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    	GeneralGuiFunctions.closeWindow(this, new LoginWindow());
+    } 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton addUserButton;
     private javax.swing.JButton editUserButton;
     private javax.swing.JButton helpButton;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JButton removeUserButton;
-    private javax.swing.JList<String> userList;
-    private javax.swing.JLabel usersLabel;
-    // End of variables declaration//GEN-END:variables
-    
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private javax.swing.JLabel userLabel;
+    private javax.swing.JTable userTable;
+    // End of variables declaration    
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        userList = new javax.swing.JList<>();
-        usersLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        userTable = new javax.swing.JTable();
+        helpButton = new javax.swing.JButton();
+        userLabel = new javax.swing.JLabel();
         editUserButton = new javax.swing.JButton();
         addUserButton = new javax.swing.JButton();
         removeUserButton = new javax.swing.JButton();
-        helpButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sales Inventory Management System (SIMS) - Admin");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("SIMS - Admin");
 
-        userList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Zachary Young", "Gary Uhland II", "Sophia Tetang", "Marsha Balthazar", "Benjamin Sutter" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(userList);
-
-        usersLabel.setText("Users");
-
-        editUserButton.setText("Edit");
-        editUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editUserButtonActionPerformed(evt);
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"bdsutte", "<role>"},
+                {null, "SUPERVISOR"}
+            },
+            new String [] {
+                "Username", "Role"
             }
-        });
-
-        addUserButton.setText("Add");
-        addUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addUserButtonActionPerformed(evt);
-            }
-        });
-
-        removeUserButton.setText("Remove");
-        removeUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeUserButtonActionPerformed(evt);
-            }
-        });
+        ));
+        jScrollPane2.setViewportView(userTable);
 
         helpButton.setBackground(new java.awt.Color(255, 255, 153));
         helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -98,62 +78,78 @@ public class AdminWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(helpButton)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(usersLabel))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(editUserButton)
-                            .addComponent(addUserButton)
-                            .addComponent(removeUserButton))))
-                .addGap(0, 10, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(helpButton)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(usersLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(editUserButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(addUserButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(removeUserButton))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        userLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        userLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userLabel.setText("Active Users");
+
+        editUserButton.setText("View/Edit");
+        editUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserButtonActionPerformed(evt);
+            }
+        });
+
+        addUserButton.setText("Add New User");
+        addUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUserButtonActionPerformed(evt);
+            }
+        });
+
+        removeUserButton.setBackground(new java.awt.Color(153, 0, 0));
+        removeUserButton.setText("Remove");
+        removeUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeUserButtonActionPerformed(evt);
+            }
+        });
+
+        logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(helpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(removeUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(editUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(userLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(userLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(helpButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editUserButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addUserButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(removeUserButton)
+                .addGap(26, 26, 26)
+                .addComponent(logoutButton)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>                        
+        setLocationRelativeTo(null);
+    }// </editor-fold>  
 }
