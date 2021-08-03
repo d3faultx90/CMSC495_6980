@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
@@ -22,7 +23,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		this.tableTitle = tableTitle + " Requests";
 		initComponents();
 		this.resultsFromQuery = resultsFromQuery;
-		//addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
+		addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
 	}
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,9 +48,9 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		Object selectedCellValue = requestTable.getValueAt(requestTable.getSelectedRow(), 0);
 		for (List request : resultsFromQuery) {
 			
-			if (selectedCellValue == request.get(9)) {
+			if (selectedCellValue == request.get(8)) {
 				int status = isApproved? 1 : 2;
-				System.out.println(request.get(1).toString());
+				//System.out.println(request.get(1).toString());
 				if (tableTitle.contains("Order")) {
 					Database.getConnector().updateOrderStatus(status, request.get(1).toString());
 				} else if (tableTitle.contains("Waste")) {
@@ -57,6 +58,10 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 				} else {
 					GeneralGuiFunctions.displayErrorPane("Problem in approveOrDeny in OrderOrWastePanel.java");
 				}
+//				SwingUtilities.updateComponentTreeUI(SwingUtilities.getWindowAncestor(this));
+//				SwingUtilities.getWindowAncestor(this).invalidate();
+//				SwingUtilities.getWindowAncestor(this).validate();
+//				SwingUtilities.getWindowAncestor(this).repaint();
 			}
 		}
 	}
@@ -72,15 +77,14 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 //	}
 	
 	// IF SUPERVISORS CAN GET ACCESS TO USER TABLES DO THIS HERE!!!!!!!!!!!!
-//	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
-//		Map usernames = Database.getUserIdMap();
-//		for (List l : resultsFromQuery) {
-//			if (GeneralGuiFunctions.castObjectToInteger(l.get(9)) == 0) {
-//				System.out.println(usernames);
-//				model.addRow(new Object[] { l.get(8), usernames.get(l.get(2)) });
-//			}
-//		}
-//	}
+	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
+		Map usernames = Database.getUserIdMap();
+		for (List l : resultsFromQuery) {
+			if (GeneralGuiFunctions.castObjectToInteger(l.get(9)) == 0) {
+				model.addRow(new Object[] { l.get(8), usernames.get(l.get(2)) });
+			}
+		}
+	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JButton approveButton;

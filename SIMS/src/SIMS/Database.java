@@ -33,13 +33,6 @@ public class Database {
 	public Database(Connector connector) {
 		this.connector = connector;
 		initialize();
-		//System.out.println(connector.retrieveSalesOnDate("2021"));
-		//System.out.println(connector.retrieveSalesByDateRange("2020-01-01", "2021-12-31"));
-//		System.out.println(connector.retrieveSalesOnDate("2020-06-19"));
-//		System.out.println(connector.retrieveSalesSinceDate("2021-01-01"));
-		// System.out.println(resultsFromOrderQuery);
-//		System.out.println(resultsFromSalesQuery);
-//		System.out.println(connector.retrieveSalesOnDate(DateHandler.getTodaysDateSql()));
 	}
 	
 	private void initialize() {
@@ -52,6 +45,7 @@ public class Database {
 		resultsFromSalesQuery = connector.getResultsofQuery("sales");
 		resultsFromUserQuery = connector.getResultsofQuery("users");
 		populateItemIdMap();
+		populateUserIdMap();
 	}
 
 	private void populateItemIdMap() {
@@ -70,19 +64,19 @@ public class Database {
 		}
 	}
 	
-//	private void populateUserIdMap() {
-//		/**
-//		 * Creates a dictionary where the userID is the key, 
-//		 * and their username is the value 
-//		 */
-//		try {
-//			for (List l : resultsFromUserQuery) {
-//				userIds.put(l.get(0), (String) l.get(1));
-//			}
-//		} catch (Exception e) {
-//			GeneralGuiFunctions.displayErrorPane(e + "\nSomething went wrong in populateUserIdMap (Database.java)");
-//		}
-//	}
+	private void populateUserIdMap() {
+		/**
+		 * Creates a dictionary where the userID is the key, 
+		 * and their username is the value 
+		 */
+		try {
+			for (List l : resultsFromUserQuery) {
+				userIds.put(l.get(0), (String) l.get(1));
+			}
+		} catch (Exception e) {
+			GeneralGuiFunctions.displayErrorPane(e + "\nSomething went wrong in populateUserIdMap (Database.java)");
+		}
+	}
 	
 	// Accessor methods
 	static Connector getConnector() {
@@ -90,7 +84,7 @@ public class Database {
 	}
 	
 	static Map getUserIdMap() {
-		return itemIds;
+		return userIds;
 	}
 	
 	static Map getItemIdMap() {

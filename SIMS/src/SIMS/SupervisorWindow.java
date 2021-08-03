@@ -33,7 +33,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	// Variables declaration - do not modify
 	private SIMS.AddNewItemPanel addNewItemPanel1;
 	private SIMS.HomePanel homePanel;
-	private SIMS.ImportAndExportPanel importAndExportPanel;
+	private SIMS.ExportPanel importAndExportPanel;
 	private javax.swing.JTabbedPane inventorySubTabs;
 	private javax.swing.JPanel inventoryTab;
 	private javax.swing.JTabbedPane jTabbedPane1;
@@ -61,7 +61,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
 		addNewItemPanel1 = new SIMS.AddNewItemPanel();
 		salesPanel = new SIMS.SalesPanel();
 		reportPanel = new SIMS.ReportPanel();
-		importAndExportPanel = new SIMS.ImportAndExportPanel();
+		importAndExportPanel = new SIMS.ExportPanel();
 		requestsPanel = new SIMS.RequestsPanel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -83,9 +83,9 @@ public class SupervisorWindow extends javax.swing.JFrame {
 		inventorySubTabs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		inventorySubTabs.addTab("View Inventory", viewInventoryPanel1);
 		inventorySubTabs.addTab("Waste Item(s)", wastePanel1);
-		inventorySubTabs.addTab("Order", orderPanel1);
+		inventorySubTabs.addTab(" Order ", orderPanel1);
 		inventorySubTabs.addTab("Reorder", reorderPanel);
-		inventorySubTabs.addTab("Add New Item", addNewItemPanel1);
+		inventorySubTabs.addTab(" Add New Item", addNewItemPanel1);
 
 		javax.swing.GroupLayout inventoryTabLayout = new javax.swing.GroupLayout(inventoryTab);
 		inventoryTab.setLayout(inventoryTabLayout);
@@ -100,11 +100,11 @@ public class SupervisorWindow extends javax.swing.JFrame {
 								javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addGap(0, 0, Short.MAX_VALUE)));
 
-		jTabbedPane1.addTab("Inventory", inventoryTab);
-		jTabbedPane1.addTab("Sales", salesPanel);
-		jTabbedPane1.addTab("Reports", reportPanel);
-		jTabbedPane1.addTab("Import/Export", importAndExportPanel);
-		jTabbedPane1.addTab("Requests", requestsPanel);
+		jTabbedPane1.addTab("  Inventory  ", inventoryTab);
+		jTabbedPane1.addTab("  Sales  ", salesPanel);
+		jTabbedPane1.addTab("  Reports  ", reportPanel);
+		jTabbedPane1.addTab("  Export  ", importAndExportPanel);
+		jTabbedPane1.addTab("  Requests ", requestsPanel);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);

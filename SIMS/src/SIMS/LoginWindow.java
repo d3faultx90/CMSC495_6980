@@ -14,10 +14,6 @@ public class LoginWindow extends javax.swing.JFrame {
         initComponents();
     }
     
-    private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        new ChangePasswordWindow().setVisible(true);
-    }
-    
     private void usernameTextfieldActionPerformed(java.awt.event.ActionEvent evt) {
 
     }
@@ -109,46 +105,34 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JButton changePasswordButton;
     // End of variables declaration    
 
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
-        addressLabel = new javax.swing.JLabel();
-        addressTextfield = new javax.swing.JTextField();
-        portLabel = new javax.swing.JLabel();
-        portTextfield = new javax.swing.JTextField();
-        trustStorePathLabel = new javax.swing.JLabel();
-        trustStorePathTextfield = new javax.swing.JTextField();
-        trustStorePasswordLabel = new javax.swing.JLabel();
-        trustStorePasswordTextfield = new javax.swing.JPasswordField();
         usernameLabel = new javax.swing.JLabel();
-        usernameTextfield = new javax.swing.JTextField();
         passwordLabel = new javax.swing.JLabel();
-        passwordTextfield = new javax.swing.JPasswordField();
+        usernameTextfield = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
-        changePasswordButton = new javax.swing.JButton();
+        passwordTextfield = new javax.swing.JPasswordField();
+        portLabel = new javax.swing.JLabel();
+        addressLabel = new javax.swing.JLabel();
+        portTextfield = new javax.swing.JTextField();
+        addressTextfield = new javax.swing.JTextField();
+        trustStorePathLabel = new javax.swing.JLabel();
+        trustStorePasswordLabel = new javax.swing.JLabel();
+        trustStorePathTextfield = new javax.swing.JTextField();
+        trustStorePasswordTextfield = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Sales Inventory Management System (SIMS) - Login");
+        setTitle("Sales Inventory Management System (SIMS) - Login Window");
         setResizable(false);
 
-        addressLabel.setText("Server Address:");
-        addressTextfield.setText("sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com");
-        
-        portLabel.setText("Port:");
-        portTextfield.setText("3306");
+        usernameLabel.setText("Username");
 
-        trustStorePathLabel.setText("TrustStore Path:");
-        trustStorePathTextfield.setText("C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore");
-        
-        trustStorePasswordLabel.setText("TrustStore Password:");
-        trustStorePasswordTextfield.setText("password");
-        
-        usernameLabel.setText("Username:");
+        passwordLabel.setText("Password");
+
         usernameTextfield.setText("bsutte");
-        
-        passwordLabel.setText("Password:");
-        passwordTextfield.setText("P@ssw0rd");
-
         usernameTextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameTextfieldActionPerformed(evt);
@@ -162,12 +146,23 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
-        changePasswordButton.setText("Change Password");
-        changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changePasswordButtonActionPerformed(evt);
-            }
-        });
+        passwordTextfield.setText("P@ssw0rd");
+
+        portLabel.setText("Port");
+
+        addressLabel.setText("SQL Address");
+
+        portTextfield.setText("3306");
+
+        addressTextfield.setText("sims-application-test-001.c17nei9nvbm9.us-east-2.rds.amazonaws.com");
+
+        trustStorePathLabel.setText("TrustStore Path:");
+
+        trustStorePasswordLabel.setText("TrustStore Password:");
+
+        trustStorePathTextfield.setText("C:\\Program Files\\Java\\jdk-16.0.1\\bin\\truststore");
+
+        trustStorePasswordTextfield.setText("password");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -176,24 +171,23 @@ public class LoginWindow extends javax.swing.JFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(changePasswordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(passwordLabel)
                             .addComponent(usernameLabel)
-                            .addComponent(trustStorePasswordLabel)
-                            .addComponent(trustStorePathLabel)
                             .addComponent(portLabel)
-                            .addComponent(addressLabel))
+                            .addComponent(addressLabel)
+                            .addComponent(trustStorePathLabel)
+                            .addComponent(trustStorePasswordLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(usernameTextfield)
                             .addComponent(passwordTextfield)
-                            .addComponent(trustStorePasswordTextfield)
-                            .addComponent(trustStorePathTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                             .addComponent(portTextfield)
-                            .addComponent(addressTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))))
+                            .addComponent(addressTextfield)
+                            .addComponent(trustStorePathTextfield)
+                            .addComponent(trustStorePasswordTextfield))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
@@ -213,8 +207,8 @@ public class LoginWindow extends javax.swing.JFrame {
                     .addComponent(trustStorePathTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(trustStorePasswordLabel)
-                        .addComponent(trustStorePasswordTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(trustStorePasswordLabel)
+                    .addComponent(trustStorePasswordTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameLabel)
@@ -224,10 +218,8 @@ public class LoginWindow extends javax.swing.JFrame {
                     .addComponent(passwordLabel)
                     .addComponent(passwordTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loginButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(changePasswordButton)
-                .addGap(22, 22, 22))
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -39,6 +39,7 @@ public class OrderPanel extends javax.swing.JPanel {
 				// double salesTax =;
 				// double wholeSalePrice = ;
 				Object quantity = GeneralGuiFunctions.castObjectToInteger(orderedItems.getValueAt(i, 1));
+			
 				System.out.println(quantity);
 				// String date = ;
 				// int status = ;
