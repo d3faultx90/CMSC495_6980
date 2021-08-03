@@ -1,4 +1,5 @@
 /*
+ /*
  * File: ImportAndExportPanel.java
  * Author: Ben Sutter
  * Date: July 19th, 2021
@@ -11,7 +12,6 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -30,14 +30,16 @@ public class ImportAndExportPanel extends javax.swing.JPanel {
         GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
     }                                          
 
-    private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        List<List> sales = Database.getSalesTable();
-        List<List> items = Database.getItemTable();
-        List<List> orders = Database.getOrderTable();
-        List<List> wastes = Database.getWasteTable();
+    private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	Connector connector = Database.getConnector();
+    	
+    	List<List> sales = connector.exportResultsofQuery("sales");
+    	List<List> items = connector.exportResultsofQuery("inventory");
+    	List<List> orders = connector.exportResultsofQuery("orders");
+    	List<List> wastes = connector.exportResultsofQuery("waste");
         
-        LocalDateTime date = LocalDateTime.now();
-        String today = DateHandler.formatDateForSql(date);
+        String today = DateHandler.getTodaysDateSql();
         today = today.substring(0, 10);
         
         JFileChooser fileChooser = new JFileChooser();
