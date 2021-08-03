@@ -1,4 +1,5 @@
 /*
+ /*
  * File: WastePanel.java
  * Author: Ben Sutter
  * Date: July 19th, 2021
@@ -8,6 +9,7 @@
 package SIMS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public class WastePanel extends javax.swing.JPanel {
 
 	public WastePanel() {
 		initComponents();
-		
+
 	}
 
 	private void wasteButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -32,46 +34,46 @@ public class WastePanel extends javax.swing.JPanel {
 
 				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount");
 
-			} else if (!(Integer.parseInt(quantityTextfield.getText()) >= 1)) {
+			}
+
+			if (!(Integer.parseInt(quantityTextfield.getText()) >= 1)) {
 
 				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
 
 			} else {
-				
-				System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
-				
-			}
-			
-			Connector connector = Database.getConnector();
-			//employeeId connecter.userID
-			Map <String, Integer> itemIds = Database.getItemIdMap();
-			int itemID = itemIds.get(selectedCellValue);
-			// status will come from enum
-			// quantity comes from textfield
-			// createWaste(int employeeID, int itemID, double saleTax, double wholeSalePrice, int quantity, String date, int status)
-			//Database.getConnector().createWaste();
-			
-		} catch (NumberFormatException d) {
 
-			GeneralGuiFunctions.displayErrorPane("Please enter a valid quantity amount");
+				System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
+
+			}
+
+			Connector connector = Database.getConnector();
+
+			// employeeId connecter.userID
+			Map<Object, Object> itemIds = new HashMap<Object, Object>();
+			Map<Object, Object> itemPrices = new HashMap<Object, Object>();
+			Object id = itemIds.get(selectedCellValue);
+			Object price = itemPrices.get(selectedCellValue);
+
+			int itemID = GeneralGuiFunctions.castObjectToInteger(id);
+			double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(price);
+			String quantity = quantityTextfield.getText();
+			int removalQuantity = GeneralGuiFunctions.castObjectToInteger(quantity);
+			String date = DateHandler.getTodaysDateUser();
+			int status = 0;
+
+			// createWaste(int itemID, double wholeSalePrice, int removalQuantity,String
+			// date, int status)
+			Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
+
+		} catch (NumberFormatException d) {
 
 		} catch (ArrayIndexOutOfBoundsException e) {
 
 			GeneralGuiFunctions.displayErrorPane("Please select an item");
 
-		} catch (Exception f) {
-
-			GeneralGuiFunctions.displayErrorPane("An error has occured");
-
 		}
 
 	} // end wasteButtonActionPerformed
-		
-		
-		
-		
-		
-	
 
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
