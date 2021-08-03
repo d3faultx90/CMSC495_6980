@@ -51,6 +51,7 @@ public class SalesPanel extends javax.swing.JPanel {
 		}
 		//System.out.println(itemIdsAndQuantity);
 		// Pass the 2D list here once method is updated
+		System.out.println(date);
 		Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
 		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 	}

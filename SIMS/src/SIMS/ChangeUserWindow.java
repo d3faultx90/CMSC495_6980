@@ -33,6 +33,8 @@ public class ChangeUserWindow extends javax.swing.JFrame {
     		int permissionLevel = GeneralGuiFunctions.castObjectToInteger(userInfo[3]);
     		roleComboBox.setSelectedIndex(permissionLevel);
     		addOrEditButton.setText("Edit User");
+    		usernameLabel.setVisible(false);
+    		usernameTextfield.setVisible(false);
     	}
     }
 

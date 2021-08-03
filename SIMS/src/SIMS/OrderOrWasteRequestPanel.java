@@ -36,33 +36,47 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 	private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		approveOrDeny(true);
-		GeneralGuiFunctions.displayConfirmationPane(tableTitle + " was approved.");
 	}
 
 	private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		approveOrDeny(false);
-		GeneralGuiFunctions.displayConfirmationPane(tableTitle + " was denied.");
 	}
-	
+
 	private void approveOrDeny(boolean isApproved) {
-		Object selectedCellValue = requestTable.getValueAt(requestTable.getSelectedRow(), 0);
-		for (List request : resultsFromQuery) {
-			
-			if (selectedCellValue == request.get(8)) {
-				int status = isApproved? 1 : 2;
-				//System.out.println(request.get(1).toString());
-				if (tableTitle.contains("Order")) {
-					Database.getConnector().updateOrderStatus(status, request.get(1).toString());
-				} else if (tableTitle.contains("Waste")) {
-					Database.getConnector().updateWasteStatus(status, request.get(1).toString());
-				} else {
-					GeneralGuiFunctions.displayErrorPane("Problem in approveOrDeny in OrderOrWastePanel.java");
-				}
+		try {
+			Object selectedCellValue = requestTable.getValueAt(requestTable.getSelectedRow(), 0);
+			for (List request : resultsFromQuery) {
+
+				if (selectedCellValue == request.get(8)) {
+					int status = isApproved ? 1 : 2;
+					// System.out.println(request.get(1).toString());
+					if (tableTitle.contains("Order")) {
+						Database.getConnector().updateOrderStatus(status, request.get(1).toString());
+						printApprovalOrDenial(isApproved);
+					} else if (tableTitle.contains("Waste")) {
+						Database.getConnector().updateWasteStatus(status, request.get(1).toString());
+						printApprovalOrDenial(isApproved);
+					} else {
+						GeneralGuiFunctions.displayErrorPane("Problem in approveOrDeny in OrderOrWastePanel.java");
+					}
 //				SwingUtilities.updateComponentTreeUI(SwingUtilities.getWindowAncestor(this));
 //				SwingUtilities.getWindowAncestor(this).invalidate();
 //				SwingUtilities.getWindowAncestor(this).validate();
 //				SwingUtilities.getWindowAncestor(this).repaint();
+				}
 			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+
+			GeneralGuiFunctions.displayErrorPane("Please select a request");
+
+		}
+	}
+	
+	private void printApprovalOrDenial(boolean isApproved) {
+		if (isApproved) {
+			GeneralGuiFunctions.displayConfirmationPane(tableTitle + " was approved.");
+		} else {
+			GeneralGuiFunctions.displayConfirmationPane(tableTitle + " was denied.");
 		}
 	}
 
@@ -75,7 +89,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 //			}
 //		}
 //	}
-	
+
 	// IF SUPERVISORS CAN GET ACCESS TO USER TABLES DO THIS HERE!!!!!!!!!!!!
 	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
 		Map usernames = Database.getUserIdMap();

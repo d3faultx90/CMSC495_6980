@@ -45,9 +45,7 @@ public class WastePanel extends javax.swing.JPanel {
 				System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
 
 			}
-
-			Connector connector = Database.getConnector();
-
+			
 			// employeeId connecter.userID
 			Map<Object, Object> itemIds = new HashMap<Object, Object>();
 			Map<Object, Object> itemPrices = new HashMap<Object, Object>();
