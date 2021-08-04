@@ -17,10 +17,10 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
         initComponents();
     }  
 
-    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    	GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
-    }   
-
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayHelpPane("Select the item you want to view and click on view details!");
+		
+    }	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton helpButton;
     private SIMS.ItemFilterPanel itemFilterPanel;

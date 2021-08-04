@@ -39,9 +39,7 @@ public class HomePanel extends javax.swing.JPanel {
         String salesLastYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
         String salesThisYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
         String total = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(sales));
-        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today.substring(0, 10))));
-        System.out.println(today);
-        System.out.println(salesToday);
+        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today)));
         
 		todaysSalesLabel.setText("Today's sales: " + salesToday);
 		yesterdaysSalesLabel.setText("Yesterday's sales: " + salesMinusDay);
@@ -53,7 +51,9 @@ public class HomePanel extends javax.swing.JPanel {
     }
     
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+    	GeneralGuiFunctions.displayHelpPane("Daily, weekly, monthly and yearly sales are reported here. "
+        		+ "\nClick on refresh to refresh the page ."
+        		+ "\nClickon loggout to log off ");
     }//GEN-LAST:event_helpButtonActionPerformed
 
     // When the user logs out, opens a new LoginWindow and closes the current window
@@ -62,8 +62,8 @@ public class HomePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
 
-    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {  
-    	setSaleTextfields();
+    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+        // TODO add your handling code here:
     }                                                 
 
     // Variables declaration - do not modify                     
@@ -262,7 +262,6 @@ public class HomePanel extends javax.swing.JPanel {
                     .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-        
     }// </editor-fold>                        
   
 }

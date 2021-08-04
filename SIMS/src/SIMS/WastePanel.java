@@ -1,3 +1,6 @@
+/*
+ /*
+ /*
  /*
  * File: WastePanel.java
  * Author: Ben Sutter
@@ -76,7 +79,9 @@ public class WastePanel extends javax.swing.JPanel {
 	} // end wasteButtonActionPerformed
 
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+		GeneralGuiFunctions.displayHelpPane(" First select the item name then enter the quantity and click on the waste button!");
+		
+		
 	}
 
 	// Variables declaration - do not modify

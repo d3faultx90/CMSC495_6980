@@ -15,10 +15,13 @@ public class ReorderPanel extends javax.swing.JPanel {
 	
     public ReorderPanel() {
         initComponents();
-    }   
+    }  
+    
+    
+		
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+        GeneralGuiFunctions.displayHelpPane("Select the order Id and click on view details to display more details or click on reorder to reorder");
     }                                          
 
     private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {                                                       
