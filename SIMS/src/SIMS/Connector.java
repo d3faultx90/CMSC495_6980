@@ -327,20 +327,23 @@ public class Connector {
 	    	// connect to database via JDBC
 	    	Connection con = buildJDBCConnecter();
 	    	
-	    	PreparedStatement st = con.prepareStatement("SELECT name FROM SIMS_app_data.inventory WHERE name = ?");
+	    	PreparedStatement st = con.prepareStatement("SELECT count(*) FROM SIMS_app_data.inventory WHERE name = ?");
 	    	st.setString(1, itemName);
 	        ResultSet rs = st.executeQuery();
         	
-        	rs.next();
+        	if (rs.next()) {
+        		int count = rs.getInt(1);
+        		
+        		System.out.print(count);
+        		
+        		if (count == 1) {
+                	exists = true;
+                } else {
+                	exists = false;
+                }
+        	}
+
         	
-        	String returnedName = rs.getString("name");
-        	
-            if (returnedName.equals(itemName)) {
-            	exists = true;
-            } else {
-            	exists = false;
-            }
-                
 	        // close con, rs, and st
 	        rs.close();
 	        st.close();
@@ -358,7 +361,7 @@ public class Connector {
     
     protected List<List> createInventoryItem(String name, String description, 
     		String foodCategory, double wholeSalePrice, double retailPrice, 
-    		int quantity){
+    		int quantity) throws Exception{
 	    /**
 	     * Method determines whether item exist in SIMS_app_data.inventory.
 	     * 
@@ -411,6 +414,8 @@ public class Connector {
                 e.printStackTrace();
             }
             
+    	} else {
+    		throw new Exception(name + " already exists.");
     	} // end of if-else
     	
     	
@@ -478,7 +483,7 @@ public class Connector {
             e.printStackTrace();
         }
         
-        results = getResultsofQuery("order");
+        results = getResultsofQuery("orders");
         
         return results;
                 
@@ -501,6 +506,7 @@ public class Connector {
     	List<List> results = new ArrayList<List>();
     	String salesEventID = UUID.randomUUID().toString();
 
+    	System.out.println(salesDate);
         try {
         	
         	// connect to database via JDBC
@@ -650,7 +656,7 @@ public class Connector {
 
     protected List<List> updateInventoryItem(String oldName, String newName, 
     		String newDescription, String newFoodCategory, double newWholeSalePrice, 
-    		double newRetailPrice, int newQuantity){
+    		double newRetailPrice, int newQuantity) throws Exception{
 	    /**
 	     * Method updated old inventory record. If item doesn't exist, it creates. 
 	     * 	Any value can stay the same, including the name.
@@ -969,5 +975,7 @@ public class Connector {
      * com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
      * The last packet sent successfully to the server was 0 milliseconds ago. 
      *  java.net.UnknownHostException: No such host is known
+     *  java.sql.SQLException: Illegal operation on empty result set.
+     *  java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '' for key 'inventory.Description'
      */
 }

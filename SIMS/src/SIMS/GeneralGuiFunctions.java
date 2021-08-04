@@ -68,6 +68,12 @@ public class GeneralGuiFunctions {
 	static void displayErrorPane(String errorMessage) {
 		JOptionPane.showMessageDialog(null, errorMessage, "Invalid Field Entry", JOptionPane.ERROR_MESSAGE);
 	}
+	
+	// Display this JOptionpane whenever a field is missing input or has negative
+    // values
+    static void customDisplayErrorPane(String errorMessage, String headerMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage, headerMessage, JOptionPane.ERROR_MESSAGE);
+    }
 
 	// Display this JOptionpane whenever a field is missing input or has negative
 	// values

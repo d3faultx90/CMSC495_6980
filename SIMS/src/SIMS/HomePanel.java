@@ -65,7 +65,7 @@ public class HomePanel extends javax.swing.JPanel {
 
 
     private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-        // TODO add your handling code here:
+    	//GeneralGuiFunctions.closeWindow(SwingUtilities.getWindowAncestor(this), SwingUtilities.getWindowAncestor(this));
     }                                                 
 
     // Variables declaration - do not modify                     
