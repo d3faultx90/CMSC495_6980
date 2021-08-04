@@ -44,7 +44,7 @@ public class LoginWindow extends javax.swing.JFrame {
             }
             else if (connector.role == 2) {
             	// We do not have a user window currently
-                GeneralGuiFunctions.closeWindow(this, new SupervisorWindow(connector, username));//Change this to normal user
+                GeneralGuiFunctions.closeWindow(this, new UserWindow(connector, username));//Change this to normal user
             }
 
         }

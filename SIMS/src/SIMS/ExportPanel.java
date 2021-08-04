@@ -23,8 +23,9 @@ public class ExportPanel extends javax.swing.JPanel {
     }                                     
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
-    }                                          
+    	GeneralGuiFunctions.displayHelpPane("To import data click on the import button. "
+        		+ "\nTo export database information,click on the export button ");
+    }                                           
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	

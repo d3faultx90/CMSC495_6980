@@ -20,8 +20,8 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	// resultsFromSalesQuery
 	// resultsFromUsersQuery
 
-	public SupervisorWindow(Connector connector, String user) {
-		username = user;
+	public SupervisorWindow(Connector connector, String username) {
+		username = username;
 		Database database = new Database(connector);
 		initComponents();
 	}
@@ -31,19 +31,19 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	}
 
 	// Variables declaration - do not modify
-	private SIMS.AddNewItemPanel addNewItemPanel1;
+	private SIMS.AddNewItemPanel addNewItemPanel;
 	private SIMS.HomePanel homePanel;
 	private SIMS.ExportPanel importAndExportPanel;
 	private javax.swing.JTabbedPane inventorySubTabs;
 	private javax.swing.JPanel inventoryTab;
 	private javax.swing.JTabbedPane jTabbedPane1;
-	private SIMS.OrderPanel orderPanel1;
+	private SIMS.OrderPanel orderPanel;
 	private SIMS.ReorderPanel reorderPanel;
 	private SIMS.ReportPanel reportPanel;
 	private SIMS.RequestsPanel requestsPanel;
 	private SIMS.SalesPanel salesPanel;
-	private SIMS.ViewInventoryPanel viewInventoryPanel1;
-	private SIMS.WastePanel wastePanel1;
+	private SIMS.ViewInventoryPanel viewInventoryPanel;
+	private SIMS.WastePanel wastePanel;
 	// End of variables declaration
 
 	/**
@@ -56,21 +56,21 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	private void initComponents() {
 
 		jTabbedPane1 = new javax.swing.JTabbedPane();
-		homePanel = new SIMS.HomePanel();
+		homePanel = new SIMS.HomePanel(username);
 		inventoryTab = new javax.swing.JPanel();
 		inventorySubTabs = new javax.swing.JTabbedPane();
-		viewInventoryPanel1 = new SIMS.ViewInventoryPanel();
-		wastePanel1 = new SIMS.WastePanel();
-		orderPanel1 = new SIMS.OrderPanel();
+		viewInventoryPanel = new SIMS.ViewInventoryPanel();
+		wastePanel = new SIMS.WastePanel();
+		orderPanel = new SIMS.OrderPanel();
 		reorderPanel = new SIMS.ReorderPanel();
-		addNewItemPanel1 = new SIMS.AddNewItemPanel();
+		addNewItemPanel = new SIMS.AddNewItemPanel();
 		salesPanel = new SIMS.SalesPanel();
 		reportPanel = new SIMS.ReportPanel();
 		importAndExportPanel = new SIMS.ExportPanel();
 		requestsPanel = new SIMS.RequestsPanel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Sales Inventory Management System (SIMS) - Supervisor");
+		setTitle("SIMS - Supervisor Window");
 		setResizable(false);
 
 		jTabbedPane1.setPreferredSize(new java.awt.Dimension(419, 418));
@@ -82,17 +82,17 @@ public class SupervisorWindow extends javax.swing.JFrame {
 		boolean isMac = (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0);
 		if (isMac) {
 			System.out.println("Get a better computer, Marsha - From Gary");
-			inventorySubTabs.addTab("View Inventory", viewInventoryPanel1);
-			inventorySubTabs.addTab("Waste Item(s)", wastePanel1);
-			inventorySubTabs.addTab("Order", orderPanel1);
+			inventorySubTabs.addTab("View Inventory", viewInventoryPanel);
+			inventorySubTabs.addTab("Waste Item(s)", wastePanel);
+			inventorySubTabs.addTab("Order", orderPanel);
 			inventorySubTabs.addTab("Reorder", reorderPanel);
-			inventorySubTabs.addTab("Add New Item", addNewItemPanel1);
+			inventorySubTabs.addTab("Add New Item", addNewItemPanel);
 		} else {
-			inventorySubTabs.addTab("View Inventory", viewInventoryPanel1);
-			inventorySubTabs.addTab("Waste Item(s)", wastePanel1);
-			inventorySubTabs.addTab(" Order ", orderPanel1);
+			inventorySubTabs.addTab("View Inventory", viewInventoryPanel);
+			inventorySubTabs.addTab("Waste Item(s)", wastePanel);
+			inventorySubTabs.addTab(" Order ", orderPanel);
 			inventorySubTabs.addTab("Reorder", reorderPanel);
-			inventorySubTabs.addTab(" Add New Item", addNewItemPanel1);
+			inventorySubTabs.addTab(" Add New Item", addNewItemPanel);
 		}
 
 		javax.swing.GroupLayout inventoryTabLayout = new javax.swing.GroupLayout(inventoryTab);

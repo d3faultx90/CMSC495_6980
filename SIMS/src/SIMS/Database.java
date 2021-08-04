@@ -97,7 +97,7 @@ public class Database {
 	}
 	
 	static Map getItemPricesMap() {
-		return itemIds;
+		return itemPrices;
 	}
 
 	static List<List> getItemTable() {

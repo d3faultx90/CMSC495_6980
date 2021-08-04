@@ -67,7 +67,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private SIMS.OrderAndSalesPanel orderAndSalesPanel;
-	private javax.swing.JButton orderButton;
+	public javax.swing.JButton orderButton;
 	private javax.swing.JPanel panel;
 	// End of variables declaration//GEN-END:variables
 

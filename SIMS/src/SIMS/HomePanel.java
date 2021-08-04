@@ -14,8 +14,10 @@ import javax.swing.SwingUtilities;
 public class HomePanel extends javax.swing.JPanel {
 
 	TimeThread time;
+	String username;
 	
-    public HomePanel() {
+    public HomePanel(String username) {
+    	this.username = username;
         initComponents();
         time = new TimeThread(currentTimeLabel);
         time.start();
@@ -39,7 +41,7 @@ public class HomePanel extends javax.swing.JPanel {
         String salesLastYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
         String salesThisYear = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
         String total = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(sales));
-        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today)));
+        String salesToday = GeneralGuiFunctions.stringToPrice(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today.substring(0, 10))));
         
 		todaysSalesLabel.setText("Today's sales: " + salesToday);
 		yesterdaysSalesLabel.setText("Yesterday's sales: " + salesMinusDay);
@@ -108,7 +110,7 @@ public class HomePanel extends javax.swing.JPanel {
 
         headerPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        helloUsernameLabel.setText("Hello, " + SupervisorWindow.getUsername());
+        helloUsernameLabel.setText("Hello, " + username);
 
         currentTimeLabel.setText("");
 
@@ -180,7 +182,7 @@ public class HomePanel extends javax.swing.JPanel {
         });
 
         refreshLabel.setForeground(new java.awt.Color(255, 0, 0));
-        refreshLabel.setText("In case manual refresh is needed ->");
+        refreshLabel.setText("");
 
         totalRecordedSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         totalRecordedSalesLabel.setText("Total recorded sales:");

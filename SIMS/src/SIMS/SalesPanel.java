@@ -35,7 +35,7 @@ public class SalesPanel extends javax.swing.JPanel {
 		// DELETE THIS AND GRAB IT FROM ELSEWHERE
 		int employeeId = Database.getConnector().userID;
 		double salesTax = .08; // Don't hardcode
-		String date = DateHandler.formatDateForSql(jDateChooser1.getDate());
+		String date = DateHandler.formatDateForSql(dateChooser.getDate());
 		// 2D list that is passed into createSale() index 0 = itemID, index 1 = quantity
 		List<List> itemIdsAndQuantity = new ArrayList<List>();
 		// Iterates through the whole table to grab each row
@@ -62,10 +62,10 @@ public class SalesPanel extends javax.swing.JPanel {
 	}
 
 	// Variables declaration - do not modify
-	private com.toedter.calendar.JDateChooser jDateChooser1;
+	public com.toedter.calendar.JDateChooser dateChooser;
 	private SIMS.OrderAndSalesPanel salesPanel;
 	private javax.swing.JPanel salesTab;
-	private javax.swing.JButton saveSaleButton;
+	public javax.swing.JButton saveSaleButton;
 	// End of variables declaration
 	
 	@SuppressWarnings("unchecked")
@@ -75,7 +75,7 @@ public class SalesPanel extends javax.swing.JPanel {
 		salesTab = new javax.swing.JPanel();
 		saveSaleButton = new javax.swing.JButton();
 		salesPanel = new SIMS.OrderAndSalesPanel();
-		jDateChooser1 = new com.toedter.calendar.JDateChooser();
+		dateChooser = new com.toedter.calendar.JDateChooser();
 
 		salesTab.setToolTipText("[187,187,187]");
 
@@ -90,7 +90,7 @@ public class SalesPanel extends javax.swing.JPanel {
 		});
 		
 		java.util.Date date = new java.util.Date();
-		jDateChooser1.setDate(date);
+		dateChooser.setDate(date);
 
 		javax.swing.GroupLayout salesTabLayout = new javax.swing.GroupLayout(salesTab);
 		salesTab.setLayout(salesTabLayout);
@@ -105,12 +105,12 @@ public class SalesPanel extends javax.swing.JPanel {
 												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
 												.addComponent(salesPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE,
+												.addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
 						.addContainerGap()));
 		salesTabLayout.setVerticalGroup(salesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(salesTabLayout.createSequentialGroup().addContainerGap()
-						.addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE,
+						.addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(salesPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
