@@ -28,14 +28,14 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 	}
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		System.out.println("Pressed view button");
+
 		Object selectedCellValue = requestTable.getValueAt(requestTable.getSelectedRow(), 0);
 		Map<Object, Object> itemNames = Database.getItemNamesMap();
 		ArrayList<Object[]> masterList = new ArrayList<Object[]>();
 		
 		double totalPrice = 0;
 		for (List request : resultsFromQuery) {
-			System.out.println(request);
+			
 			if (selectedCellValue.equals(request.get(8))) {
 				Object name = itemNames.get(request.get(4));
 				Object quantity = request.get(7);
@@ -43,14 +43,14 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 				totalPrice += GeneralGuiFunctions.castObjectToDouble(price);
 				Object[] grouped = new Object[] {name, quantity, price};
 				masterList.add(grouped);
-				System.out.print("name: " + name + " quantity: " + quantity + " total price: " + price);
 			}
 		}
 		Object [][] masterArray = new Object[masterList.size()][3];
 		for (int i = 0; i < masterList.size(); i ++) {
 			masterArray[i] = masterList.get(i);
 		}
-		new OrderAndWasteDetailWindow(tableTitle, (String) selectedCellValue, masterArray, totalPrice).setVisible(true);
+		String formattedTotalPrice = GeneralGuiFunctions.priceToString(totalPrice);
+		new OrderAndWasteDetailWindow(tableTitle, (String) selectedCellValue, masterArray, formattedTotalPrice).setVisible(true);
 	}
 
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {

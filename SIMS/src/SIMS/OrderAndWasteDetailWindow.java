@@ -11,9 +11,9 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 	Object [][] masterArray;
 	String date;
 	String wasteOrOrder;
-	double totalPrice;
+	String totalPrice;
 	
-    public OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object [][] masterArray, double totalPrice) {
+    public OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object [][] masterArray, String totalPrice) {
     	this.wasteOrOrder = wasteOrOrder;
     	this.date = date;
     	this.masterArray = masterArray;

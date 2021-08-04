@@ -62,10 +62,10 @@ public class SalesPanel extends javax.swing.JPanel {
 	}
 
 	// Variables declaration - do not modify
-	public com.toedter.calendar.JDateChooser dateChooser;
+	protected com.toedter.calendar.JDateChooser dateChooser;
 	private SIMS.OrderAndSalesPanel salesPanel;
 	private javax.swing.JPanel salesTab;
-	public javax.swing.JButton saveSaleButton;
+	protected javax.swing.JButton saveSaleButton;
 	// End of variables declaration
 	
 	@SuppressWarnings("unchecked")

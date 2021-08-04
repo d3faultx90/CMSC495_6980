@@ -64,7 +64,7 @@ public class ReportPanel extends javax.swing.JPanel {
     	DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
     	for (String year : uniqueYears) {
     		double profits = GeneralGuiFunctions.parseSales(getYearsProfits(year));
-    		model.addRow(new Object[] {year, GeneralGuiFunctions.stringToPrice(profits)});
+    		model.addRow(new Object[] {year, GeneralGuiFunctions.priceToString(profits)});
     	}
     	
     }

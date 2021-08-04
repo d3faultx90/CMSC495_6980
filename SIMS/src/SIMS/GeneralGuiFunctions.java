@@ -94,7 +94,7 @@ public class GeneralGuiFunctions {
 
 	// Display this JOptionpane whenever a field is missing input or has negative
 	// values
-	static String stringToPrice(String unparsedPrice) {
+	static String priceToString(String unparsedPrice) {
 		try {
 			double price = Double.parseDouble(unparsedPrice);
 			NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
@@ -105,7 +105,7 @@ public class GeneralGuiFunctions {
 		return "ERROR";
 	}
 
-	static String stringToPrice(Double price) {
+	static String priceToString(Double price) {
 		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 		return formatter.format(price);
 	}
