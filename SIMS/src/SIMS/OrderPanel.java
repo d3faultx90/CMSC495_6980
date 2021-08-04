@@ -7,6 +7,7 @@
 package SIMS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,55 +20,52 @@ public class OrderPanel extends javax.swing.JPanel {
 	private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
 		javax.swing.JTable orderedItems = orderAndSalesPanel.orderTable;
-		Map<String, Integer> itemNum = Database.getItemIdMap();
+		Map<Object, Object> itemNum = Database.getItemIdMap();
+		Map<Object, Object> itemPrices = Database.getItemPricesMap();
+		
 
 		List<List> databBaseInfo = new ArrayList<List>();
 
 		if (orderedItems.getRowCount() == 0) {
+			
 			GeneralGuiFunctions.displayErrorPane("Please select an item to order");
 
 		} else {
 
+			String date = DateHandler.getTodaysDateSql();
+			int status = 0 ;
 			for (int i = 0; i < orderedItems.getRowCount(); i++) {
 
 				// 2D List to pass to createOrder
 				List<Object> list = new ArrayList<Object>();
 
-				// int employeeID = ;
+				
 				Object itemID = itemNum.get(orderedItems.getValueAt(i, 0));
-				System.out.println(itemID);
-				// double salesTax =;
-				// double wholeSalePrice = ;
-				Object quantity = GeneralGuiFunctions.castObjectToInteger(orderedItems.getValueAt(i, 1));
-			
-				System.out.println(quantity);
-				// String date = ;
-				// int status = ;
-
-				// list.add(employeeID);
+				Object price = itemPrices.get(orderedItems.getValueAt(i, 0));
+				Object quantity = orderedItems.getValueAt(i, 1);
+				
+				
+				
 				list.add(itemID);
-				// list.add(saleTax);
-				// list.add(wholeSalePrice);
+				list.add(price);
 				list.add(quantity);
-				// list.add(date);
-				// list.add(status);
+				
 
 				databBaseInfo.add(list);
-
-				//System.out.println(databBaseInfo);
+				
+				
 
 			} // end for
-
+			Database.getConnector().createOrder(databBaseInfo,date, status);
 		} // end else
 
-		// Database.getConnector().createOrder(employeeID, itemID, saleTax,
-		// wholeSalePrice, quantity, date, status);
+		
 
 	}// end orderButtonActionPerformed
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private SIMS.OrderAndSalesPanel orderAndSalesPanel;
-	public javax.swing.JButton orderButton;
+	private javax.swing.JButton orderButton;
 	private javax.swing.JPanel panel;
 	// End of variables declaration//GEN-END:variables
 
@@ -82,7 +80,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
         orderAndSalesPanel = new SIMS.OrderAndSalesPanel();
         orderButton = new javax.swing.JButton();
-
+       
         orderButton.setBackground(new java.awt.Color(0, 102, 0));
         orderButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         orderButton.setText("Order");
