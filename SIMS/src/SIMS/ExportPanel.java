@@ -1,5 +1,5 @@
 /*
- * File: ExportPanel.java
+ * File: ImportAndExportPanel.java
  * Author: Ben Sutter
  * Date: July 19th, 2021
  * Purpose: Panel that is used in the Import/Export tab of the Main GUI
@@ -23,8 +23,9 @@ public class ExportPanel extends javax.swing.JPanel {
     }                                     
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
-    }                                          
+    	GeneralGuiFunctions.displayHelpPane("To import data click on the import button. "
+        		+ "\nTo export database information,click on the export button ");
+    }                                           
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	
@@ -36,8 +37,7 @@ public class ExportPanel extends javax.swing.JPanel {
     	List<List> wastes = connector.exportResultsofQuery("waste");
         
         String today = DateHandler.getTodaysDateSql();
-        today = today.replaceAll(" ", "_");
-        today = today.replaceAll(":", ";");
+        today = today.substring(0, 10);
         
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
