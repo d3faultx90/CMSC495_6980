@@ -81,7 +81,6 @@ public class SupervisorWindow extends javax.swing.JFrame {
 
 		boolean isMac = (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0);
 		if (isMac) {
-			System.out.println("Get a better computer, Marsha - From Gary");
 			inventorySubTabs.addTab("View Inventory", viewInventoryPanel);
 			inventorySubTabs.addTab("Waste Item(s)", wastePanel);
 			inventorySubTabs.addTab("Order", orderPanel);

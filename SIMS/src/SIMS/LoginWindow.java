@@ -132,7 +132,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
         passwordLabel.setText("Password");
 
-        usernameTextfield.setText("bsutte");
+        usernameTextfield.setText("stetan");
         usernameTextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameTextfieldActionPerformed(evt);

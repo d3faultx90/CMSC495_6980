@@ -44,7 +44,7 @@ public class WastePanel extends javax.swing.JPanel {
 
 			} else {
 
-				System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
+				//System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
 
 			}
 
@@ -61,7 +61,7 @@ public class WastePanel extends javax.swing.JPanel {
 			String date = DateHandler.getTodaysDateSql();
 			int status = 0;
 			
-			System.out.println("waste");
+			//System.out.println("waste");
 
 			// createWaste(int itemID, double wholeSalePrice, int removalQuantity,String
 			// date, int status)

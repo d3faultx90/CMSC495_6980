@@ -333,9 +333,7 @@ public class Connector {
         	
         	if (rs.next()) {
         		int count = rs.getInt(1);
-        		
-        		System.out.print(count);
-        		
+        		        		
         		if (count == 1) {
                 	exists = true;
                 } else {
@@ -506,7 +504,6 @@ public class Connector {
     	List<List> results = new ArrayList<List>();
     	String salesEventID = UUID.randomUUID().toString();
 
-    	System.out.println(salesDate);
         try {
         	
         	// connect to database via JDBC

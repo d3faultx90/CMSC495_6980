@@ -25,7 +25,7 @@ public class ReportPanel extends javax.swing.JPanel {
         columnModel.getColumn(0).setPreferredWidth(20);
         //System.out.println(Database.getSalesTable());
         GeneralGuiFunctions.parseSales(getYearsProfits("2021"));
-        System.out.println(Database.resultsFromSalesQuery);
+        //System.out.println(Database.resultsFromSalesQuery);
         getUniqueYears(Database.resultsFromSalesQuery);
         populateTable();
 		//System.out.println(Months.JANUARY.getNumericalRepresentation());

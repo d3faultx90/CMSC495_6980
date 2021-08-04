@@ -127,12 +127,7 @@ public class GeneralGuiFunctions {
 		for (List l : sales) {
 			totalProfit += Double.parseDouble((String) l.get(6));
 		}
-		// System.out.println(totalProfit);
 		return totalProfit;
 	}
 
-//    static List<String> determineCategories(List<List> items){
-//    	List<String> categories = new List<String>();
-//    	return items;
-//    }
 }
