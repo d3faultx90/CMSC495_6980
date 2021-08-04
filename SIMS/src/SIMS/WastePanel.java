@@ -1,4 +1,3 @@
-/*
  /*
  * File: WastePanel.java
  * Author: Ben Sutter

@@ -501,7 +501,6 @@ public class Connector {
     	List<List> results = new ArrayList<List>();
     	String salesEventID = UUID.randomUUID().toString();
 
-    	System.out.println(salesDate);
         try {
         	
         	// connect to database via JDBC

@@ -8,6 +8,9 @@
 package SIMS;
 
 import java.util.Map;
+
+import javax.swing.SwingUtilities;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +54,11 @@ public class SalesPanel extends javax.swing.JPanel {
 		}
 		//System.out.println(itemIdsAndQuantity);
 		// Pass the 2D list here once method is updated
-		Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
+		Database.resultsFromSalesQuery = Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
 		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
+		SwingUtilities.getWindowAncestor(this).invalidate();
+		SwingUtilities.getWindowAncestor(this).validate();
+		SwingUtilities.getWindowAncestor(this).repaint();
 	}
 
 	// Variables declaration - do not modify

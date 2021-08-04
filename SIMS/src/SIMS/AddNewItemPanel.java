@@ -27,7 +27,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		ArrayList<String> categoryArrayList = new ArrayList<String>();
 		categoryArrayList.add("New Category"); // Category field must be filled in
 		for (List l : Database.getItemTable()) {
-			//System.out.println(l);
+			// System.out.println(l);
 			// If category hasn't been added yet, then add it
 			if (!categoryArrayList.contains(l.get(3))) {
 				categoryArrayList.add(l.get(3).toString());
@@ -38,14 +38,26 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	}
 
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		String name = nameTextfield.getText();
-		String description = descriptionTextArea.getText();
-		String category = categoryComboBox.getSelectedIndex() == 0 ? newCategoryTextfield.getText() : (String) categoryComboBox.getSelectedItem();
-		double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(purchasePriceTextfield.getText());
-		double retailPrice = GeneralGuiFunctions.castObjectToDouble(sellPriceTextfield.getText());
-		int quantity = GeneralGuiFunctions.castObjectToInteger(quantityTextfield.getText());
-		Database.getConnector().createInventoryItem(name, description, category, wholeSalePrice, retailPrice, quantity);
-		GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
+		try {
+			String name = nameTextfield.getText();
+			String description = descriptionTextArea.getText();
+			String category = categoryComboBox.getSelectedIndex() == 0 ? newCategoryTextfield.getText()
+					: (String) categoryComboBox.getSelectedItem();
+			double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(purchasePriceTextfield.getText());
+			double retailPrice = GeneralGuiFunctions.castObjectToDouble(sellPriceTextfield.getText());
+			int quantity = GeneralGuiFunctions.castObjectToInteger(quantityTextfield.getText());
+			if (name.isEmpty() || description.isEmpty() || category.isEmpty()) {
+				GeneralGuiFunctions.displayErrorPane("Please ensure all textfields are filled in");
+			} else {
+				Database.getConnector().createInventoryItem(name, description, category, wholeSalePrice, retailPrice,
+						quantity);
+				GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
+			}
+
+		} catch (Exception e) {
+			GeneralGuiFunctions.displayErrorPane("Error encounter, please check all textfields.");
+		}
+
 		// double wholeSalePrice, double retailPrice, int quantity){
 		// Gets hooke dup to createInventory item
 	}
@@ -63,7 +75,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 			newCategoryTextfield.setVisible(true);
 		}
 	}
-	
+
 	private void ensureValidDoubleInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textfield) {
 		char c = evt.getKeyChar();
 		if ((!Character.isDigit(c) && c != '.') || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
