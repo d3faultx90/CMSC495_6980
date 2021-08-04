@@ -33,7 +33,8 @@ public class OrderPanel extends javax.swing.JPanel {
 		} else {
 
 			String date = DateHandler.getTodaysDateSql();
-			int status = 0 ;
+			// If they are a regular user (role = 2), the status should be 0 (pending)
+			int status = Database.getConnector().role == 2 ? 0 : 1;
 			for (int i = 0; i < orderedItems.getRowCount(); i++) {
 
 				// 2D List to pass to createOrder

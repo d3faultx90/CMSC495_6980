@@ -21,7 +21,7 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	// resultsFromUsersQuery
 
 	public SupervisorWindow(Connector connector, String username) {
-		username = username;
+		this.username = username;
 		Database database = new Database(connector);
 		initComponents();
 	}

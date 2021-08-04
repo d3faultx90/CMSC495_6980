@@ -7,6 +7,7 @@
 package SIMS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,28 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		System.out.println("Pressed view button");
+		Object selectedCellValue = requestTable.getValueAt(requestTable.getSelectedRow(), 0);
+		Map<Object, Object> itemNames = Database.getItemNamesMap();
+		ArrayList<Object[]> masterList = new ArrayList<Object[]>();
+		
+		double totalPrice = 0;
+		for (List request : resultsFromQuery) {
+			System.out.println(request);
+			if (selectedCellValue.equals(request.get(8))) {
+				Object name = itemNames.get(request.get(4));
+				Object quantity = request.get(7);
+				Object price = request.get(6);
+				totalPrice += GeneralGuiFunctions.castObjectToDouble(price);
+				Object[] grouped = new Object[] {name, quantity, price};
+				masterList.add(grouped);
+				System.out.print("name: " + name + " quantity: " + quantity + " total price: " + price);
+			}
+		}
+		Object [][] masterArray = new Object[masterList.size()][3];
+		for (int i = 0; i < masterList.size(); i ++) {
+			masterArray[i] = masterList.get(i);
+		}
+		new OrderAndWasteDetailWindow(tableTitle, (String) selectedCellValue, masterArray, totalPrice).setVisible(true);
 	}
 
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,22 +103,18 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		}
 	}
 
-//	// Given a 2D list, add the item and the quantity of the list to the selected
-//	// table
-//	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
-//		for (List l : resultsFromQuery) {
-//			if (GeneralGuiFunctions.castSqlObjectToInteger(l.get(10)) == 0) {
-//				model.addRow(new Object[] { l.get(9), l.get(2) });
-//			}
-//		}
-//	}
-
 	// IF SUPERVISORS CAN GET ACCESS TO USER TABLES DO THIS HERE!!!!!!!!!!!!
 	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
 		Map usernames = Database.getUserIdMap();
+		ArrayList<String> alreadyAdded = new ArrayList<String>();
 		for (List l : resultsFromQuery) {
 			if (GeneralGuiFunctions.castObjectToInteger(l.get(9)) == 0) {
-				model.addRow(new Object[] { l.get(8), usernames.get(l.get(2)) });
+				String date = (String) l.get(8);
+				if (!alreadyAdded.contains(date)) {
+					model.addRow(new Object[] { date, usernames.get(l.get(2)) });
+					alreadyAdded.add(date);
+				}
+				
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * File: ImportAndExportPanel.java
+ * File: ExportPanel.java
  * Author: Ben Sutter
  * Date: July 19th, 2021
  * Purpose: Panel that is used in the Import/Export tab of the Main GUI
@@ -37,7 +37,7 @@ public class ExportPanel extends javax.swing.JPanel {
     	List<List> wastes = connector.exportResultsofQuery("waste");
         
         String today = DateHandler.getTodaysDateSql();
-        today = today.substring(0, 10);
+        today = today.replaceAll(" ", "_").replaceAll(":", ";");
         
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

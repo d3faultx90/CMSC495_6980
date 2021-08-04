@@ -19,7 +19,6 @@ public class Database {
 	 * needed. Once the connection is made, these are filled with the various
 	 * queries (item, sales, waste and orders)
 	 */
-	static List<String> itemNames = new ArrayList<String>();
 	static List<List> resultsFromItemQuery = new ArrayList<List>();
 	static List<List> resultsFromOrderQuery = new ArrayList<List>();
 	static List<List> resultsFromWasteQuery = new ArrayList<List>();
@@ -27,6 +26,7 @@ public class Database {
 	static List<List> resultsFromUserQuery = new ArrayList<List>();
 	static Map<Object, Object> itemIds = new HashMap<Object, Object>();
 	static Map<Object, Object> itemPrices = new HashMap<Object, Object>();
+	static Map<Object, Object> itemNames = new HashMap<Object, Object>();
 	static Map<Object, String> userIds = new HashMap<Object, String>();
 	static Connector connector;
 	private int role;
@@ -60,7 +60,11 @@ public class Database {
 		 */
 		try {
 			for (List l : resultsFromItemQuery) {
+				// Index 1 - name, Index 0 = ID
 				itemIds.put(l.get(1), l.get(0));
+				// Index 0 = ID, Index 1 - name
+				itemNames.put(l.get(0), l.get(1));
+				// Index 1 - name, Index 5 = Price
 				itemPrices.put(l.get(1), l.get(5));
 				
 			}
@@ -94,6 +98,10 @@ public class Database {
 	
 	static Map getItemIdMap() {
 		return itemIds;
+	}
+	
+	static Map getItemNamesMap() {
+		return itemNames;
 	}
 	
 	static Map getItemPricesMap() {

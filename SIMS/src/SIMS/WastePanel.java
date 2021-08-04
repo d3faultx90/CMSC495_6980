@@ -59,13 +59,19 @@ public class WastePanel extends javax.swing.JPanel {
 			String quantity = quantityTextfield.getText();
 			int removalQuantity = GeneralGuiFunctions.castObjectToInteger(quantity);
 			String date = DateHandler.getTodaysDateSql();
-			int status = 0;
 			
-			//System.out.println("waste");
+			
+			int status = 0; // Pending
+			String confirmation = "Waste request (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
+			// If they are a regular user (role = 2), the status should be 0 (pending)
+			if (Database.getConnector().role == 2) {
+				status = 1;
+				confirmation = "Waste (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
+			} 
 
-			// createWaste(int itemID, double wholeSalePrice, int removalQuantity,String
-			// date, int status)
 			Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
+			
+			GeneralGuiFunctions.displayConfirmationPane(confirmation);
 
 		} catch (NumberFormatException d) {
 			GeneralGuiFunctions.displayErrorPane("I am really angry ... call and admin.");
