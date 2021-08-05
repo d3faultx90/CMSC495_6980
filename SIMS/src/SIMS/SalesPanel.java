@@ -10,6 +10,7 @@ package SIMS;
 import java.util.Map;
 
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,12 @@ public class SalesPanel extends javax.swing.JPanel {
 		//System.out.println(itemIdsAndQuantity);
 		// Pass the 2D list here once method is updated
 		Database.resultsFromSalesQuery = Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
+		
+		// https://stackoverflow.com/a/4577820
+		DefaultTableModel dm = (DefaultTableModel)salesPanel.orderTable.getModel();
+		dm.getDataVector().removeAllElements();
+		dm.fireTableDataChanged(); // notifies the JTable that the model has changed
+		
 		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 		SwingUtilities.getWindowAncestor(this).invalidate();
 		SwingUtilities.getWindowAncestor(this).validate();

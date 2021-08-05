@@ -7,6 +7,8 @@
 
 package SIMS;
 
+import javax.swing.table.TableColumnModel;
+
 public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 
 	Object[][] masterArray;
@@ -17,11 +19,23 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 		this.title = title;
 		convertColumnsForSorting();
 		initComponents();
+		// changeTableHeaderWidth();
 	}
 
+//	private void changeTableHeaderWidth() {
+//		TableColumnModel columnModel = saleTable.getColumnModel();
+//		System.out.println(columnModel.getColumn(0).getPreferredWidth());
+//		System.out.println(columnModel.getColumn(1).getPreferredWidth());
+//		System.out.println(columnModel.getColumn(2).getPreferredWidth());
+//		System.out.println(columnModel.getColumn(3).getPreferredWidth());
+//		columnModel.getColumn(0).setPreferredWidth(60);
+//		columnModel.getColumn(2).setPreferredWidth(15);
+//	}
+
+	// Converts indexes 2 and 3 to doubles so sorting works correctly
 	private void convertColumnsForSorting() {
 		for (int i = 0; i < masterArray.length; i++) {
-			masterArray[i][2] = GeneralGuiFunctions.castObjectToInteger(masterArray[i][2]);
+			masterArray[i][2] = GeneralGuiFunctions.castObjectToDouble(masterArray[i][2]);
 			masterArray[i][3] = GeneralGuiFunctions.castObjectToDouble(masterArray[i][3]);
 		}
 	}
@@ -37,13 +51,14 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Sales during " + title);
+		setResizable(false);
 
 		saleTable.setModel(new javax.swing.table.DefaultTableModel(
 
 				masterArray, new String[] { "Date and Time", "Item", "Quantity", "Total Sales Price" }) {
-			Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class,
+			Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Double.class,
 					java.lang.Double.class };
-			boolean[] canEdit = new boolean[] { true, false, false, false };
+			boolean[] canEdit = new boolean[] { false, false, false, false };
 
 			public Class getColumnClass(int columnIndex) {
 				return types[columnIndex];
@@ -56,7 +71,15 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 
 		saleTable.setAutoCreateRowSorter(true);
 
+		saleTable.getRowSorter().toggleSortOrder(0);
+
 		jScrollPane1.setViewportView(saleTable);
+
+		if (saleTable.getColumnModel().getColumnCount() > 0) {
+			saleTable.getColumnModel().getColumn(0).setPreferredWidth(75);
+			saleTable.getColumnModel().getColumn(2).setPreferredWidth(10);
+			saleTable.getColumnModel().getColumn(3).setPreferredWidth(60);
+		}
 
 		titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 		titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -81,7 +104,6 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
-
 		pack();
 		setLocationRelativeTo(null);
 

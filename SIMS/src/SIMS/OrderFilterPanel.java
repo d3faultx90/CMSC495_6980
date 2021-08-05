@@ -24,9 +24,7 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 
 	public OrderFilterPanel() {
 		initComponents();
-		TableColumnModel columnModel = itemTable.getColumnModel();
-		columnModel.getColumn(0).setPreferredWidth(35);
-		columnModel.getColumn(2).setPreferredWidth(20);
+		changeTableHeaderWidth();
 		addOrderAndIdToTable();
 
 	}
@@ -34,6 +32,12 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 	private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
 		// This needs to be updated with stuff from the order query
 		GeneralGuiFunctions.filterTable(itemTable, filterField);
+	}
+	
+	private void changeTableHeaderWidth() {
+		TableColumnModel columnModel = itemTable.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(35);
+		columnModel.getColumn(2).setPreferredWidth(20);
 	}
 
 	private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {

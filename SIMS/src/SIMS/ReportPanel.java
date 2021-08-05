@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -130,6 +131,9 @@ public class ReportPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        
+        yearAndProfitTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        yearAndProfitTable.changeSelection(0, 0, true, false);
         itemScrollPane.setViewportView(yearAndProfitTable);
 
         monthlyBreakdownButton.setText("View Monthly Breakdown");

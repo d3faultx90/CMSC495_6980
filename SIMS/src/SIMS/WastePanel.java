@@ -74,7 +74,7 @@ public class WastePanel extends javax.swing.JPanel {
 			GeneralGuiFunctions.displayConfirmationPane(confirmation);
 
 		} catch (NumberFormatException d) {
-			GeneralGuiFunctions.displayErrorPane("I am really angry ... call and admin.");
+			GeneralGuiFunctions.displayErrorPane("I am really angry ... call an admin.");
 
 		} catch (ArrayIndexOutOfBoundsException e) {
 

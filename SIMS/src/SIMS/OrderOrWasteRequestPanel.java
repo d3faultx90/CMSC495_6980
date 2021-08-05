@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -182,6 +183,8 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 				denyButtonActionPerformed(evt);
 			}
 		});
+		
+		requestTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
