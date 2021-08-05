@@ -45,7 +45,7 @@ public class MonthViewWindow extends javax.swing.JFrame {
         
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle(year + " monthly breakdown");
+        setTitle(year + " Monthly Breakdown");
         setMaximumSize(new java.awt.Dimension(417, 396));
         setMinimumSize(new java.awt.Dimension(417, 396));
         setResizable(false);

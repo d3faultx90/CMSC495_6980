@@ -45,6 +45,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 				masterList.add(grouped);
 			}
 		}
+		// Convert 2D arraylist into 2D array
 		Object [][] masterArray = new Object[masterList.size()][3];
 		for (int i = 0; i < masterList.size(); i ++) {
 			masterArray[i] = masterList.get(i);
