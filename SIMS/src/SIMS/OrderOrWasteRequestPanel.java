@@ -4,7 +4,8 @@
  * Date: July 27th, 2021
  * Purpose:
  */
-package SIMS;
+package SIMS
+;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -60,10 +60,10 @@ public class OrderPanel extends javax.swing.JPanel {
 			} // end for
 			
 			// If they are a regular user (role = 2), the status should be 0 (pending)
-			int status = Database.getConnector().role == 2 ? 0 : 1; // 0 = pending, 1 = approved
+			int status = 0; // 0 = pending, 1 = approved
 			String confirmation = "Order request";
 			// If they are a regular user (role = 2), the status should be 0 (pending)
-			if (Database.getConnector().role == 2) {
+			if (Database.getConnector().role == 1) {
 				status = 1;
 				confirmation = "Order";
 			} 

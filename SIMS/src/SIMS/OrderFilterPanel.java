@@ -33,7 +33,7 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 		// This needs to be updated with stuff from the order query
 		GeneralGuiFunctions.filterTable(itemTable, filterField);
 	}
-	
+
 	private void changeTableHeaderWidth() {
 		TableColumnModel columnModel = itemTable.getColumnModel();
 		columnModel.getColumn(0).setPreferredWidth(35);
@@ -48,14 +48,21 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 	// table
 	private void addOrderAndIdToTable() {
 
+		ArrayList<String> alreadyAdded = new ArrayList<String>();
 		DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
 
 		for (List l : Database.getOrderTable()) {
-			int status = GeneralGuiFunctions.castObjectToInteger(l.get(9)); // Index 10 = Status
+			
+			int status = GeneralGuiFunctions.castObjectToInteger(l.get(9)); // Index 9 = Status
 			// 0 = pending, so if it is not pending (Approved/Denied) then show it
 			if (status > 0) {
-				// Index 1 = EventId, Index 9 = OrderDate
-				model.addRow(new Object[] { l.get(1), l.get(8), OrderStatus.values()[status] });
+				String date = (String) l.get(8);
+
+				if (!alreadyAdded.contains(date)) {
+					model.addRow(new Object[] { l.get(1), l.get(8), OrderStatus.values()[status] });
+					alreadyAdded.add(date);
+
+				}
 			}
 		}
 	}
