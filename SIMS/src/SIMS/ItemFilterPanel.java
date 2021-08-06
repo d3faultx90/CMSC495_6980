@@ -59,12 +59,8 @@ public class ItemFilterPanel extends javax.swing.JPanel {
 
 		itemTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
 				new String[] { "Item Name", "Current Quantity" }) {
-			Class[] types = new Class[] { java.lang.String.class, java.lang.Integer.class };
-			boolean[] canEdit = new boolean[] { false, false };
 
-			public Class getColumnClass(int columnIndex) {
-				return types[columnIndex];
-			}
+			boolean[] canEdit = new boolean[] { false, false };
 
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
 				return canEdit[columnIndex];

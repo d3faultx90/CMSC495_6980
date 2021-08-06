@@ -31,6 +31,8 @@ public class WastePanel extends javax.swing.JPanel {
 
 			JTable table = itemFilterPanel.itemTable; // Access the filter panel's item table
 			String selectedCellValue = (String) table.getValueAt(table.getSelectedRow(), 0);
+			String selectedCellQuantity = (String) table.getValueAt(table.getSelectedRow(), 1);
+			int requestingQuantity = Integer.parseInt(quantityTextfield.getText());
 
 			if (quantityTextfield.getText().isEmpty()) {
 
@@ -38,38 +40,40 @@ public class WastePanel extends javax.swing.JPanel {
 
 			}
 
-			if (!(Integer.parseInt(quantityTextfield.getText()) >= 1)) {
+			if (!(requestingQuantity >= 1)) {
 
 				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
 
+			} else if (requestingQuantity > Integer.parseInt(selectedCellQuantity.replaceAll(",",""))) {
+				
+				GeneralGuiFunctions.displayErrorPane("Requested waste quantity is greater than stock on hand");
+				
 			} else {
-				//System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
+				
+				Object id = Database.itemIds.get(selectedCellValue);
+				Object price = Database.itemPrices.get(selectedCellValue);
+
+				int itemID = GeneralGuiFunctions.castObjectToInteger(id);
+				double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(price);
+				String quantity = quantityTextfield.getText();
+				int removalQuantity = GeneralGuiFunctions.castObjectToInteger(quantity);
+				String date = DateHandler.getTodaysDateSql();
+				
+				
+				int status = 0; // Pending
+				String confirmation = "Waste request (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
+				// If they are a regular user (role = 2), the status should be 0 (pending)
+				if (Database.getConnector().role == 2) {
+					status = 1;
+					confirmation = "Waste (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
+				} 
+
+				Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
+				
+				GeneralGuiFunctions.displayConfirmationPane(confirmation);
 			}
 
-			// employeeId connecter.userID
-			//Map<Object, Object> itemIds = new HashMap<Object, Object>();
-			//Map<Object, Object> itemPrices = new HashMap<Object, Object>();
-			Object id = Database.itemIds.get(selectedCellValue);
-			Object price = Database.itemPrices.get(selectedCellValue);
 
-			int itemID = GeneralGuiFunctions.castObjectToInteger(id);
-			double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(price);
-			String quantity = quantityTextfield.getText();
-			int removalQuantity = GeneralGuiFunctions.castObjectToInteger(quantity);
-			String date = DateHandler.getTodaysDateSql();
-			
-			
-			int status = 0; // Pending
-			String confirmation = "Waste request (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
-			// If they are a regular user (role = 2), the status should be 0 (pending)
-			if (Database.getConnector().role == 2) {
-				status = 1;
-				confirmation = "Waste (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
-			} 
-
-			Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
-			
-			GeneralGuiFunctions.displayConfirmationPane(confirmation);
 
 		} catch (NumberFormatException d) {
 			GeneralGuiFunctions.displayErrorPane("I am really angry ... call an admin.");
@@ -97,86 +101,81 @@ public class WastePanel extends javax.swing.JPanel {
 	private javax.swing.JButton wasteButton;
 	// End of variables declaration
 
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
-		panel = new javax.swing.JPanel();
-		wasteButton = new javax.swing.JButton();
-		quantityLabel = new javax.swing.JLabel();
-		quantityTextfield = new javax.swing.JTextField();
-		helpButton = new javax.swing.JButton();
-		itemFilterPanel = new SIMS.ItemFilterPanel();
+        panel = new javax.swing.JPanel();
+        wasteButton = new javax.swing.JButton();
+        quantityLabel = new javax.swing.JLabel();
+        quantityTextfield = new javax.swing.JTextField();
+        helpButton = new javax.swing.JButton();
+        itemFilterPanel = new SIMS.ItemFilterPanel();
 
-		wasteButton.setText("Waste Item(s)");
-		wasteButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				wasteButtonActionPerformed(evt);
-			}
-		});
+        wasteButton.setText("Waste Item(s)");
+        wasteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wasteButtonActionPerformed(evt);
+            }
+        });
 
-		quantityLabel.setText("Quantity to waste ");
+        quantityLabel.setText("Quantity to waste ");
 
-		helpButton.setBackground(new java.awt.Color(255, 255, 153));
-		helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-		helpButton.setText("?");
-		helpButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				helpButtonActionPerformed(evt);
-			}
-		});
+        helpButton.setBackground(new java.awt.Color(255, 255, 153));
+        helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        helpButton.setText("?");
+        helpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButtonActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-		panel.setLayout(panelLayout);
-		panelLayout.setHorizontalGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(panelLayout.createSequentialGroup()
-						.addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(panelLayout.createSequentialGroup().addComponent(helpButton).addGap(134, 134,
-										134))
-								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-										panelLayout.createSequentialGroup().addComponent(quantityLabel).addGap(18, 18,
-												18)))
-						.addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 42,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-						.addComponent(wasteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-						panelLayout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE).addComponent(itemFilterPanel,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)));
-		panelLayout.setVerticalGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(panelLayout.createSequentialGroup()
-						.addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(panelLayout.createSequentialGroup().addComponent(helpButton)
-										.addGap(216, 216, 216))
-								.addComponent(itemFilterPanel, javax.swing.GroupLayout.Alignment.TRAILING,
-										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(wasteButton)
-								.addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(quantityLabel))
-						.addContainerGap(66, Short.MAX_VALUE)));
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addComponent(helpButton)
+                .addGap(25, 25, 25)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(quantityLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(wasteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(helpButton)
+                        .addGap(216, 216, 216))
+                    .addComponent(itemFilterPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(wasteButton)
+                    .addComponent(quantityTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantityLabel))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		this.setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 417, Short.MAX_VALUE)
-				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(layout.createSequentialGroup().addGap(0, 14, Short.MAX_VALUE)
-								.addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(0, 15, Short.MAX_VALUE))));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 357, Short.MAX_VALUE)
-				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(layout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE)
-								.addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(0, 0, Short.MAX_VALUE))));
-	}// </editor-fold>
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 417, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 366, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }// </editor-fold>                        
 
 }
