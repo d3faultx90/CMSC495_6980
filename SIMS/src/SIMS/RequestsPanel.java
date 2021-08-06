@@ -4,6 +4,7 @@
  * Date: July 19th, 2021
  * Purpose: Holds the request panel that is nested in User/Supervisor window
  */
+
 package SIMS;
 
 import java.util.List;
@@ -12,15 +13,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class RequestsPanel extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form RequestsPanel
-	 */
 	public RequestsPanel() {
 		initComponents();
 	}
 
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane("Here is how this panel works!");
+		GeneralGuiFunctions.displayHelpPane("Any order or wastes submitted by a user will show up here."
+				+ "\nIf you can see this you are a supervisor and must approve or deny the request.");
 	}
 	
 	// Variables declaration - do not modify
@@ -30,8 +29,6 @@ public class RequestsPanel extends javax.swing.JPanel {
 	private SIMS.OrderOrWasteRequestPanel wasteRequestPanel;
 	// End of variables declaration
 
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
 		requestPanel = new javax.swing.JPanel();
@@ -82,6 +79,6 @@ public class RequestsPanel extends javax.swing.JPanel {
 		layout.setVerticalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(requestPanel,
 						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-	}// </editor-fold>
+	}
 
 }
