@@ -24,6 +24,10 @@ public class HomePanel extends javax.swing.JPanel {
         setSaleTextfields();
     }
     
+    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    	setSaleTextfields();
+    }                                                 
+    
     public void setSaleTextfields() {
         LocalDateTime date = LocalDateTime.now();
         String minusDay = DateHandler.formatDateForSql(date.minusDays(1));
@@ -62,11 +66,6 @@ public class HomePanel extends javax.swing.JPanel {
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         GeneralGuiFunctions.closeWindow(SwingUtilities.getWindowAncestor(this), new LoginWindow());
     }//GEN-LAST:event_logoutButtonActionPerformed
-
-
-    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-    	//GeneralGuiFunctions.closeWindow(SwingUtilities.getWindowAncestor(this), SwingUtilities.getWindowAncestor(this));
-    }                                                 
 
     // Variables declaration - do not modify                     
     private javax.swing.JLabel annualSalesLabel;

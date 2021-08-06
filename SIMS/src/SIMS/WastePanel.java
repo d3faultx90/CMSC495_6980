@@ -43,9 +43,7 @@ public class WastePanel extends javax.swing.JPanel {
 				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
 
 			} else {
-
 				//System.out.println(selectedCellValue + " quantity: " + quantityTextfield.getText());
-
 			}
 
 			// employeeId connecter.userID

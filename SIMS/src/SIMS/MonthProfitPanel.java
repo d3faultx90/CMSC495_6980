@@ -18,6 +18,15 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 	private String year;
 	private String profits;
 	private List<List> salesFromQuery;
+	
+	
+//	public MonthProfitPanel(salesFromQuery) {
+//		this.month = month.name();
+//		this.year = year;
+//		this.salesFromQuery = salesFromQuery
+//		this.profits = profits;
+//		initComponents();
+//	}
 
 	public MonthProfitPanel(Months month, String year) {
 		this.month = month.name();

@@ -40,9 +40,6 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed" desc="Generated
-	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
 		jScrollPane1 = new javax.swing.JScrollPane();
@@ -54,7 +51,6 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 		setResizable(false);
 
 		saleTable.setModel(new javax.swing.table.DefaultTableModel(
-
 				masterArray, new String[] { "Date and Time", "Item", "Quantity", "Total Sales Price" }) {
 			Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Double.class,
 					java.lang.Double.class };
@@ -107,11 +103,11 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 		pack();
 		setLocationRelativeTo(null);
 
-	}// </editor-fold>//GEN-END:initComponents
+	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
+	// Variables declaration
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable saleTable;
 	private javax.swing.JLabel titleLabel;
-	// End of variables declaration//GEN-END:variables
+	// End of variables declaration
 }

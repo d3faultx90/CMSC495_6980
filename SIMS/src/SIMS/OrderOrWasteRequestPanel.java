@@ -85,8 +85,11 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 						GeneralGuiFunctions.displayErrorPane("Problem in approveOrDeny in OrderOrWastePanel.java");
 					}
 
+					((DefaultTableModel)requestTable.getModel()).removeRow((requestTable.getSelectedRow()));
+
 				}
 			}
+
 		} catch (ArrayIndexOutOfBoundsException e) {
 
 			GeneralGuiFunctions.displayErrorPane("Please select a request");
