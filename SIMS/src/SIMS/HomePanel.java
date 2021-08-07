@@ -59,7 +59,7 @@ public class HomePanel extends javax.swing.JPanel {
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
     	GeneralGuiFunctions.displayHelpPane("Daily, weekly, monthly and yearly sales are reported here. "
         		+ "\nClick on refresh to refresh the page ."
-        		+ "\nClickon loggout to log off ");
+        		+ "\nClick on logout to log off ");
     }//GEN-LAST:event_helpButtonActionPerformed
 
     // When the user logs out, opens a new LoginWindow and closes the current window
