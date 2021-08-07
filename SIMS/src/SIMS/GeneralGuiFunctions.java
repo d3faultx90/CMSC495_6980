@@ -21,6 +21,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 public class GeneralGuiFunctions {
 
@@ -128,6 +129,13 @@ public class GeneralGuiFunctions {
 			totalProfit += Double.parseDouble((String) l.get(6));
 		}
 		return totalProfit;
+	}
+	
+	// https://stackoverflow.com/a/4577820
+	static void clearTable(JTable table) {
+		DefaultTableModel dm = (DefaultTableModel)table.getModel();
+		dm.getDataVector().removeAllElements();
+		dm.fireTableDataChanged(); // notifies the JTable that the model has changed
 	}
 
 }

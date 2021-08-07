@@ -57,10 +57,18 @@ public class SalesPanel extends javax.swing.JPanel {
 		// Pass the 2D list here once method is updated
 		Database.resultsFromSalesQuery = Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
 		
-		// https://stackoverflow.com/a/4577820
-		DefaultTableModel dm = (DefaultTableModel)salesPanel.orderTable.getModel();
-		dm.getDataVector().removeAllElements();
-		dm.fireTableDataChanged(); // notifies the JTable that the model has changed
+		// Clears the order table after the success
+		GeneralGuiFunctions.clearTable(salesPanel.orderTable);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		// Need Zach's method to update inventory here (also in order panel)
+
+//		List<List> updateInventory = <Zach's update method>
+//		salesPanel.itemFilterPanel.refreshTable(updateInventory);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+		
 		
 		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 //		SwingUtilities.getWindowAncestor(this).invalidate();

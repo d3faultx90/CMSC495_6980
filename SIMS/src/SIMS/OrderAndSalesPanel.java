@@ -26,7 +26,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 	private javax.swing.JPanel completionPanel;
 	private javax.swing.JPanel filterPanel;
 	private javax.swing.JButton helpButton;
-	private SIMS.ItemFilterPanel itemFilterPanel;
+	protected SIMS.ItemFilterPanel itemFilterPanel;
 	private javax.swing.JScrollPane jScrollPane6;
 	protected javax.swing.JTable orderTable;
 	private javax.swing.table.DefaultTableModel previousModel;

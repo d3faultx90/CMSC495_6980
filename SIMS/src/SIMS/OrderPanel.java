@@ -70,10 +70,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
 			Database.getConnector().createOrder(databBaseInfo,date, status);
 			
-			// https://stackoverflow.com/a/4577820
-			DefaultTableModel dm = (DefaultTableModel)orderPanel.orderTable.getModel();
-			dm.getDataVector().removeAllElements();
-			dm.fireTableDataChanged(); // notifies the JTable that the model has changed
+			GeneralGuiFunctions.clearTable(orderPanel.orderTable);
 			
 			GeneralGuiFunctions.displayConfirmationPane(confirmation + " was submitted succesfully");
 
