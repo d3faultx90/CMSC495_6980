@@ -63,9 +63,9 @@ public class SalesPanel extends javax.swing.JPanel {
 		dm.fireTableDataChanged(); // notifies the JTable that the model has changed
 		
 		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
-		SwingUtilities.getWindowAncestor(this).invalidate();
-		SwingUtilities.getWindowAncestor(this).validate();
-		SwingUtilities.getWindowAncestor(this).repaint();
+//		SwingUtilities.getWindowAncestor(this).invalidate();
+//		SwingUtilities.getWindowAncestor(this).validate();
+//		SwingUtilities.getWindowAncestor(this).repaint();
 	}
 
 	// Variables declaration - do not modify

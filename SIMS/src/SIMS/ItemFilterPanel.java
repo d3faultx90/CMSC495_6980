@@ -19,25 +19,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemFilterPanel extends javax.swing.JPanel {
+	
+	static List<List> currentInventory = new ArrayList<List>();
 
 	public ItemFilterPanel() {
 		initComponents();
-		// Initializes the table to show item and quantity from the SQL table
-		GeneralGuiFunctions.addItemAndQuantityToTable(itemTable,
-				Database.getItemTable());
+		initializeInventory();
+		populateTable();
 	}
+	
+	private void populateTable() {
+		GeneralGuiFunctions.addItemAndQuantityToTable(itemTable, currentInventory);
+	}
+	
+	private void initializeInventory() {
+		if (currentInventory.isEmpty()) {
+			currentInventory = Database.getItemTable();
+		}
+	}
+	
+//	static void addRow() {
+//		DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
+//		model.addRow(new Object[] { "wow", "please" });
+//	}
 
 	// Filters the table based on the text field
 	private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
 		GeneralGuiFunctions.filterTable(itemTable, filterField);
 	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
+	// Variables declaration
 	private javax.swing.JTextField filterField;
 	private javax.swing.JLabel filterLabel;
 	private javax.swing.JScrollPane itemScrollPane;
-	public javax.swing.JTable itemTable;
-	// End of variables declaration//GEN-END:variables
+	protected javax.swing.JTable itemTable;
+	// End of variables declaration
 
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated
