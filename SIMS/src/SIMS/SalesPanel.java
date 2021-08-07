@@ -31,7 +31,7 @@ public class SalesPanel extends javax.swing.JPanel {
 		// Copy variables here for easier reading
 		javax.swing.JTable saleTable = salesPanel.orderTable;
 		Map <Object, Object> itemIds = Database.getItemIdMap();
-		Map <Object, Object> itemPrices = Database.getItemPricesMap();
+		Map <Object, Object> itemPrices = Database.getRetailItemPricesMap();
 		
 		// DELETE THIS AND GRAB IT FROM ELSEWHERE
 		int employeeId = Database.getConnector().userID;

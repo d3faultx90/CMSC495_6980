@@ -51,7 +51,7 @@ public class WastePanel extends javax.swing.JPanel {
 			} else {
 				
 				Object id = Database.itemIds.get(selectedCellValue);
-				Object price = Database.itemPrices.get(selectedCellValue);
+				Object price = Database.itemRetailPrices.get(selectedCellValue);
 
 				int itemID = GeneralGuiFunctions.castObjectToInteger(id);
 				double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(price);

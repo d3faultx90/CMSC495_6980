@@ -25,7 +25,8 @@ public class Database {
 	static List<List> resultsFromSalesQuery = new ArrayList<List>();
 	static List<List> resultsFromUserQuery = new ArrayList<List>();
 	static Map<Object, Object> itemIds = new HashMap<Object, Object>();
-	static Map<Object, Object> itemPrices = new HashMap<Object, Object>();
+	static Map<Object, Object> itemRetailPrices = new HashMap<Object, Object>();
+	static Map<Object, Object> itemWholesalePrices = new HashMap<Object, Object>();
 	static Map<Object, Object> itemNames = new HashMap<Object, Object>();
 	static Map<Object, String> userIds = new HashMap<Object, String>();
 	static Connector connector;
@@ -47,13 +48,13 @@ public class Database {
 			resultsFromOrderQuery = connector.getResultsofQuery("orders");
 			resultsFromWasteQuery = connector.getResultsofQuery("waste");
 			resultsFromSalesQuery = connector.getResultsofQuery("sales");;
-			populateItemIdMap();
+			populateItemMaps();
 			populateUserIdMap();
 		}
 
 	}
 
-	private void populateItemIdMap() {
+	private void populateItemMaps() {
 		/**
 		 * Creates a dictionary where the item name is the key, 
 		 * and its ID is the value 
@@ -64,8 +65,10 @@ public class Database {
 				itemIds.put(l.get(1), l.get(0));
 				// Index 0 = ID, Index 1 - name
 				itemNames.put(l.get(0), l.get(1));
-				// Index 1 - name, Index 5 = Price
-				itemPrices.put(l.get(1), l.get(5));
+				// Index 1 - name, Index 4 = wholesale price
+				itemWholesalePrices.put(l.get(1), l.get(4));
+				// Index 1 - name, Index 5 = retail price
+				itemRetailPrices.put(l.get(1), l.get(5));
 				
 			}
 		} catch (Exception e) {
@@ -104,8 +107,12 @@ public class Database {
 		return itemNames;
 	}
 	
-	static Map getItemPricesMap() {
-		return itemPrices;
+	static Map getRetailItemPricesMap() {
+		return itemRetailPrices;
+	}
+	
+	static Map getWholesaleItemPricesMap() {
+		return itemWholesalePrices;
 	}
 
 	static List<List> getItemTable() {

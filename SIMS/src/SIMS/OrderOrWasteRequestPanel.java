@@ -146,7 +146,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 				new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] { "Date", "Requesting User" }));
 		jScrollPane1.setViewportView(requestTable);
 
-		requestLabel.setText(tableTitle + "Request(s)");
+		requestLabel.setText(tableTitle + " Request(s)");
 
 		viewButton.setText("View");
 		viewButton.addActionListener(new java.awt.event.ActionListener() {

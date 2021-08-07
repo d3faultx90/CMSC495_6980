@@ -23,7 +23,7 @@ public class OrderPanel extends javax.swing.JPanel {
 
 		javax.swing.JTable orderedItems = orderPanel.orderTable;
 		Map<Object, Object> itemNum = Database.getItemIdMap();
-		Map<Object, Object> itemPrices = Database.getItemPricesMap();
+		Map<Object, Object> itemPrices = Database.getWholesaleItemPricesMap();
 		
 
 		List<List> databBaseInfo = new ArrayList<List>();
