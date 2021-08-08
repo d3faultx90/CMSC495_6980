@@ -44,7 +44,6 @@ public class MonthViewWindow extends javax.swing.JFrame {
 		this.title = objectName + " sales during " + year;
 		this.year = year;
 		this.itemId = itemId;
-		System.out.println("OITEM IDE IN CONSUTRCOTR " + itemId);
 		List<List> sales = Database.getSalesTable();
 		// Iterative over the whole year
 		parseMonthlyQuantitySold(sales);

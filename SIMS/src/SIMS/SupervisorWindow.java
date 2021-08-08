@@ -9,6 +9,9 @@ package SIMS;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.table.DefaultTableModel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,12 +49,13 @@ public class SupervisorWindow extends javax.swing.JFrame {
     	singleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
     }
     
-    public void reorder(Object [][] previousOrder) {
+    public static void reorder(Object [][] previousOrder) {
+    	GeneralGuiFunctions.clearTable(singleton.orderPanel.orderPanel.orderTable);
     	for (Object[] o :  previousOrder) {
-    		
+			DefaultTableModel model = (DefaultTableModel) singleton.orderPanel.orderPanel.orderTable.getModel();
+			model.addRow(o);
     	}
-    	//orderPanel.orderPanel.orderTable.
-    	inventorySubTabs.setSelectedIndex(2);
+    	singleton.inventorySubTabs.setSelectedIndex(2);
     }
 
 	public static String getUsername() {

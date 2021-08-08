@@ -14,155 +14,144 @@ import javax.swing.JTable;
 
 public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 
-	Object [][] masterArray;
+	Object[][] masterArray;
 	String date;
 	String wasteOrOrder;
 	String totalPrice;
-	
-    public OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object [][] masterArray, String totalPrice) {
-    	this.wasteOrOrder = wasteOrOrder;
-    	this.date = date;
-    	this.masterArray = masterArray;
-    	this.totalPrice = totalPrice;
-        initComponents();
-    }
 
-    private void filterTextfieldKeyReleased(java.awt.event.KeyEvent evt) {                                            
-    	GeneralGuiFunctions.filterTable(detailsTable, filterTextfield);
-    }  
-    
-    static void displayDetails(JTable table) {
-		
-    	Map<Object, Object> itemNames = Database.getItemNamesMap();
-		ArrayList<Object[]> masterList = new ArrayList<Object[]>();
+	public OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object[][] masterArray, String totalPrice) {
+		this.wasteOrOrder = wasteOrOrder;
+		this.date = date;
+		this.masterArray = masterArray;
+		this.totalPrice = totalPrice;
+		initComponents();
+	}
+
+	private void filterTextfieldKeyReleased(java.awt.event.KeyEvent evt) {
+		GeneralGuiFunctions.filterTable(detailsTable, filterTextfield);
+	}
+
+	static void displayDetails(JTable table, int dateIndex) {
 
 		try {
 
+			Map<Object, Object> itemNames = Database.getItemNamesMap();
+			ArrayList<Object[]> masterList = new ArrayList<Object[]>();
+
 			JTable viewItem = table;
-			Object selectedCellValue = viewItem.getValueAt(viewItem.getSelectedRow(), 1);
+			Object selectedCellValue = viewItem.getValueAt(viewItem.getSelectedRow(), dateIndex);
 
-			
-				double totalPrice = 0;
+			double totalPrice = 0;
 
-				for (List request : Database.getOrderTable()) {
+			for (List request : Database.getOrderTable()) {
 
-					if (selectedCellValue.equals(request.get(8))) {
+				if (selectedCellValue.equals(request.get(8))) {
 
-						Object name = itemNames.get(request.get(4));
-						Object quantity = request.get(7);
-						Object price = request.get(6);
-						totalPrice += GeneralGuiFunctions.castObjectToDouble(price);
-						Object[] grouped = new Object[] { name, quantity, price };
-						masterList.add(grouped);
-					}
+					Object name = itemNames.get(request.get(4));
+					Object quantity = request.get(7);
+					Object price = request.get(6);
+					totalPrice += GeneralGuiFunctions.castObjectToDouble(price);
+					Object[] grouped = new Object[] { name, quantity, price };
+					masterList.add(grouped);
 				}
-				// Convert 2D arraylist into 2D array
-				Object[][] masterArray = new Object[masterList.size()][3];
-				for (int i = 0; i < masterList.size(); i++) {
+			}
+			// Convert 2D arraylist into 2D array
+			Object[][] masterArray = new Object[masterList.size()][3];
+			for (int i = 0; i < masterList.size(); i++) {
 
-					masterArray[i] = masterList.get(i);
+				masterArray[i] = masterList.get(i);
 
-				}
+			}
 
-				String formattedTotalPrice = GeneralGuiFunctions.doubleToDollarRepresentation(totalPrice);
-				new OrderAndWasteDetailWindow("Order", (String) selectedCellValue, masterArray, formattedTotalPrice)
-						.setVisible(true);
-			
+			String formattedTotalPrice = GeneralGuiFunctions.doubleToDollarRepresentation(totalPrice);
+			new OrderAndWasteDetailWindow("Order", (String) selectedCellValue, masterArray, formattedTotalPrice)
+					.setVisible(true);
+
 		} catch (ArrayIndexOutOfBoundsException e) {
 
 			GeneralGuiFunctions.displayErrorPane("Please select an item");
 
 		}
-    }
+	}
 
-    // Variables declaration - do not modify                     
-    private javax.swing.JLabel dateLabel;
-    private javax.swing.JTable detailsTable;
-    private javax.swing.JLabel filterLabel;
-    private javax.swing.JTextField filterTextfield;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel totalPriceTextfield;
-    // End of variables declaration     
-    
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() {
+	// Variables declaration - do not modify
+	private javax.swing.JLabel dateLabel;
+	private javax.swing.JTable detailsTable;
+	private javax.swing.JLabel filterLabel;
+	private javax.swing.JTextField filterTextfield;
+	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JLabel totalPriceTextfield;
+	// End of variables declaration
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        detailsTable = new javax.swing.JTable();
-        dateLabel = new javax.swing.JLabel();
-        filterLabel = new javax.swing.JLabel();
-        filterTextfield = new javax.swing.JTextField();
-        totalPriceTextfield = new javax.swing.JLabel();
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">
+	private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Details of "  + wasteOrOrder + " on " + date);
-        setResizable(false);
+		jScrollPane1 = new javax.swing.JScrollPane();
+		detailsTable = new javax.swing.JTable();
+		dateLabel = new javax.swing.JLabel();
+		filterLabel = new javax.swing.JLabel();
+		filterTextfield = new javax.swing.JTextField();
+		totalPriceTextfield = new javax.swing.JLabel();
 
-        detailsTable.setModel(new javax.swing.table.DefaultTableModel(
-        		masterArray,
-            new String [] {
-                "Item Name", "Quantity", "Total Price"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setTitle("Details of " + wasteOrOrder + " on " + date);
+		setResizable(false);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(detailsTable);
+		detailsTable.setModel(new javax.swing.table.DefaultTableModel(masterArray,
+				new String[] { "Item Name", "Quantity", "Total Price" }) {
+			boolean[] canEdit = new boolean[] { false, false, false };
 
-        dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dateLabel.setText(date);
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return canEdit[columnIndex];
+			}
+		});
+		jScrollPane1.setViewportView(detailsTable);
 
-        filterLabel.setText("Filter");
+		dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+		dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		dateLabel.setText(date);
 
-        filterTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                filterTextfieldKeyReleased(evt);
-            }
-        });
+		filterLabel.setText("Filter");
 
-        totalPriceTextfield.setText("Total price of order: " + totalPrice);
+		filterTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				filterTextfieldKeyReleased(evt);
+			}
+		});
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(totalPriceTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(filterLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(filterTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(dateLabel)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(filterLabel)
-                    .addComponent(filterTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(totalPriceTextfield)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+		totalPriceTextfield.setText("Total price of order: " + totalPrice);
 
-        pack();
-        setLocationRelativeTo(null);
-    }// </editor-fold>                        
-    
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+						.addComponent(totalPriceTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 213,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(filterLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(filterTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 303,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 347,
+										javax.swing.GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addContainerGap().addComponent(dateLabel).addGap(5, 5, 5)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(filterLabel).addComponent(filterTextfield, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159,
+						javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(totalPriceTextfield)
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+
+		pack();
+		setLocationRelativeTo(null);
+	}// </editor-fold>
+
 }

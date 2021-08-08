@@ -25,7 +25,6 @@ public class OrderPanel extends javax.swing.JPanel {
 		Map<Object, Object> itemNum = Database.getItemIdMap();
 		Map<Object, Object> itemPrices = Database.getWholesaleItemPricesMap();
 		
-
 		List<List> databBaseInfo = new ArrayList<List>();
 
 		if (orderedItems.getRowCount() == 0) {
@@ -73,6 +72,12 @@ public class OrderPanel extends javax.swing.JPanel {
 			GeneralGuiFunctions.clearTable(orderPanel.orderTable);
 			
 			GeneralGuiFunctions.displayConfirmationPane(confirmation + " was submitted succesfully");
+			
+			if (Database.getRole() == 1) {
+				SupervisorWindow.refreshAllItemTables();
+			} else {
+				UserWindow.refreshAllItemTables();
+			}
 
 		} // end else
 

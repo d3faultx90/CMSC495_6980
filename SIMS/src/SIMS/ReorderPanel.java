@@ -7,6 +7,7 @@
 package SIMS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +26,52 @@ public class ReorderPanel extends javax.swing.JPanel {
 	}
 
 	private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {
-		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.itemTable);
+		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.itemTable, 1);
 	}
 
 	private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		Object[][] previousOrder = parseItemAndQuantity(orderFilterPanel.itemTable);
+		if (Database.getRole() == 1) {
+			SupervisorWindow.reorder(previousOrder);
+		} else {
+			UserWindow.reorder(previousOrder);
+		}
+
+	}
+
+	static Object[][] parseItemAndQuantity(JTable table) {
+		try {
+			Map<Object, Object> itemNames = Database.getItemNamesMap();
+			ArrayList<Object[]> masterList = new ArrayList<Object[]>();
+
+			JTable viewItem = table;
+			Object selectedCellValue = viewItem.getValueAt(viewItem.getSelectedRow(), 1);
+
+			for (List request : Database.getOrderTable()) {
+
+				if (selectedCellValue.equals(request.get(8))) {
+					Object name = itemNames.get(request.get(4));
+					Object quantity = request.get(7);
+					Object[] grouped = new Object[] { name, quantity };
+					masterList.add(grouped);
+				}
+			}
+			// Convert 2D arraylist into 2D array
+			Object[][] masterArray = new Object[masterList.size()][2];
+			for (int i = 0; i < masterList.size(); i++) {
+
+				masterArray[i] = masterList.get(i);
+
+			}
+
+			return masterArray;
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+
+			GeneralGuiFunctions.displayErrorPane("Please select an item");
+
+		}
+		return new Object[1][1];
 	}
 
 	// Variables declaration - do not modify

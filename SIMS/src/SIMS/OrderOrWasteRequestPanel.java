@@ -30,7 +30,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 	}
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		OrderAndWasteDetailWindow.displayDetails(requestTable);
+		OrderAndWasteDetailWindow.displayDetails(requestTable, 0);
 	}
 
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,6 +64,12 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 					}
 
 					((DefaultTableModel)requestTable.getModel()).removeRow((requestTable.getSelectedRow()));
+					
+					if (Database.getRole() == 1) {
+						SupervisorWindow.refreshAllItemTables();
+					} else {
+						UserWindow.refreshAllItemTables();
+					}
 
 				}
 			}

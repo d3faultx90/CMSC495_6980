@@ -17,56 +17,63 @@ import java.util.List;
 
 public class SalesPanel extends javax.swing.JPanel {
 
-	
 	public SalesPanel() {
 		initComponents();
 	}
 
 	private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		/**
-		 * Method grabs values from the JTable and gives them to createSales() 
-		 * to create a sale on the SQL database.
+		 * Method grabs values from the JTable and gives them to createSales() to create
+		 * a sale on the SQL database.
 		 */
-		
+
 		// Copy variables here for easier reading
 		javax.swing.JTable saleTable = salesPanel.orderTable;
-		Map <Object, Object> itemIds = Database.getItemIdMap();
-		Map <Object, Object> itemPrices = Database.getRetailItemPricesMap();
-		
-		// DELETE THIS AND GRAB IT FROM ELSEWHERE
-		int employeeId = Database.getConnector().userID;
-		double salesTax = .08; // Don't hardcode
-		String date = DateHandler.formatDateForSql(dateChooser.getDate());
-		// 2D list that is passed into createSale() index 0 = itemID, index 1 = quantity
-		List<List> itemIdsAndQuantity = new ArrayList<List>();
-		// Iterates through the whole table to grab each row
-		for (int i = 0; i < saleTable.getRowCount(); i++) {
-			
-			List<Object> list = new ArrayList<Object>();
-			Object itemID = itemIds.get(saleTable.getValueAt(i, 0));
-			Object unitPrice = itemPrices.get(saleTable.getValueAt(i, 0));
-			Object quantity = saleTable.getValueAt(i, 1);
-			list.add(itemID);
-			list.add(unitPrice);
-			list.add(quantity);
-			itemIdsAndQuantity.add(list);
+		Map<Object, Object> itemIds = Database.getItemIdMap();
+		Map<Object, Object> itemPrices = Database.getRetailItemPricesMap();
 
-			//System.out.println("Sale happened for " + quantity + " items with the id of " + itemID);
-		}
-		//System.out.println(itemIdsAndQuantity);
-		// Pass the 2D list here once method is updated
-		Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
-		
-		// Clears the order table after the success
-		GeneralGuiFunctions.clearTable(salesPanel.orderTable);
+		if (saleTable.getRowCount() == 0) {
 
-		if (Database.getRole() == 1) {
-			SupervisorWindow.refreshAllItemTables();
+			GeneralGuiFunctions.displayErrorPane("Please select an item to order");
+
 		} else {
-			UserWindow.refreshAllItemTables();
+
+			// DELETE THIS AND GRAB IT FROM ELSEWHERE
+			int employeeId = Database.getConnector().userID;
+			double salesTax = .08; // Don't hardcode
+			String date = DateHandler.formatDateForSql(dateChooser.getDate());
+			// 2D list that is passed into createSale() index 0 = itemID, index 1 = quantity
+			List<List> itemIdsAndQuantity = new ArrayList<List>();
+			// Iterates through the whole table to grab each row
+			for (int i = 0; i < saleTable.getRowCount(); i++) {
+
+				List<Object> list = new ArrayList<Object>();
+				Object itemID = itemIds.get(saleTable.getValueAt(i, 0));
+				Object unitPrice = itemPrices.get(saleTable.getValueAt(i, 0));
+				Object quantity = saleTable.getValueAt(i, 1);
+				list.add(itemID);
+				list.add(unitPrice);
+				list.add(quantity);
+				itemIdsAndQuantity.add(list);
+
+				// System.out.println("Sale happened for " + quantity + " items with the id of "
+				// + itemID);
+			}
+			// System.out.println(itemIdsAndQuantity);
+			// Pass the 2D list here once method is updated
+			Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
+
+			// Clears the order table after the success
+			GeneralGuiFunctions.clearTable(salesPanel.orderTable);
+
+			if (Database.getRole() == 1) {
+				SupervisorWindow.refreshAllItemTables();
+			} else {
+				UserWindow.refreshAllItemTables();
+			}
+
+			GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 		}
-		
-		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 
 	}
 
@@ -95,7 +102,7 @@ public class SalesPanel extends javax.swing.JPanel {
 				saveSaleButtonActionPerformed(evt);
 			}
 		});
-		
+
 		java.util.Date date = new java.util.Date();
 		dateChooser.setDate(date);
 

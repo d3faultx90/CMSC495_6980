@@ -71,6 +71,12 @@ public class WastePanel extends javax.swing.JPanel {
 				Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
 				
 				GeneralGuiFunctions.displayConfirmationPane(confirmation);
+				
+				if (Database.getRole() == 1) {
+					SupervisorWindow.refreshAllItemTables();
+				} else {
+					UserWindow.refreshAllItemTables();
+				}
 			}
 
 
@@ -98,7 +104,7 @@ public class WastePanel extends javax.swing.JPanel {
 	private javax.swing.JPanel panel;
 	private javax.swing.JLabel quantityLabel;
 	private javax.swing.JTextField quantityTextfield;
-	private javax.swing.JButton wasteButton;
+	protected javax.swing.JButton wasteButton;
 	// End of variables declaration
 
 	private void initComponents() {

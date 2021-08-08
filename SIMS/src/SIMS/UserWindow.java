@@ -7,12 +7,15 @@
 package SIMS;
 
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
 import java.util.ArrayList;
 
 public class UserWindow extends javax.swing.JFrame {
 
 	static String username;
-	private static UserWindow userSingleton;
+	private static UserWindow singleton;
 
 	public UserWindow(Connector connector, String user) {
 		username = user;
@@ -24,27 +27,37 @@ public class UserWindow extends javax.swing.JFrame {
 
 	public void changeTextForUser() {
 		salesPanel.dateChooser.setVisible(false);
-		salesPanel.saveSaleButton.setText("Submit Sales Request");
+		wastePanel.wasteButton.setText("Submit Waste Request");
+		//salesPanel.saveSaleButton.setText("Submit Sales Request");
 		orderPanel.orderButton.setText("Submit Order Request");
 	}
 
 	// Getter method for the singleton instance
     public static UserWindow getWindow() {
-        return userSingleton;
+        return singleton;
     }
     
     // Setter method for the singleton (only called via login window)
     public static UserWindow createWindow(Connector connector, String username) {
-    	userSingleton = new UserWindow(connector, username);
-    	return userSingleton;
+    	singleton = new UserWindow(connector, username);
+    	return singleton;
     }
     
     public static void refreshAllItemTables() {
     	List<List> inventory = Database.getItemTable();
-    	userSingleton.salesPanel.salesPanel.itemFilterPanel.refreshTable(inventory);
-    	userSingleton.orderPanel.orderPanel.itemFilterPanel.refreshTable(inventory);
-    	userSingleton.wastePanel.itemFilterPanel.refreshTable(inventory);
-    	userSingleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.wastePanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
+    }
+    
+    public static void reorder(Object [][] previousOrder) {
+    	GeneralGuiFunctions.clearTable(singleton.orderPanel.orderPanel.orderTable);
+    	for (Object[] o :  previousOrder) {
+			DefaultTableModel model = (DefaultTableModel) singleton.orderPanel.orderPanel.orderTable.getModel();
+			model.addRow(o);
+    	}
+    	singleton.inventorySubTabs.setSelectedIndex(2);
     }
 	
 	private void initComponents() {
