@@ -25,7 +25,56 @@ public class ReorderPanel extends javax.swing.JPanel {
     }                                          
 
     private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {                                                       
-        // TODO add your handling code here:
+        	
+	    	Map<Object, Object> itemNames = Database.getItemNamesMap();
+		ArrayList<Object[]> masterList = new ArrayList<Object[]>();
+		
+		try {
+			
+				
+				JTable viewItem = orderFilterPanel1.itemTable;
+				Object selectedCellValue = viewItem.getValueAt(viewItem.getSelectedRow(), 1);
+			
+				if (viewItem.getSelectedRowCount()<=0) {
+				   
+				   GeneralGuiFunctions.displayErrorPane("Please select an item");
+				   
+				}else{
+					
+						double totalPrice = 0;
+				
+						for (List request : Database.getOrderTable()) {
+			
+								if (selectedCellValue.equals(request.get(8))) {
+									
+									Object name = itemNames.get(request.get(4));
+									Object quantity = request.get(7);
+									Object price = request.get(6);
+									totalPrice += GeneralGuiFunctions.castObjectToDouble(price);
+									Object[] grouped = new Object[] {name, quantity, price};
+									masterList.add(grouped);
+								}
+						}
+				// Convert 2D arraylist into 2D array
+				Object [][] masterArray = new Object[masterList.size()][3];
+				for (int i = 0; i < masterList.size(); i ++) {
+					
+					masterArray[i] = masterList.get(i);
+				
+				}
+				
+				String formattedTotalPrice = GeneralGuiFunctions.priceToString(totalPrice);
+				new OrderAndWasteDetailWindow("Order", (String) selectedCellValue, masterArray, formattedTotalPrice).setVisible(true);
+			}
+		}catch (ArrayIndexOutOfBoundsException e) {
+
+			
+			GeneralGuiFunctions.displayErrorPane("Please select an item");
+
+		} 
+			
+		
+         
     }                                                      
 
     private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
