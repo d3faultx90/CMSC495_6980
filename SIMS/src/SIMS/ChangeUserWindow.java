@@ -22,8 +22,14 @@ public class ChangeUserWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_helpButtonActionPerformed
 
     private void addOrEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrEditButtonActionPerformed
-        System.out.println(roleComboBox.getSelectedIndex());
-    }//GEN-LAST:event_addOrEditButtonActionPerformed
+        
+    	String userName  = usernameTextfield.getText();
+    	int newRole = roleComboBox.getSelectedIndex();
+        String fName = firstNameTextfield.getText();
+        String lName = lastNameTextfield.getText();
+        
+    	Database.getConnector().updateUserInfo(userName, newRole, fName, lName);
+    	}//GEN-LAST:event_addOrEditButtonActionPerformed
     
     private void populateTestFieldCheck(String[] userInfo) {
     	if (isEditing) {
