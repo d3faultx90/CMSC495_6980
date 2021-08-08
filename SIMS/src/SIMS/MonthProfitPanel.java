@@ -17,7 +17,7 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 	private String month;
 	private String year;
 	private String profits;
-	private List<List> salesFromQuery;
+	private List<List> salesPerMonth;
 	
 	
 //	public MonthProfitPanel(salesFromQuery) {
@@ -28,12 +28,12 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 //		initComponents();
 //	}
 
-	public MonthProfitPanel(Months month, String year) {
+	public MonthProfitPanel(Months month, String year, List<List> salesPerMonth) {
 		this.month = month.name();
 		this.year = year;
-		salesFromQuery = getMonthsProfits(year, month.getNumericalRepresentation());
-		Double value = GeneralGuiFunctions.parseSales(salesFromQuery);
-		String profits = GeneralGuiFunctions.doubleToDollarRepresentation(value);
+		this.salesPerMonth = salesPerMonth;
+		Double value = GeneralGuiFunctions.parseSales(this.salesPerMonth);
+		String profits = GeneralGuiFunctions.priceToString(value);
 		this.profits = profits;
 		initComponents();
 	}
@@ -43,14 +43,14 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 	}
 
 	private Object[][] parseSalesForBreakdownWindow() {
-		Object[][] parsed = new Object[salesFromQuery.size()][4];
+		Object[][] parsed = new Object[salesPerMonth.size()][4];
 
 		Map<Object, Object> itemNames = Database.getItemNamesMap();
-		for (int i = 0; i < salesFromQuery.size(); i++) {
-			Object dateAndTime = salesFromQuery.get(i).get(8);
-			Object name = itemNames.get(salesFromQuery.get(i).get(3));
-			Object quantity = salesFromQuery.get(i).get(7);
-			Object price = salesFromQuery.get(i).get(6);
+		for (int i = 0; i < salesPerMonth.size(); i++) {
+			Object dateAndTime = salesPerMonth.get(i).get(8);
+			Object name = itemNames.get(salesPerMonth.get(i).get(3));
+			Object quantity = salesPerMonth.get(i).get(7);
+			Object price = salesPerMonth.get(i).get(6);
 			parsed[i] = new Object[] {dateAndTime, name, quantity, price};
 		}
 		return parsed;
@@ -84,7 +84,7 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 		monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		monthLabel.setText(month);
 		
-		if (salesFromQuery.isEmpty()) {
+		if (salesPerMonth.isEmpty()) {
 			monthProfitButton.setEnabled(false);
 		}
 
