@@ -55,7 +55,7 @@ public class SalesPanel extends javax.swing.JPanel {
 		}
 		//System.out.println(itemIdsAndQuantity);
 		// Pass the 2D list here once method is updated
-		Database.resultsFromSalesQuery = Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
+		Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
 		
 		// Clears the order table after the success
 		GeneralGuiFunctions.clearTable(salesPanel.orderTable);

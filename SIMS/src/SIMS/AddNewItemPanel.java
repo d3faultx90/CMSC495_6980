@@ -56,12 +56,12 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 				GeneralGuiFunctions.displayErrorPane("Please ensure all textfields are filled in");
 			} else {
 				try {
-					Database.resultsFromItemQuery = Database.getConnector().createInventoryItem(name, description,
+					Database.getConnector().createInventoryItem(name, description,
 							category, wholeSalePrice, retailPrice, quantity);
 					GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
 				} catch (Exception e) {
 					// This unique exception occurs when the item already exists in SQL
-					GeneralGuiFunctions.customDisplayErrorPane(e.getMessage(), "Invalid item name.");
+					GeneralGuiFunctions.customDisplayErrorPane(e.getMessage(), "Invalid item addition attempt.");
 				}
 			}
 
