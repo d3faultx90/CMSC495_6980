@@ -16,17 +16,39 @@ public class SupervisorWindow extends javax.swing.JFrame {
 
 	static String username;
 	static int userID; // THIS NEEDS TO GET FILLED OUT FOR USE IN SALES/ORDER/WASTE panel.
+	private static SupervisorWindow singleton;
 	// resultsFromOrderQuery
 	// resultsFromSalesQuery
 	// resultsFromUsersQuery
 
-	public SupervisorWindow(Connector connector, String username) {
+	private SupervisorWindow(Connector connector, String username) {
 		this.username = username;
 		Database database = new Database(connector);
 		initComponents();
 	}
+	
+	// Getter method for the singleton instance
+    public static SupervisorWindow getWindow() {
+        return singleton;
+    }
+    
+    // Setter method for the singleton (only called via login window)
+    public static SupervisorWindow createWindow(Connector connector, String username) {
+    	singleton = new SupervisorWindow(connector, username);
+    	return singleton;
+    }
+    
+    public static void refreshAllItemTables() {
+    	List<List> inventory = Database.getItemTable();
+    	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.wastePanel.itemFilterPanel.refreshTable(inventory);
+    	singleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
+    }
+    
+    
 
-	static String getUsername() {
+	public static String getUsername() {
 		return username;
 	}
 

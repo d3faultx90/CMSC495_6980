@@ -30,7 +30,7 @@ public class Database {
 	static Map<Object, Object> itemNames = new HashMap<Object, Object>();
 	static Map<Object, String> userIds = new HashMap<Object, String>();
 	static Connector connector;
-	private int role;
+	static int role;
 	
 	public Database(Connector connector) {
 		this.connector = connector;
@@ -138,6 +138,10 @@ public class Database {
 	
 	static List<List> getUsersTable() {
 		return resultsFromUserQuery;
+	}
+	
+	static int getRole() {
+		return role;
 	}
 	// End of accessor methods
 	

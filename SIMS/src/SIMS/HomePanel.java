@@ -24,11 +24,15 @@ public class HomePanel extends javax.swing.JPanel {
         setSaleTextfields();
     }
     
-    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {    
+    	
     	setSaleTextfields();
+    	SupervisorWindow.refreshAllItemTables();
+    	
     }                                                 
     
     public void setSaleTextfields() {
+    	
         LocalDateTime date = LocalDateTime.now();
         String minusDay = DateHandler.formatDateForSql(date.minusDays(1));
         String minusWeek = DateHandler.formatDateForSql(date.minusWeeks(1));

@@ -16,7 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
-	public OrderAndSalesPanel() {
+	private boolean isSalesPanel;
+	
+	public OrderAndSalesPanel(boolean isSalesPanel) {
+		this.isSalesPanel = isSalesPanel;
 		initComponents();
 		previousModel = (DefaultTableModel) orderTable.getModel();
 	}
@@ -62,7 +65,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 
 				GeneralGuiFunctions.displayErrorPane("Please enter a quantity amount greater than 0");
 
-			} else if (requestingQuantity > Integer.parseInt(selectedCellQuantity.replaceAll(",",""))) {
+			} else if (requestingQuantity > Integer.parseInt(selectedCellQuantity.replaceAll(",","")) && isSalesPanel) {
 				
 				GeneralGuiFunctions.displayErrorPane("Requested quantity is greater than stock on hand");
 				

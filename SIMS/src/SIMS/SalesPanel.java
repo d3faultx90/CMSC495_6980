@@ -59,37 +59,29 @@ public class SalesPanel extends javax.swing.JPanel {
 		
 		// Clears the order table after the success
 		GeneralGuiFunctions.clearTable(salesPanel.orderTable);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		// Need Zach's method to update inventory here (also in order panel)
 
-//		List<List> updateInventory = <Zach's update method>
-//		salesPanel.itemFilterPanel.refreshTable(updateInventory);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-		
+		if (Database.getRole() == 1) {
+			SupervisorWindow.refreshAllItemTables();
+		} else {
+			UserWindow.refreshAllItemTables();
+		}
 		
 		GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
-//		SwingUtilities.getWindowAncestor(this).invalidate();
-//		SwingUtilities.getWindowAncestor(this).validate();
-//		SwingUtilities.getWindowAncestor(this).repaint();
+
 	}
 
 	// Variables declaration - do not modify
 	protected com.toedter.calendar.JDateChooser dateChooser;
-	private SIMS.OrderAndSalesPanel salesPanel;
+	protected SIMS.OrderAndSalesPanel salesPanel;
 	private javax.swing.JPanel salesTab;
 	protected javax.swing.JButton saveSaleButton;
 	// End of variables declaration
-	
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed" desc="Generated Code">
+
 	private void initComponents() {
 
 		salesTab = new javax.swing.JPanel();
 		saveSaleButton = new javax.swing.JButton();
-		salesPanel = new SIMS.OrderAndSalesPanel();
+		salesPanel = new SIMS.OrderAndSalesPanel(true);
 		dateChooser = new com.toedter.calendar.JDateChooser();
 
 		salesTab.setToolTipText("[187,187,187]");

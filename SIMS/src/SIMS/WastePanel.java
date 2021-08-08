@@ -94,7 +94,7 @@ public class WastePanel extends javax.swing.JPanel {
 
 	// Variables declaration - do not modify
 	private javax.swing.JButton helpButton;
-	private SIMS.ItemFilterPanel itemFilterPanel;
+	protected SIMS.ItemFilterPanel itemFilterPanel;
 	private javax.swing.JPanel panel;
 	private javax.swing.JLabel quantityLabel;
 	private javax.swing.JTextField quantityTextfield;

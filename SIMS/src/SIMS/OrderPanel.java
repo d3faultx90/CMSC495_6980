@@ -81,7 +81,7 @@ public class OrderPanel extends javax.swing.JPanel {
 	}// end orderButtonActionPerformed
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private SIMS.OrderAndSalesPanel orderPanel;
+	protected SIMS.OrderAndSalesPanel orderPanel;
 	protected javax.swing.JButton orderButton;
 	private javax.swing.JPanel mainPanel;
 	// End of variables declaration//GEN-END:variables
@@ -90,7 +90,7 @@ public class OrderPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        orderPanel = new SIMS.OrderAndSalesPanel();
+        orderPanel = new SIMS.OrderAndSalesPanel(false);
         orderButton = new javax.swing.JButton();
        
         orderButton.setBackground(new java.awt.Color(0, 102, 0));

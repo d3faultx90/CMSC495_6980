@@ -40,11 +40,11 @@ public class LoginWindow extends javax.swing.JFrame {
                 GeneralGuiFunctions.closeAndOpenWindow(this, new AdminWindow(connector, username));
             }
             else if (connector.role == 1) {
-                GeneralGuiFunctions.closeAndOpenWindow(this, new SupervisorWindow(connector, username));
+                GeneralGuiFunctions.closeAndOpenWindow(this, SupervisorWindow.createWindow(connector, username));
             }
             else if (connector.role == 2) {
             	// We do not have a user window currently
-                GeneralGuiFunctions.closeAndOpenWindow(this, new UserWindow(connector, username));//Change this to normal user
+                GeneralGuiFunctions.closeAndOpenWindow(this, UserWindow.createWindow(connector, username));//Change this to normal user
             }
 
         }

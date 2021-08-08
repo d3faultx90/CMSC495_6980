@@ -23,7 +23,7 @@ public class ViewInventoryPanel extends javax.swing.JPanel {
     }	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton helpButton;
-    private SIMS.ItemFilterPanel itemFilterPanel;
+    protected SIMS.ItemFilterPanel itemFilterPanel;
     private javax.swing.JPanel panel;
     private javax.swing.JButton viewDetailButton;
     // End of variables declaration//GEN-END:variables

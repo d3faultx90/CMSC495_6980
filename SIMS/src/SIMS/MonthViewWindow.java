@@ -31,7 +31,7 @@ public class MonthViewWindow extends javax.swing.JFrame {
 	List<List> decemberSales = new ArrayList<List>();
 
 	public MonthViewWindow(String year) {
-		this.title = year;
+		this.title = "All sales during " + year;
 		this.year = year;
 		List<List> sales = Database.getSalesTable();
 		// Iterative over the whole year
