@@ -411,7 +411,7 @@ public class Connector {
 	     * @return exists Returns values based on unique name in table.
 	     */
 		
-		// invalid role
+    	// no role check
 		Boolean exists = false;
 		
 	    try {
@@ -466,7 +466,7 @@ public class Connector {
 	     */
     
         // if supervisor or employee ...  
-    	if (this.role == 1 || this.role == 0) {
+    	if (this.role == 1 || this.role == 2) {
 	    	
 	    	Boolean itemExists = verifyItemExists(name);
 	
@@ -520,82 +520,7 @@ public class Connector {
     	    			
     } // end of updatedInventory()
     
-    
-    protected void createOrder(List<List> orderRecord, String salesDate, 
-            int status) {
-        /**
-         * Method creates sales record based on list provided.
-         * 
-         * List inside of saleRecord need to contain the following:
-         *     int itemID, double salePrice, int quantity
-         * 
-         * @param orderRecord This is a List of List (2D). 
-         * 
-         * @return void
-         */
-    
-
-        // if supervisor or employee ...  
-    	if (this.role == 1 || this.role == 0) {
-		    	
-	        String orderEventID = UUID.randomUUID().toString();
-	    
-	        // 
-	        try {
-	            
-	            // connect to database via JDBC
-	            Connection con = buildJDBCConnecter();
-	            
-	            // build and send query per item entry in list
-	            for (List item : orderRecord) {
-	        
-	                PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.orders"
-	                        + "(OrderEventID, EmployeeID, ItemID, WholeSaleUnitPrice, "
-	                        + "Quantity, OrderDate, Status) "
-	                        + "VALUES (?, ?, ?, ?, ?, ?, ?)");
-	                
-	                // each list in saleRecord must be formated as ...
-	                // int itemID, double salePrice, int quantity
-	                st.setString(1, orderEventID);
-	                st.setInt(2, this.userID);
-	                st.setInt(3, (GeneralGuiFunctions.castObjectToInteger(item.get(0))));
-	                st.setDouble(4, (GeneralGuiFunctions.castObjectToDouble(item.get(1))));
-	                st.setInt(5, (GeneralGuiFunctions.castObjectToInteger(item.get(2))));
-	                st.setString(6, salesDate);
-	                st.setInt(7, status);
-	                
-	                int rs = st.executeUpdate();
-	
-	                //if (rs != 1) throw SQLException("Failed to create new sales item.");
-	                
-	                // close st
-	                st.close();
-	             
-	            }
-	            
-				//if (rs != 1) throw SQLException("Failed to create new waste item.");
-	                        
-	            // close con
-	            con.close();
-	            
-				// update everything
-				getAllResults();
-				                    
-	        } catch (SQLException e) {
-	            // handle and stop print for production
-	            e.printStackTrace();
-	        } // end of try-catch
-
-    	} else {
-    		
-    		System.out.println("You cannot run createOrder()");
-    		// throw exception to be caught by caller
-    		
-    	} // end of permissions if else check
-                
-    } // end of createOrder()
-    
-    
+     
     protected void createSales(List<List> saleRecord, double salesTax, 
     		String salesDate){
     	/**
@@ -670,7 +595,99 @@ public class Connector {
     			
 	} // end of createSales() 
 
- 
+    
+    protected void createOrder(List<List> orderRecord, String salesDate, 
+            int status) {
+        /**
+         * Method creates sales record based on list provided.
+         * 
+         * List inside of saleRecord need to contain the following:
+         *     int itemID, double salePrice, int quantity
+         * 
+         * @param orderRecord This is a List of List (2D). 
+         * 
+         * @return void
+         */
+    
+
+        // if supervisor or employee ...  
+    	if (this.role == 1 || this.role == 2) {
+		    	
+	        String orderEventID = UUID.randomUUID().toString();
+	    
+	        // 
+	        try {
+	            
+	            // connect to database via JDBC
+	            Connection con = buildJDBCConnecter();
+	            
+	            // build and send query per item entry in list
+	            for (List item : orderRecord) {
+	        
+	            	int itemID = GeneralGuiFunctions.castObjectToInteger(item.get(0));
+	            	int additionalQuantity = GeneralGuiFunctions.castObjectToInteger(item.get(2));
+	            	
+	                PreparedStatement st = con.prepareStatement("INSERT INTO SIMS_app_data.orders"
+	                        + "(OrderEventID, EmployeeID, ItemID, WholeSaleUnitPrice, "
+	                        + "Quantity, OrderDate, Status) "
+	                        + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+	                
+	                // each list in saleRecord must be formated as ...
+	                // int itemID, double salePrice, int quantity
+	                st.setString(1, orderEventID);
+	                st.setInt(2, this.userID);
+	                st.setInt(3, itemID);
+	                st.setDouble(4, (GeneralGuiFunctions.castObjectToDouble(item.get(1))));
+	                st.setInt(5, additionalQuantity);
+	                st.setString(6, salesDate);
+	                st.setInt(7, status);
+	                
+	                int rs = st.executeUpdate();
+	
+	                //if (rs != 1) throw SQLException("Failed to create new sales item.");
+	                
+	                // close st
+	                st.close();
+	                
+	                // only is submitted by supervisor
+	                if (status == 1) {
+	                	
+	                	PreparedStatement updateItem = con.prepareStatement("UPDATE SIMS_app_data.inventory "
+		    	    			+ "SET quantity = quantity + ? WHERE InventoryID = ?");
+
+		            	updateItem.setInt(1, additionalQuantity);
+		            	updateItem.setInt(2, itemID);
+		    	        rs = updateItem.executeUpdate();
+		    	        
+		    	        updateItem.close();
+		    	        
+		    			//if (rs != 1) throw SQLException("Failed to create new waste item.");
+	                
+	                } // end of if status
+	             
+	            } // end of for loop for all items
+	            	                        
+	            // close con
+	            con.close();
+	            
+				// update everything
+				getAllResults();
+				                    
+	        } catch (SQLException e) {
+	            // handle and stop print for production
+	            e.printStackTrace();
+	        } // end of try-catch
+
+    	} else {
+    		
+    		System.out.println("You cannot run createOrder()");
+    		// throw exception to be caught by caller
+    		
+    	} // end of permissions if else check
+                
+    } // end of createOrder()
+    
+    
     protected void createWaste(int itemID, double wholeSalePrice, int removalQuantity, 
     		String date, int status){
 	    /**
@@ -689,7 +706,7 @@ public class Connector {
     	
 
         // if supervisor or employee ...  
-    	if (this.role == 1 || this.role == 0) {
+    	if (this.role == 1 || this.role == 2) {
     
 	    	String wasteEventID = UUID.randomUUID().toString();
 	    
@@ -709,15 +726,31 @@ public class Connector {
 		    	st.setInt(7, status);
 		        int rs = st.executeUpdate();
 	        	
-				// close con, rs, and st
+				// close st
 				st.close();
-				con.close();
-	            
+
 				//if (rs != 1) throw SQLException("Failed to create new waste item.");
+				
+				// if it was supervisor who submitted ... 
+				if (status == 1) {
+			        
+			        // build query to get all items for the WasteEventID
+					PreparedStatement updateItem = con.prepareStatement("UPDATE SIMS_app_data.inventory "
+	    	    			+ "SET quantity = quantity - ? WHERE InventoryID = ?");
+					
+	            	updateItem.setInt(1, removalQuantity);
+	            	updateItem.setInt(2, itemID);
+	    	        rs = updateItem.executeUpdate();
+	    	        
+	    	        updateItem.close();
+	    	        
+	    			//if (rs != 1) throw SQLException("Failed to create new waste item.");
+			            			       		            
+				} // end of if statement checking status
+				
+				// close connection
+				con.close();
 	                        
-	            // close con
-	            con.close();
-	            
 				// update everything
 				getAllResults();
 				
@@ -728,7 +761,7 @@ public class Connector {
 
     	} else {
     		
-    		System.out.println("You cannot run exportResultsofQuery()");
+    		System.out.println("You cannot run createWaste()");
     		// throw exception to be caught by caller
     		
     	} // end of permissions if else check
@@ -756,7 +789,7 @@ public class Connector {
     
     	Boolean itemExists = verifyItemExists(oldName);
 
-    	// if supervisor or employee ...  
+    	// if supervisor ...  
     	if (this.role == 1) {
 	    	
 	    	if (itemExists == false) {
@@ -1171,7 +1204,7 @@ public class Connector {
     	 */
 		
 
-        // if supervisor or employee ...  
+        // if admin ...  
     	if (this.role == 0) {
 	    	
     		try {
@@ -1210,7 +1243,7 @@ public class Connector {
             	
     	        updateSt.close();
 
-    			//if (rs != 1) throw SQLException("Failed to create new waste item.");
+    			//if (qRs != 1) throw SQLException("Failed to create new waste item.");
     			
 				// close con
 				con.close();
