@@ -2,7 +2,7 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 08/02/2021
+Last edited: 08/08/2021
 Created for: CMSC495
 Tested platform(s): 
   mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
@@ -92,7 +92,7 @@ SELECT ' [+] Configuring tables ...' as '';
 -- User application table
 -- Role: 0 = admin, 1 = approver, 2 = employee
 -- username is their sql name
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS SIMS_app_data.users(
     UserID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Username VARCHAR(60) UNIQUE NOT NULL, 
     Fname VARCHAR(60) NOT NULL, 
@@ -105,7 +105,7 @@ COMMENT="The users table is used for managing application users."
 -- password table referencing user
 
 -- Inventory table
-CREATE TABLE IF NOT EXISTS  inventory(
+CREATE TABLE IF NOT EXISTS  SIMS_app_data.inventory(
     InventoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     Name VARCHAR(60) UNIQUE NOT NULL,  
     Description VARCHAR(120) UNIQUE NOT NULL,
@@ -117,17 +117,15 @@ CREATE TABLE IF NOT EXISTS  inventory(
 COMMENT="The inventory table is used for managing inventory items."
 ;
 
--- Orders tables
-CREATE TABLE IF NOT EXISTS orders(
+-- Sales tables
+CREATE TABLE IF NOT EXISTS SIMS_app_data.orders(
     OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     OrderEventID VARCHAR(130) NOT NULL,
     EmployeeID INT NOT NULL,
     ApproverID INT,
     ItemID INT NOT NULL,
-    SalesTax DECIMAL(5,4) NOT NULL,
     WholeSaleUnitPrice DECIMAL(8,2) NOT NULL,
-    WholeSaleTotalPrice DECIMAL(10,2) AS (((WholeSaleUnitPrice * Quantity) *
-	       	SalesTax ) + (WholeSaleUnitPrice * Quantity)),
+    WholeSaleTotalPrice DECIMAL(10,2) AS (WholeSaleUnitPrice * Quantity),
     Quantity INT NOT NULL, 
     OrderDate DATETIME NOT NULL,
     Status INT DEFAULT 0 CHECK (Status = 0 OR Status = 1 OR Status = 2),
@@ -138,35 +136,15 @@ CREATE TABLE IF NOT EXISTS orders(
 COMMENT="The orders table is used for managing whole sale orders placed."
 ;
 
--- Sales tables
-CREATE TABLE IF NOT EXISTS sales(
-    SalesID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    SalesEventID VARCHAR(130) NOT NULL,
-    EmployeeID INT NOT NULL,
-    ItemID INT NOT NULL,
-    SalesUnitPrice DECIMAL(8,2) NOT NULL,
-    SalesTax DECIMAL(5,4) NOT NULL,
-    TotalSalePrice  DECIMAL(10,2) AS (((SalesUnitPrice * Quantity) *
-	       	SalesTax) + (SalesUnitPrice * Quantity)), 
-    Quantity INT NOT NULL, 
-    SalesDate DATETIME NOT NULL,
-    FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
-    FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
-)
-COMMENT="The sales table is used for tracking customer sales."
-;
-
 -- Waste tables
-CREATE TABLE IF NOT EXISTS waste(
+CREATE TABLE IF NOT EXISTS SIMS_app_data.waste(
     WasteID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     WasteEventID VARCHAR(130) NOT NULL,
     EmployeeID INT NOT NULL,
     ApproverID INT,
     ItemID INT NOT NULL,
-    SalesTax DECIMAL(5,4) NOT NULL,
     WholeSaleUnitPrice DECIMAL(8,2) NOT NULL,
-    WholeSaleTotalPrice DECIMAL(10,2) AS (((WholeSaleUnitPrice * Quantity) *
-	       	SalesTax ) + (WholeSaleUnitPrice * Quantity)),
+    WholeSaleTotalPrice DECIMAL(10,2) AS (WholeSaleUnitPrice * Quantity),
     Quantity INT NOT NULL, 
     WasteDate DATETIME NOT NULL,
     Status INT DEFAULT 0 CHECK (Status = 0 OR Status = 1 OR Status = 2),
