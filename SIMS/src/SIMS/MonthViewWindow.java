@@ -15,55 +15,91 @@ import enums.Months;
 public class MonthViewWindow extends javax.swing.JFrame {
 	
 	String year;
-	// Save whatever year query here
-	// List<List> januarySales = new ArrayList<List>();
-	// List<List> februarySales = new ArrayList<List>();
+	List<List> januarySales = new ArrayList<List>();
+	List<List> februarySales = new ArrayList<List>();
+	List<List> marchSales = new ArrayList<List>();
+	List<List> aprilSales = new ArrayList<List>();
+	List<List> maySales = new ArrayList<List>();
+	List<List> juneSales = new ArrayList<List>();
+	List<List> julySales = new ArrayList<List>();
+	List<List> augustSales = new ArrayList<List>();
+	List<List> septemberSales = new ArrayList<List>();
+	List<List> octoberSales = new ArrayList<List>();
+	List<List> novemberSales = new ArrayList<List>();
+	List<List> decemberSales = new ArrayList<List>();
 	
 
     public MonthViewWindow(String year) {
     	this.year = year;
-    	// Sort out month things
-        initComponents();
+    	List<List> sales = Database.getSalesTable();
+        // Iterative over the whole year
+    	parseMonthlySales(sales);
+    	initComponents();
     }
     
-    // Iterative over the whole year
-    // If month equals january add it to january array
-    // If month equals february add it to february array
-//	for (List l : sales) {
-    	// If month add whole list to 2d arary
-    	//		totalProfit += Double.parseDouble((String) l.get(6));
-//	}
+    private void parseMonthlySales(List<List> sales) {
+    	for (List l : sales) {
+        	String month = l.get(8).toString().substring(5, 7);
+        	if (l.get(8).toString().substring(0, 4).equals(this.year)) {
+        		// If month add whole list to 2d array
+	        	if (month.equals("01")) {
+	        		
+	        		januarySales.add(l);
+	        	}
+	        	else if (month.equals("02")) {
+	        		februarySales.add(l);
+	        	}
+	        	else if (month.equals("03")) {
+	        		marchSales.add(l);
+	        	}
+	        	else if (month.equals("04")) {
+	        		aprilSales.add(l);
+	        	}
+	        	else if (month.equals("05")) {
+	        		maySales.add(l);
+	        	}
+	        	else if (month.equals("06")) {
+	        		juneSales.add(l);
+	        	}
+	        	else if (month.equals("07")) {
+	        		
+	        		julySales.add(l);
+	        	}
+	        	else if (month.equals("08")) {
+	        		augustSales.add(l);
+	        	}
+	        	else if (month.equals("09")) {
+	        		septemberSales.add(l);
+	        	}
+	        	else if (month.equals("10")) {
+	        		octoberSales.add(l);
+	        	}
+	        	else if (month.equals("11")) {
+	        		novemberSales.add(l);
+	        	}
+	        	else if (month.equals("12")) {
+	        		decemberSales.add(l);
+	        	}
+        	}
+        }
+    }
                        
     private void initComponents() {
 
         yearLabel = new javax.swing.JLabel();
-        
-//        januaryPanel = new SIMS.MonthProfitPanel(januarySales);
-//        februaryPanel = new SIMS.MonthProfitPanel(Months.February, year);
-//        marchPanel = new SIMS.MonthProfitPanel(Months.March, year);
-//        aprilPanel = new SIMS.MonthProfitPanel(Months.April, year);
-//        mayPanel = new SIMS.MonthProfitPanel(Months.May, year);
-//        junePanel = new SIMS.MonthProfitPanel(Months.June, year);
-//        julyPanel = new SIMS.MonthProfitPanel(Months.July, year);
-//        augustPanel = new SIMS.MonthProfitPanel(Months.August, year);
-//        septemberPanel = new SIMS.MonthProfitPanel(Months.September, year);
-//        octoberPanel = new SIMS.MonthProfitPanel(Months.October, year);
-//        novemberPanel = new SIMS.MonthProfitPanel(Months.November, year);
-//        decemberPanel = new SIMS.MonthProfitPanel(Months.December, year);
-        
-        
-        januaryPanel = new SIMS.MonthProfitPanel(Months.January, year);
-        februaryPanel = new SIMS.MonthProfitPanel(Months.February, year);
-        marchPanel = new SIMS.MonthProfitPanel(Months.March, year);
-        aprilPanel = new SIMS.MonthProfitPanel(Months.April, year);
-        mayPanel = new SIMS.MonthProfitPanel(Months.May, year);
-        junePanel = new SIMS.MonthProfitPanel(Months.June, year);
-        julyPanel = new SIMS.MonthProfitPanel(Months.July, year);
-        augustPanel = new SIMS.MonthProfitPanel(Months.August, year);
-        septemberPanel = new SIMS.MonthProfitPanel(Months.September, year);
-        octoberPanel = new SIMS.MonthProfitPanel(Months.October, year);
-        novemberPanel = new SIMS.MonthProfitPanel(Months.November, year);
-        decemberPanel = new SIMS.MonthProfitPanel(Months.December, year);
+               
+        januaryPanel = new SIMS.MonthProfitPanel(Months.January, year, januarySales);
+        februaryPanel = new SIMS.MonthProfitPanel(Months.February, year, februarySales);
+        marchPanel = new SIMS.MonthProfitPanel(Months.March, year, marchSales);
+        aprilPanel = new SIMS.MonthProfitPanel(Months.April, year, aprilSales);
+        mayPanel = new SIMS.MonthProfitPanel(Months.May, year, maySales);
+        junePanel = new SIMS.MonthProfitPanel(Months.June, year, juneSales);
+        julyPanel = new SIMS.MonthProfitPanel(Months.July, year, julySales);
+        augustPanel = new SIMS.MonthProfitPanel(Months.August, year, augustSales);
+        septemberPanel = new SIMS.MonthProfitPanel(Months.September, year, septemberSales);
+        octoberPanel = new SIMS.MonthProfitPanel(Months.October, year, octoberSales);
+        novemberPanel = new SIMS.MonthProfitPanel(Months.November, year, novemberSales);
+        decemberPanel = new SIMS.MonthProfitPanel(Months.December, year, decemberSales);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(year + " Monthly Breakdown");
