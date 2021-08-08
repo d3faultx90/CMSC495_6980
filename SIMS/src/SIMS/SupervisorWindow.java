@@ -46,7 +46,13 @@ public class SupervisorWindow extends javax.swing.JFrame {
     	singleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
     }
     
-    
+    public void reorder(Object [][] previousOrder) {
+    	for (Object[] o :  previousOrder) {
+    		
+    	}
+    	//orderPanel.orderPanel.orderTable.
+    	inventorySubTabs.setSelectedIndex(2);
+    }
 
 	public static String getUsername() {
 		return username;

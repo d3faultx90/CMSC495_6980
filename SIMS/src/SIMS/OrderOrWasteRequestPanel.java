@@ -30,30 +30,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 	}
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
-		Object selectedCellValue = requestTable.getValueAt(requestTable.getSelectedRow(), 0);
-		Map<Object, Object> itemNames = Database.getItemNamesMap();
-		ArrayList<Object[]> masterList = new ArrayList<Object[]>();
-		
-		double totalPrice = 0;
-		for (List request : resultsFromQuery) {
-			
-			if (selectedCellValue.equals(request.get(8))) {
-				Object name = itemNames.get(request.get(4));
-				Object quantity = request.get(7);
-				Object price = request.get(6);
-				totalPrice += GeneralGuiFunctions.castObjectToDouble(price);
-				Object[] grouped = new Object[] {name, quantity, price};
-				masterList.add(grouped);
-			}
-		}
-		// Convert 2D arraylist into 2D array
-		Object [][] masterArray = new Object[masterList.size()][3];
-		for (int i = 0; i < masterList.size(); i ++) {
-			masterArray[i] = masterList.get(i);
-		}
-		String formattedTotalPrice = GeneralGuiFunctions.doubleToDollarRepresentation(totalPrice);
-		new OrderAndWasteDetailWindow(tableTitle, (String) selectedCellValue, masterArray, formattedTotalPrice).setVisible(true);
+		OrderAndWasteDetailWindow.displayDetails(requestTable);
 	}
 
 	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
