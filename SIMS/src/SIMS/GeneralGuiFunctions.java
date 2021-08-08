@@ -37,8 +37,16 @@ public class GeneralGuiFunctions {
 	static void addItemAndQuantityToTable(javax.swing.JTable table, List<List> resultsFromItemQuery) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		for (List l : resultsFromItemQuery) {
-			model.addRow(new Object[] { l.get(1), String.format("%,d", Integer.parseInt((String) l.get(6))) });
+			model.addRow(new Object[] { l.get(1), addThousandsPlaces(l.get(6))});
 		}
+	}
+	
+	static String addThousandsPlaces(Object number) {
+		return String.format("%,d", Integer.parseInt((String) number));
+	}
+	
+	static String addThousandsPlaces(int number) {
+		return String.format("%,d", number);
 	}
 
 	// Method found from: https://stackoverflow.com/a/37989058
@@ -54,11 +62,11 @@ public class GeneralGuiFunctions {
 	static int castObjectToInteger(Object obj) {
 		return Integer.parseInt((String) obj);
 	}
-	
+
 	static double castObjectToDouble(Object obj) {
 		return Double.parseDouble((String) obj);
 	}
-	
+
 //	
 //	static int castSqlObjectToInteger(Object obj) {
 //		return Integer.parseInt((String) obj);
@@ -69,12 +77,12 @@ public class GeneralGuiFunctions {
 	static void displayErrorPane(String errorMessage) {
 		JOptionPane.showMessageDialog(null, errorMessage, "Invalid Field Entry", JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	// Display this JOptionpane whenever a field is missing input or has negative
-    // values
-    static void customDisplayErrorPane(String errorMessage, String headerMessage) {
-        JOptionPane.showMessageDialog(null, errorMessage, headerMessage, JOptionPane.ERROR_MESSAGE);
-    }
+	// values
+	static void customDisplayErrorPane(String errorMessage, String headerMessage) {
+		JOptionPane.showMessageDialog(null, errorMessage, headerMessage, JOptionPane.ERROR_MESSAGE);
+	}
 
 	// Display this JOptionpane whenever a field is missing input or has negative
 	// values
@@ -82,13 +90,14 @@ public class GeneralGuiFunctions {
 		JOptionPane.showMessageDialog(null, helpInformation, "Help", JOptionPane.QUESTION_MESSAGE);
 	}
 
-	// Display this JOptionpane whenever a field is missing input or has negative values
+	// Display this JOptionpane whenever a field is missing input or has negative
+	// values
 	static void displayConfirmationPane(String confirmation) {
 		try {
-		ImageIcon icon = new ImageIcon("src/images/checkmark.png");
-		JOptionPane.showMessageDialog(null, confirmation, "Confirmation", JOptionPane.INFORMATION_MESSAGE, icon);
+			ImageIcon icon = new ImageIcon("src/images/checkmark.png");
+			JOptionPane.showMessageDialog(null, confirmation, "Confirmation", JOptionPane.INFORMATION_MESSAGE, icon);
 		} catch (Exception e) {
-			//If image fails to load, just show generic icon
+			// If image fails to load, just show generic icon
 			JOptionPane.showMessageDialog(null, confirmation, "Confirmation", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
@@ -130,10 +139,22 @@ public class GeneralGuiFunctions {
 		}
 		return totalProfit;
 	}
-	
+
+	static int parseQuantitySold(List<List> sales, Object itemId) {
+		int itemsSold = 0;
+		for (List l : sales) {
+			// If the Id matches the Id in the sale, add the quantity
+			if (itemId.equals(l.get(3))) {
+				int sold = Integer.parseInt((String) l.get(7));
+				itemsSold += sold;
+			}
+		}
+		return itemsSold;
+	}
+
 	// https://stackoverflow.com/a/4577820
 	static void clearTable(JTable table) {
-		DefaultTableModel dm = (DefaultTableModel)table.getModel();
+		DefaultTableModel dm = (DefaultTableModel) table.getModel();
 		dm.getDataVector().removeAllElements();
 		dm.fireTableDataChanged(); // notifies the JTable that the model has changed
 	}
