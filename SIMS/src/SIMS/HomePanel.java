@@ -39,13 +39,13 @@ public class HomePanel extends javax.swing.JPanel {
         
         Connector c = Database.getConnector();
         List<List> sales = Database.getSalesTable();
-        String salesMinusDay = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusDay)));
-        String salesMinusWeek = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(c.retrieveSalesByDateRange(minusWeek, today)));
-        String salesMinusMonth = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusMonth.substring(0, 7))));
-        String salesLastYear = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
-        String salesThisYear = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
-        String total = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(sales));
-        String salesToday = GeneralGuiFunctions.priceToString(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today.substring(0, 10))));
+        String salesMinusDay = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusDay)));
+        String salesMinusWeek = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(c.retrieveSalesByDateRange(minusWeek, today)));
+        String salesMinusMonth = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(minusMonth.substring(0, 7))));
+        String salesLastYear = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(lastYear)));
+        String salesThisYear = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(thisYear)));
+        String total = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(sales));
+        String salesToday = GeneralGuiFunctions.doubleToDollarRepresentation(GeneralGuiFunctions.parseSales(c.retrieveSalesOnDate(today.substring(0, 10))));
         
 		todaysSalesLabel.setText("Today's sales: " + salesToday);
 		yesterdaysSalesLabel.setText("Yesterday's sales: " + salesMinusDay);
@@ -64,7 +64,7 @@ public class HomePanel extends javax.swing.JPanel {
 
     // When the user logs out, opens a new LoginWindow and closes the current window
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        GeneralGuiFunctions.closeWindow(SwingUtilities.getWindowAncestor(this), new LoginWindow());
+        GeneralGuiFunctions.closeAndOpenWindow(SwingUtilities.getWindowAncestor(this), new LoginWindow());
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     // Variables declaration - do not modify                     

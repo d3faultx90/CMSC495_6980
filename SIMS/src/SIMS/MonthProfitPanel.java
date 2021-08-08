@@ -33,7 +33,7 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 		this.year = year;
 		salesFromQuery = getMonthsProfits(year, month.getNumericalRepresentation());
 		Double value = GeneralGuiFunctions.parseSales(salesFromQuery);
-		String profits = GeneralGuiFunctions.priceToString(value);
+		String profits = GeneralGuiFunctions.doubleToDollarRepresentation(value);
 		this.profits = profits;
 		initComponents();
 	}

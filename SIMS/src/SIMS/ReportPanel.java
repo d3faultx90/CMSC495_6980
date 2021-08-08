@@ -24,46 +24,24 @@ public class ReportPanel extends javax.swing.JPanel {
 	ArrayList<String> uniqueYears = new ArrayList<String>();
 	String[] itemNames;
 
+	// Variables declaration - do not modify
+	private javax.swing.JButton helpButton;
+	private javax.swing.JRadioButton itemRadioButton;
+	private javax.swing.JScrollPane itemScrollPane;
+	private javax.swing.JComboBox<String> itemComboBox;
+	private javax.swing.JButton monthlyBreakdownButton;
+	private javax.swing.ButtonGroup radioButtonGroup;
+	private javax.swing.JPanel reportsTab;
+	private javax.swing.JRadioButton salesRadioButton;
+	public javax.swing.JTable yearAndProfitTable;
+	private javax.swing.JLabel yearLookLabel;
+	// End of variables declaration
+
 	public ReportPanel() {
 		parseItemNames();
 		initComponents();
 		getUniqueYears(Database.resultsFromSalesQuery);
 		populateTableWithSales();
-	}
-
-	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane("All years with sale data will be displayed here. "
-				+ "\nSelect a year and press the button to view the monthly breakdown of sales."
-				+ "\nPress the month button in the new window to view even further details (FEATURE MAY BE CUT)");
-	}
-
-	// Given the ItemTable, find all unique categories.
-	private void parseItemNames() {
-		ArrayList<String> categoryArrayList = new ArrayList<String>();
-		for (List l : Database.getItemTable()) {
-
-			// If category hasn't been added yet, then add it
-			if (!categoryArrayList.contains(l.get(1))) {
-				categoryArrayList.add(l.get(1).toString());
-			}
-		}
-		// Convert to an Array because that is what the JComboBox expects
-		itemNames = categoryArrayList.toArray(String[]::new);
-	}
-
-	private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
-		try {
-			String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
-			new MonthViewWindow(selectedCellValue).setVisible(true);
-		} catch (ArrayIndexOutOfBoundsException f) {
-			GeneralGuiFunctions.displayErrorPane("Please select an item");
-		}
-
-	}
-
-	private List<List> getYearsSales(String year) {
-		return Database.getConnector().retrieveSalesOnDate(year);
 	}
 
 	private void getUniqueYears(List<List> sales) {
@@ -80,14 +58,50 @@ public class ReportPanel extends javax.swing.JPanel {
 		this.uniqueYears = uniqueYears;
 	}
 
-	private void populateTableWithSales() {
-		GeneralGuiFunctions.clearTable(yearAndProfitTable);
-		DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
-		for (String year : uniqueYears) {
-			double profits = GeneralGuiFunctions.parseSales(getYearsSales(year));
-			model.addRow(new Object[] { year, GeneralGuiFunctions.priceToString(profits) });
+	private List<List> getYearsSales(String year) {
+		return Database.getConnector().retrieveSalesOnDate(year);
+	}
+
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayHelpPane("All years with sale data will be displayed here. "
+				+ "\nSelect a year and press the button to view the monthly breakdown of sales."
+				+ "\nPress the month button in the new window to view even further details (FEATURE MAY BE CUT)");
+	}
+
+	private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
+	}
+
+	private void itemRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		itemComboBox.setVisible(true);
+		yearAndProfitTable.getColumnModel().getColumn(1).setHeaderValue("Quantity Sold");
+		yearAndProfitTable.getTableHeader().resizeAndRepaint();
+		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
+	}
+
+	private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
+		try {
+			String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
+			new MonthViewWindow(selectedCellValue).setVisible(true);
+		} catch (ArrayIndexOutOfBoundsException f) {
+			GeneralGuiFunctions.displayErrorPane("Please select an item");
 		}
 
+	}
+
+	// Given the ItemTable, find all unique categories.
+	private void parseItemNames() {
+		ArrayList<String> categoryArrayList = new ArrayList<String>();
+		for (List l : Database.getItemTable()) {
+
+			// If category hasn't been added yet, then add it
+			if (!categoryArrayList.contains(l.get(1))) {
+				categoryArrayList.add(l.get(1).toString());
+			}
+		}
+		// Convert to an Array because that is what the JComboBox expects
+		itemNames = categoryArrayList.toArray(String[]::new);
 	}
 
 	private void populateTableWithQuantitySold(Object itemName) {
@@ -103,11 +117,14 @@ public class ReportPanel extends javax.swing.JPanel {
 
 	}
 
-	private void itemRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		itemComboBox.setVisible(true);
-		yearAndProfitTable.getColumnModel().getColumn(1).setHeaderValue("Quantity Sold");
-		yearAndProfitTable.getTableHeader().resizeAndRepaint();
-		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
+	private void populateTableWithSales() {
+		GeneralGuiFunctions.clearTable(yearAndProfitTable);
+		DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
+		for (String year : uniqueYears) {
+			double profits = GeneralGuiFunctions.parseSales(getYearsSales(year));
+			model.addRow(new Object[] { year, GeneralGuiFunctions.doubleToDollarRepresentation(profits) });
+		}
+
 	}
 
 	private void salesRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,10 +132,6 @@ public class ReportPanel extends javax.swing.JPanel {
 		yearAndProfitTable.getTableHeader().resizeAndRepaint();
 		itemComboBox.setVisible(false);
 		populateTableWithSales();
-	}
-
-	private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
-		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
 	}
 
 	private void yearAndProfitTableMouseClicked(java.awt.event.MouseEvent evt) {
@@ -129,19 +142,6 @@ public class ReportPanel extends javax.swing.JPanel {
 			monthlyBreakdownButton.setEnabled(true);
 		}
 	}
-
-	// Variables declaration - do not modify
-	private javax.swing.JButton helpButton;
-	private javax.swing.JRadioButton itemRadioButton;
-	private javax.swing.JScrollPane itemScrollPane;
-	private javax.swing.JComboBox<String> itemComboBox;
-	private javax.swing.JButton monthlyBreakdownButton;
-	private javax.swing.ButtonGroup radioButtonGroup;
-	private javax.swing.JPanel reportsTab;
-	private javax.swing.JRadioButton salesRadioButton;
-	public javax.swing.JTable yearAndProfitTable;
-	private javax.swing.JLabel yearLookLabel;
-	// End of variables declaration
 
 	private void initComponents() {
 
@@ -300,4 +300,5 @@ public class ReportPanel extends javax.swing.JPanel {
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addGap(0, 0, Short.MAX_VALUE))));
 	}// </editor-fold>
+
 }

@@ -46,7 +46,7 @@ public class AdminWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_removeUserButtonActionPerformed
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.closeWindow(this, new LoginWindow());
+		GeneralGuiFunctions.closeAndOpenWindow(this, new LoginWindow());
 	}
 
 	private void populateUserTable() {

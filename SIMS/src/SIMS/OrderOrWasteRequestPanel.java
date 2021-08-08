@@ -52,7 +52,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		for (int i = 0; i < masterList.size(); i ++) {
 			masterArray[i] = masterList.get(i);
 		}
-		String formattedTotalPrice = GeneralGuiFunctions.priceToString(totalPrice);
+		String formattedTotalPrice = GeneralGuiFunctions.doubleToDollarRepresentation(totalPrice);
 		new OrderAndWasteDetailWindow(tableTitle, (String) selectedCellValue, masterArray, formattedTotalPrice).setVisible(true);
 	}
 

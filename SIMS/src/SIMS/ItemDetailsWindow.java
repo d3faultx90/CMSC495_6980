@@ -17,8 +17,8 @@ public class ItemDetailsWindow extends javax.swing.JFrame {
         itemNameLabel.setText(name);
         descriptionText.setText(description);
         categoryText.setText(category);
-        wholesalePriceText.setText(GeneralGuiFunctions.priceToString(wholesalePrice));
-        retailPriceText.setText(GeneralGuiFunctions.priceToString(retailPrice));
+        wholesalePriceText.setText(GeneralGuiFunctions.stringToDollarRepresentation(wholesalePrice));
+        retailPriceText.setText(GeneralGuiFunctions.stringToDollarRepresentation(retailPrice));
         quantityText.setText(quantity);
         pack();
     }
