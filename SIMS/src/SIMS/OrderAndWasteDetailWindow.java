@@ -32,7 +32,8 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
     }  
     
     static void displayDetails(JTable table) {
-		Map<Object, Object> itemNames = Database.getItemNamesMap();
+		
+    	Map<Object, Object> itemNames = Database.getItemNamesMap();
 		ArrayList<Object[]> masterList = new ArrayList<Object[]>();
 
 		try {
@@ -40,12 +41,7 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 			JTable viewItem = table;
 			Object selectedCellValue = viewItem.getValueAt(viewItem.getSelectedRow(), 1);
 
-			if (viewItem.getSelectedRowCount() <= 0) {
-
-				GeneralGuiFunctions.displayErrorPane("Please select an item");
-
-			} else {
-
+			
 				double totalPrice = 0;
 
 				for (List request : Database.getOrderTable()) {
@@ -71,7 +67,7 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 				String formattedTotalPrice = GeneralGuiFunctions.doubleToDollarRepresentation(totalPrice);
 				new OrderAndWasteDetailWindow("Order", (String) selectedCellValue, masterArray, formattedTotalPrice)
 						.setVisible(true);
-			}
+			
 		} catch (ArrayIndexOutOfBoundsException e) {
 
 			GeneralGuiFunctions.displayErrorPane("Please select an item");
