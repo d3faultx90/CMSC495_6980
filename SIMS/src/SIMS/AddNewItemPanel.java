@@ -4,102 +4,16 @@
  * Date: July 19th, 2021
  * Purpose: Panel that is used in the Add New Item subtab
  */
+
 package SIMS;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class AddNewItemPanel extends javax.swing.JPanel {
 
-	String[] categories;
-
-	public AddNewItemPanel() {
-		parseCategories();
-		initComponents();
-	}
-
-	// Given the ItemTable, find all unique categories.
-	private void parseCategories() {
-		ArrayList<String> categoryArrayList = new ArrayList<String>();
-		categoryArrayList.add("New Category"); // Category field must be filled in
-		for (List l : Database.getItemTable()) {
-
-			// If category hasn't been added yet, then add it
-			if (!categoryArrayList.contains(l.get(3))) {
-				categoryArrayList.add(l.get(3).toString());
-			}
-		}
-		// Convert to an Array because that is what the JComboBox expects
-		categories = categoryArrayList.toArray(String[]::new);
-	}
-
-	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-			String name = nameTextfield.getText();
-			String description = descriptionTextArea.getText();
-			String category = categoryComboBox.getSelectedIndex() == 0 ? newCategoryTextfield.getText()
-					: (String) categoryComboBox.getSelectedItem();
-			double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(purchasePriceTextfield.getText());
-			double retailPrice = GeneralGuiFunctions.castObjectToDouble(sellPriceTextfield.getText());
-			int quantity = GeneralGuiFunctions.castObjectToInteger(quantityTextfield.getText());
-			
-			if (name.isEmpty() || description.isEmpty() || category.isEmpty()) {
-				GeneralGuiFunctions.displayErrorPane("Please ensure all textfields are filled in");
-			} else {
-				try {
-					Database.resultsFromItemQuery = Database.getConnector().createInventoryItem(name, description,
-							category, wholeSalePrice, retailPrice, quantity);
-					GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
-				} catch (Exception e) {
-					GeneralGuiFunctions.customDisplayErrorPane(e.getMessage(), "Invalid item name.");
-				}
-			}
-
-		} catch (Exception e) {
-			GeneralGuiFunctions.displayErrorPane("Error encountered, please check all textfields.");
-		}
-
-	}
-
-	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane("Fill the form and click on Add Item to add the item to the inventory");
-	}
-
-	private void categoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
-		if (categoryComboBox.getSelectedIndex() != 0) {
-			newCategoryLabel.setVisible(false);
-			newCategoryTextfield.setVisible(false);
-		} else {
-			newCategoryLabel.setVisible(true);
-			newCategoryTextfield.setVisible(true);
-		}
-	}
-
-	private void ensureValidDoubleInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textfield) {
-		char c = evt.getKeyChar();
-		if ((!Character.isDigit(c) && c != '.') || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
-			evt.consume();
-		} else if (textfield.getText().contains(".") && c == '.') {
-			evt.consume();
-		}
-	}
-
-	private void purchasePriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
-		ensureValidDoubleInput(evt, purchasePriceTextfield);
-	}
-
-	private void sellPriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
-		ensureValidDoubleInput(evt, sellPriceTextfield);
-	}
-
-	private void quantityTextFieldKeyTyped(java.awt.event.KeyEvent evt) {
-		char c = evt.getKeyChar();
-		if (!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
-			evt.consume();
-		}
-	}
+	String[] categories; // Holds all recognized categories to put in combo box.
 
 	// Variables declaration - do not modify
 	private javax.swing.JButton addItemButton;
@@ -122,7 +36,100 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel sellPriceLabel;
 	private javax.swing.JTextField sellPriceTextfield;
 	// End of variables declaration
+	
+	public AddNewItemPanel() {
+		parseCategories(); // Parse categories before initializing combo box
+		initComponents();
+	}
+	
+	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+			String name = nameTextfield.getText();
+			String description = descriptionTextArea.getText();
+			// If new category (index 0) is seleted, grab string from textfield rather than combobox selection
+			String category = categoryComboBox.getSelectedIndex() == 0 ? newCategoryTextfield.getText() : (String) categoryComboBox.getSelectedItem();
+			double wholeSalePrice = GeneralGuiFunctions.castObjectToDouble(purchasePriceTextfield.getText());
+			double retailPrice = GeneralGuiFunctions.castObjectToDouble(sellPriceTextfield.getText());
+			int quantity = GeneralGuiFunctions.castObjectToInteger(quantityTextfield.getText());
 
+			if (name.isEmpty() || description.isEmpty() || category.isEmpty()) {
+				GeneralGuiFunctions.displayErrorPane("Please ensure all textfields are filled in");
+			} else {
+				try {
+					Database.resultsFromItemQuery = Database.getConnector().createInventoryItem(name, description,
+							category, wholeSalePrice, retailPrice, quantity);
+					GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
+				} catch (Exception e) {
+					// This unique exception occurs when the item already exists in SQL
+					GeneralGuiFunctions.customDisplayErrorPane(e.getMessage(), "Invalid item name.");
+				}
+			}
+
+		} catch (Exception e) {
+			GeneralGuiFunctions.displayErrorPane("Error encountered, please check all textfields.");
+		}
+
+	}
+	
+	// If the index is new category (0), the show textfield, otherwise hide it.
+	private void categoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+		if (categoryComboBox.getSelectedIndex() == 0) {
+			newCategoryLabel.setVisible(true);
+			newCategoryTextfield.setVisible(true);
+		} else {
+			newCategoryLabel.setVisible(false);
+			newCategoryTextfield.setVisible(false);
+		}
+	}
+	
+	// This limits the textfield so the user can only type numbers or a single period.
+	private void ensureValidDoubleInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textfield) {
+		char c = evt.getKeyChar();
+		if ((!Character.isDigit(c) && c != '.') || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
+			evt.consume();
+		} else if (textfield.getText().contains(".") && c == '.') {
+			evt.consume();
+		}
+	}
+	
+	// Displays some help information for the user
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayHelpPane("Fill the form and click on Add Item to add the item to the inventory");
+	}
+	
+	// Given the ItemTable, find all unique categories.
+	private void parseCategories() {
+		ArrayList<String> categoryArrayList = new ArrayList<String>();
+		categoryArrayList.add("New Category"); // Category field must be filled in
+		for (List l : Database.getItemTable()) {
+
+			// If category hasn't been added yet, then add it
+			if (!categoryArrayList.contains(l.get(3))) {
+				categoryArrayList.add(l.get(3).toString());
+			}
+		}
+		// Convert to an Array because that is what the JComboBox expects
+		categories = categoryArrayList.toArray(String[]::new);
+	}
+	
+	// Ensures each input from the user is valid.
+	private void purchasePriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
+		ensureValidDoubleInput(evt, purchasePriceTextfield);
+	}
+	
+	// Ensures the textfield contains only digits
+	private void quantityTextFieldKeyTyped(java.awt.event.KeyEvent evt) {
+		char c = evt.getKeyChar();
+		if (!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
+			evt.consume();
+		}
+	}
+
+	// Ensures each input from the user is valid.
+	private void sellPriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
+		ensureValidDoubleInput(evt, sellPriceTextfield);
+	}
+	
 	private void initComponents() {
 
 		mainPanel = new javax.swing.JPanel();
@@ -341,6 +348,6 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 						.addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addGap(0, 0, Short.MAX_VALUE)));
-	}// </editor-fold>
+	}
 
 }

@@ -17,45 +17,39 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 	private String month;
 	private String year;
 	private String profits;
-	private List<List> salesFromQuery;
-	
-	
-//	public MonthProfitPanel(salesFromQuery) {
-//		this.month = month.name();
-//		this.year = year;
-//		this.salesFromQuery = salesFromQuery
-//		this.profits = profits;
-//		initComponents();
-//	}
 
-	public MonthProfitPanel(Months month, String year) {
+	private List<List> salesPerMonth;
+
+	public MonthProfitPanel(Months month, String year, List<List> salesPerMonth, String itemName) {
 		this.month = month.name();
 		this.year = year;
-		salesFromQuery = getMonthsProfits(year, month.getNumericalRepresentation());
-		Double value = GeneralGuiFunctions.parseSales(salesFromQuery);
-		String profits = GeneralGuiFunctions.doubleToDollarRepresentation(value);
-		this.profits = profits;
+		this.salesPerMonth = salesPerMonth;
+		if (itemName == "") {
+			Double value = GeneralGuiFunctions.parseSales(this.salesPerMonth);
+			String profits = GeneralGuiFunctions.doubleToDollarRepresentation(value);
+			this.profits = profits;
+		} else {
+			int quantity = GeneralGuiFunctions.parseQuantitySold(this.salesPerMonth);
+			String profits = GeneralGuiFunctions.addThousandsPlaces(quantity);
+			this.profits = profits;
+		}
 		initComponents();
 	}
 
-	private List<List> getMonthsProfits(String year, String month) {
-		return Database.getConnector().retrieveSalesOnDate(year + "-" + month);
-	}
-
 	private Object[][] parseSalesForBreakdownWindow() {
-		Object[][] parsed = new Object[salesFromQuery.size()][4];
+		Object[][] parsed = new Object[salesPerMonth.size()][4];
 
 		Map<Object, Object> itemNames = Database.getItemNamesMap();
-		for (int i = 0; i < salesFromQuery.size(); i++) {
-			Object dateAndTime = salesFromQuery.get(i).get(8);
-			Object name = itemNames.get(salesFromQuery.get(i).get(3));
-			Object quantity = salesFromQuery.get(i).get(7);
-			Object price = salesFromQuery.get(i).get(6);
-			parsed[i] = new Object[] {dateAndTime, name, quantity, price};
+		for (int i = 0; i < salesPerMonth.size(); i++) {
+			Object dateAndTime = salesPerMonth.get(i).get(8);
+			Object name = itemNames.get(salesPerMonth.get(i).get(3));
+			Object quantity = salesPerMonth.get(i).get(7);
+			Object price = salesPerMonth.get(i).get(6);
+			parsed[i] = new Object[] { dateAndTime, name, quantity, price };
 		}
 		return parsed;
 	}
-	
+
 	private void monthProfitButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		new MonthlySaleBreakdownWindow(parseSalesForBreakdownWindow(), month + " " + year).setVisible(true);
 	}
@@ -64,7 +58,7 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel monthLabel;
 	private javax.swing.JButton monthProfitButton;
 	// End of variables declaration
-	
+
 	private void initComponents() {
 
 		monthProfitButton = new javax.swing.JButton();
@@ -83,8 +77,8 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 
 		monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		monthLabel.setText(month);
-		
-		if (salesFromQuery.isEmpty()) {
+
+		if (salesPerMonth.isEmpty()) {
 			monthProfitButton.setEnabled(false);
 		}
 

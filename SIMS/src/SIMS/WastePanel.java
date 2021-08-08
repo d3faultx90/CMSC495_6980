@@ -62,8 +62,8 @@ public class WastePanel extends javax.swing.JPanel {
 				
 				int status = 0; // Pending
 				String confirmation = "Waste request (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
-				// If they are a regular user (role = 2), the status should be 0 (pending)
-				if (Database.getConnector().role == 2) {
+				// If they are a supervisor (role =  1), the status should be 1 (approved)
+				if (Database.getConnector().role == 1) {
 					status = 1;
 					confirmation = "Waste (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
 				} 

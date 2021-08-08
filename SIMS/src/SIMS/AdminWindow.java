@@ -36,14 +36,13 @@ public class AdminWindow extends javax.swing.JFrame {
 		new ChangeUserWindow(true, groupUserInfo()).setVisible(true);
 	}// GEN-LAST:event_editUserButtonActionPerformed
 
-	private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_addUserButtonActionPerformed
-		new ChangeUserWindow(false, new String[0]).setVisible(true);
+	private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayErrorPane("Was unable to implement in time due to security concerns");
 	}// GEN-LAST:event_addUserButtonActionPerformed
 
-	private void removeUserButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_removeUserButtonActionPerformed
-		// Delete user
-		// Confirmation
-	}// GEN-LAST:event_removeUserButtonActionPerformed
+	private void removeUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayErrorPane("Was unable to implement in time due to security concerns");
+	}
 
 	private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.closeAndOpenWindow(this, new LoginWindow());

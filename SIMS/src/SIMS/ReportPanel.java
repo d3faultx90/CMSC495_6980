@@ -83,7 +83,12 @@ public class ReportPanel extends javax.swing.JPanel {
 
 		try {
 			String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
-			new MonthViewWindow(selectedCellValue).setVisible(true);
+			if (itemRadioButton.isSelected()) {
+				Object itemId = Database.getItemIdMap().get(itemComboBox.getSelectedItem());
+				new MonthViewWindow(selectedCellValue, itemId).setVisible(true);
+			} else if (salesRadioButton.isSelected()) {
+				new MonthViewWindow(selectedCellValue).setVisible(true);
+			}
 		} catch (ArrayIndexOutOfBoundsException f) {
 			GeneralGuiFunctions.displayErrorPane("Please select an item");
 		}
@@ -105,6 +110,7 @@ public class ReportPanel extends javax.swing.JPanel {
 	}
 
 	private void populateTableWithQuantitySold(Object itemName) {
+
 		GeneralGuiFunctions.clearTable(yearAndProfitTable);
 		DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
 		Map<Object, Object> itemIds = Database.getItemIdMap();

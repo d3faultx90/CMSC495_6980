@@ -135,6 +135,15 @@ public class GeneralGuiFunctions {
 		}
 		return itemsSold;
 	}
+	
+	// This is called for when the table has been reduced by the unoverloaded method
+	static int parseQuantitySold(List<List> sales) {
+		int itemsSold = 0;
+		for (List l : sales) {
+			itemsSold += Integer.parseInt((String) l.get(7));
+		}
+		return itemsSold;
+	}
 
 	// Given the 2D list of sales, parse total sales
 	static double parseSales(List<List> sales) {
