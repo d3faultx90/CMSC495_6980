@@ -57,9 +57,9 @@ public class HomePanel extends javax.swing.JPanel {
     }
     
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-    	GeneralGuiFunctions.displayHelpPane("Daily, weekly, monthly and yearly sales are reported here. "
-        		+ "\nClick on refresh to refresh the page ."
-        		+ "\nClick on logout to log off ");
+    	GeneralGuiFunctions.displayHelpPane("Daily, weekly, monthly and yearly sales are reported here."
+        		+ "\nClick on refresh to refresh the page."
+        		+ "\nClick on logout to log off.");
     }//GEN-LAST:event_helpButtonActionPerformed
 
     // When the user logs out, opens a new LoginWindow and closes the current window
@@ -86,8 +86,6 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel yesterdaysSalesLabel;
     // End of variables declaration 
     
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
@@ -103,7 +101,6 @@ public class HomePanel extends javax.swing.JPanel {
         todaysSalesLastYearLabel = new javax.swing.JLabel();
         lastWeekSaleLabel = new javax.swing.JLabel();
         refreshDataButton = new javax.swing.JButton();
-        refreshLabel = new javax.swing.JLabel();
         totalRecordedSalesLabel = new javax.swing.JLabel();
         todaysSalesLabel = new javax.swing.JLabel();
 
@@ -114,7 +111,7 @@ public class HomePanel extends javax.swing.JPanel {
         currentTimeLabel.setText("");
 
         currentDateLabel.setText(DateHandler.getTodaysDateUser());
-        
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -122,11 +119,11 @@ public class HomePanel extends javax.swing.JPanel {
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(helloUsernameLabel)
-                .addGap(68, 68, 68)
+                .addGap(64, 64, 64)
                 .addComponent(currentDateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(currentTimeLabel)
-                .addGap(20, 20, 20))
+                .addGap(32, 32, 32))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,6 +135,29 @@ public class HomePanel extends javax.swing.JPanel {
                     .addComponent(currentDateLabel))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
+
+        yesterdaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        yesterdaysSalesLabel.setText("Yesterday's sales: ");
+
+        todaysSalesLastYearLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        todaysSalesLastYearLabel.setText("Today's sales last year: ");
+
+        lastWeekSaleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lastWeekSaleLabel.setText("Sales this week:");
+
+        refreshDataButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        refreshDataButton.setText("Refresh Data");
+        refreshDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshDataButtonActionPerformed(evt);
+            }
+        });
+
+        totalRecordedSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalRecordedSalesLabel.setText("Total recorded sales:");
+
+        todaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        todaysSalesLabel.setText("Today's sales: ");
 
         helpButton.setBackground(new java.awt.Color(255, 255, 153));
         helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -163,67 +183,37 @@ public class HomePanel extends javax.swing.JPanel {
         monthlySalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         monthlySalesLabel.setText("Last month's sales: ");
 
-        yesterdaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        yesterdaysSalesLabel.setText("Yesterday's sales: ");
-
-        todaysSalesLastYearLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        todaysSalesLastYearLabel.setText("Today's sales last year: ");
-
-        lastWeekSaleLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lastWeekSaleLabel.setText("Sales this week:");
-
-        refreshDataButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        refreshDataButton.setText("Refresh Data");
-        refreshDataButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshDataButtonActionPerformed(evt);
-            }
-        });
-
-        refreshLabel.setForeground(new java.awt.Color(255, 0, 0));
-        refreshLabel.setText("");
-
-        totalRecordedSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        totalRecordedSalesLabel.setText("Total recorded sales:");
-
-        todaysSalesLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        todaysSalesLabel.setText("Today's sales: ");
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(headerPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(todaysSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addComponent(helpButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(refreshLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(refreshDataButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(todaysSalesLastYearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(yesterdaysSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lastWeekSaleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(monthlySalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(annualSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(totalRecordedSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
+                    .addComponent(totalRecordedSalesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(helpButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(refreshDataButton))))
+                .addContainerGap())
         );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(refreshDataButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(helpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(refreshLabel)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(refreshDataButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(helpButton))
                 .addGap(32, 32, 32)
                 .addComponent(todaysSalesLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -240,29 +230,8 @@ public class HomePanel extends javax.swing.JPanel {
                 .addComponent(totalRecordedSalesLabel)
                 .addGap(18, 18, 18)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-    }// </editor-fold>                        
+    }// </editor-fold>  
   
 }
