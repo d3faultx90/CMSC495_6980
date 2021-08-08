@@ -40,6 +40,7 @@ public class Database {
 	
 	private void initialize() {
 		// Only Admins and Supervisors need the user table
+		/*
 		if (role < 2) {
 			resultsFromUserQuery = connector.getResultsofQuery("users");
 		}
@@ -47,10 +48,14 @@ public class Database {
 			resultsFromItemQuery = connector.getResultsofQuery("inventory");
 			resultsFromOrderQuery = connector.getResultsofQuery("orders");
 			resultsFromWasteQuery = connector.getResultsofQuery("waste");
-			resultsFromSalesQuery = connector.getResultsofQuery("sales");;
+			resultsFromSalesQuery = connector.getResultsofQuery("sales");
 			populateItemMaps();
 			populateUserIdMap();
 		}
+		*/
+		connector.getAllResults();
+		populateItemMaps();
+		populateUserIdMap();
 
 	}
 
