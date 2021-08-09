@@ -85,9 +85,9 @@ public class ReportPanel extends javax.swing.JPanel {
 			String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
 			if (itemRadioButton.isSelected()) {
 				Object itemId = Database.getItemIdMap().get(itemComboBox.getSelectedItem());
-				new MonthViewWindow(selectedCellValue, itemId).setVisible(true);
+				new CalendarViewWindow(selectedCellValue, itemId).setVisible(true);
 			} else if (salesRadioButton.isSelected()) {
-				new MonthViewWindow(selectedCellValue).setVisible(true);
+				new CalendarViewWindow(selectedCellValue).setVisible(true);
 			}
 		} catch (ArrayIndexOutOfBoundsException f) {
 			GeneralGuiFunctions.displayErrorPane("Please select an item");

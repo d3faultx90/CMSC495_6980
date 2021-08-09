@@ -11,26 +11,21 @@ import javax.swing.table.TableColumnModel;
 
 public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 
-	Object[][] masterArray;
-	String title;
+	Object[][] masterArray; // Used to populate the JTable
+	String title; // Title of the window
+
+	// Variables declaration
+	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JTable saleTable;
+	private javax.swing.JLabel titleLabel;
+	// End of variables declaration
 
 	protected MonthlySaleBreakdownWindow(Object[][] masterArray, String title) {
 		this.masterArray = masterArray;
 		this.title = title;
 		convertColumnsForSorting();
 		initComponents();
-		// changeTableHeaderWidth();
 	}
-
-//	private void changeTableHeaderWidth() {
-//		TableColumnModel columnModel = saleTable.getColumnModel();
-//		System.out.println(columnModel.getColumn(0).getPreferredWidth());
-//		System.out.println(columnModel.getColumn(1).getPreferredWidth());
-//		System.out.println(columnModel.getColumn(2).getPreferredWidth());
-//		System.out.println(columnModel.getColumn(3).getPreferredWidth());
-//		columnModel.getColumn(0).setPreferredWidth(60);
-//		columnModel.getColumn(2).setPreferredWidth(15);
-//	}
 
 	// Converts indexes 2 and 3 to doubles so sorting works correctly
 	private void convertColumnsForSorting() {
@@ -50,8 +45,8 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 		setTitle("Sales during " + title);
 		setResizable(false);
 
-		saleTable.setModel(new javax.swing.table.DefaultTableModel(
-				masterArray, new String[] { "Date and Time", "Item", "Quantity", "Total Sales Price" }) {
+		saleTable.setModel(new javax.swing.table.DefaultTableModel(masterArray,
+				new String[] { "Date and Time", "Item", "Quantity", "Total Sales Price" }) {
 			Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Double.class,
 					java.lang.Double.class };
 			boolean[] canEdit = new boolean[] { false, false, false, false };
@@ -105,9 +100,4 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 
 	}
 
-	// Variables declaration
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTable saleTable;
-	private javax.swing.JLabel titleLabel;
-	// End of variables declaration
 }

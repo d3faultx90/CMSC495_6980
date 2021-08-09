@@ -22,49 +22,48 @@ public class ItemFilterPanel extends javax.swing.JPanel {
 	
 	static List<List> currentInventory = new ArrayList<List>();
 
-	protected ItemFilterPanel() {
-		initComponents();
-		initializeInventory();
-		populateTable();
-	}
-	
-	protected void refreshTable(List<List> currentInventory) {
-		GeneralGuiFunctions.clearTable(itemTable);
-		// Need some logic here or something (only update the static table once
-		this.currentInventory = currentInventory; // Needs updating if change has occured (item quantity up or down)
-		populateTable();
-	}
-	
-	private void populateTable() {
-		GeneralGuiFunctions.addItemAndQuantityToTable(itemTable, currentInventory);
-	}
-	
-	private void initializeInventory() {
-		if (currentInventory.isEmpty()) {
-			currentInventory = Database.getItemTable();
-		}
-	}
-	
-//	static void addRow() {
-//		DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
-//		model.addRow(new Object[] { "wow", "please" });
-//	}
-
-	// Filters the table based on the text field
-	private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
-		GeneralGuiFunctions.filterTable(itemTable, filterField);
-	}
-
 	// Variables declaration
 	private javax.swing.JTextField filterField;
 	private javax.swing.JLabel filterLabel;
 	private javax.swing.JScrollPane itemScrollPane;
 	protected javax.swing.JTable itemTable;
 	// End of variables declaration
+	
 
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed" desc="Generated
-	// Code">//GEN-BEGIN:initComponents
+	protected ItemFilterPanel() {
+		initComponents();
+		initializeInventory();
+		populateTable();
+	}
+
+	// Filters the table based on the text field
+	private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
+		GeneralGuiFunctions.filterTable(itemTable, filterField);
+	}
+	
+	// Since currentInventory is static, it should only be initialized once.
+	private void initializeInventory() {
+		if (currentInventory.isEmpty()) {
+			currentInventory = Database.getItemTable();
+		}
+	}
+	
+	// Takes the current inventory and appends it to the item filter table
+	private void populateTable() {
+		GeneralGuiFunctions.addItemAndQuantityToTable(itemTable, currentInventory);
+	}
+
+	// Clears the table and then repopulates it.
+	protected void refreshTable() {
+		GeneralGuiFunctions.clearTable(itemTable);
+		populateTable();
+	}
+	
+	// Updates the currentInventory variable to the most recent state
+	static void updateCurrentInventory() {
+		currentInventory = Database.getItemTable();
+	}
+	
 	private void initComponents() {
 
 		filterLabel = new javax.swing.JLabel();

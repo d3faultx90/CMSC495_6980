@@ -12,11 +12,14 @@ import java.util.List;
 
 import enums.Months;
 
-public class MonthViewWindow extends javax.swing.JFrame {
+public class CalendarViewWindow extends javax.swing.JFrame {
 
 	String year;
 	String title;
 	Object itemId;
+	
+	// Hardcoded to reduce number of queries and because the month won't change.
+	// These store all the sales per their specific month
 	List<List> januarySales = new ArrayList<List>();
 	List<List> februarySales = new ArrayList<List>();
 	List<List> marchSales = new ArrayList<List>();
@@ -30,7 +33,8 @@ public class MonthViewWindow extends javax.swing.JFrame {
 	List<List> novemberSales = new ArrayList<List>();
 	List<List> decemberSales = new ArrayList<List>();
 
-	protected MonthViewWindow(String year) {
+	// Constructor for the profit display (USD)
+	protected CalendarViewWindow(String year) {
 		this.title = "All sales during " + year;
 		this.year = year;
 		List<List> sales = Database.getSalesTable();
@@ -39,7 +43,8 @@ public class MonthViewWindow extends javax.swing.JFrame {
 		initComponents();
 	}
 
-	protected MonthViewWindow(String year, Object itemId) {
+	// Constructor for the
+	protected CalendarViewWindow(String year, Object itemId) {
 		String objectName = (String) Database.getItemNamesMap().get(itemId);
 		this.title = objectName + " sales during " + year;
 		this.year = year;

@@ -40,10 +40,11 @@ public class SupervisorWindow extends javax.swing.JFrame {
     
     protected static void refreshAllItemTables() {
     	List<List> inventory = Database.getItemTable();
-    	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable(inventory);
-    	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable(inventory);
-    	singleton.wastePanel.itemFilterPanel.refreshTable(inventory);
-    	singleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
+    	ItemFilterPanel.updateCurrentInventory();
+    	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable();
+    	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable();
+    	singleton.wastePanel.itemFilterPanel.refreshTable();
+    	singleton.viewInventoryPanel.itemFilterPanel.refreshTable();
     }
     
     protected static void refreshAllRequestTables() {
