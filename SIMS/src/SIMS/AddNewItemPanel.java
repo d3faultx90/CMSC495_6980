@@ -36,12 +36,12 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel sellPriceLabel;
 	private javax.swing.JTextField sellPriceTextfield;
 	// End of variables declaration
-	
+
 	public AddNewItemPanel() {
 		parseCategories(); // Parse categories before initializing combo box
 		initComponents();
 	}
-	
+
 	private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			String name = nameTextfield.getText();
@@ -54,11 +54,18 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 			if (name.isEmpty() || description.isEmpty() || category.isEmpty()) {
 				GeneralGuiFunctions.displayErrorPane("Please ensure all textfields are filled in");
+			} else if (wholeSalePrice == 0 || retailPrice == 0 || quantity == 0 ) {
+				GeneralGuiFunctions.displayErrorPane("Textfields must not have a value of 0");
 			} else {
 				try {
 					Database.getConnector().createInventoryItem(name, description,
 							category, wholeSalePrice, retailPrice, quantity);
 					GeneralGuiFunctions.displayConfirmationPane("Item successfully added");
+					Database.refreshAllTables();
+					parseCategories();
+					categoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(categories));
+					resetTextfields();
+					Database.refreshAllComboBoxes();
 				} catch (Exception e) {
 					// This unique exception occurs when the item already exists in SQL
 					GeneralGuiFunctions.customDisplayErrorPane(e.getMessage(), "Invalid item addition attempt.");
@@ -71,6 +78,16 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 	}
 	
+	private void resetTextfields() {
+		nameTextfield.setText("");
+		categoryComboBox.setSelectedIndex(0); // Not a textfield but should be reset regardleess
+		newCategoryTextfield.setText("");
+		purchasePriceTextfield.setText("");
+		sellPriceTextfield.setText("");
+		descriptionTextArea.setText("");
+		quantityTextfield.setText("");
+	}
+
 	// If the index is new category (0), the show textfield, otherwise hide it.
 	private void categoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
 		if (categoryComboBox.getSelectedIndex() == 0) {
@@ -81,8 +98,9 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 			newCategoryTextfield.setVisible(false);
 		}
 	}
-	
-	// This limits the textfield so the user can only type numbers or a single period.
+
+	// This limits the textfield so the user can only type numbers or a single
+	// period.
 	private void ensureValidDoubleInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textfield) {
 		char c = evt.getKeyChar();
 		if ((!Character.isDigit(c) && c != '.') || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE) {
@@ -91,12 +109,12 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 			evt.consume();
 		}
 	}
-	
+
 	// Displays some help information for the user
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.displayHelpPane("Fill the form and click on Add Item to add the item to the inventory");
 	}
-	
+
 	// Given the ItemTable, find all unique categories.
 	private void parseCategories() {
 		ArrayList<String> categoryArrayList = new ArrayList<String>();
@@ -111,12 +129,12 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 		// Convert to an Array because that is what the JComboBox expects
 		categories = categoryArrayList.toArray(String[]::new);
 	}
-	
+
 	// Ensures each input from the user is valid.
 	private void purchasePriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
 		ensureValidDoubleInput(evt, purchasePriceTextfield);
 	}
-	
+
 	// Ensures the textfield contains only digits
 	private void quantityTextFieldKeyTyped(java.awt.event.KeyEvent evt) {
 		char c = evt.getKeyChar();
@@ -129,7 +147,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private void sellPriceTextfieldKeyTyped(java.awt.event.KeyEvent evt) {
 		ensureValidDoubleInput(evt, sellPriceTextfield);
 	}
-	
+
 	private void initComponents() {
 
 		mainPanel = new javax.swing.JPanel();

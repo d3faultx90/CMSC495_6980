@@ -66,12 +66,8 @@ public class SalesPanel extends javax.swing.JPanel {
 			// Clears the order table after the success
 			GeneralGuiFunctions.clearTable(salesPanel.orderTable);
 
-			if (Database.getRole() == 1) {
-				SupervisorWindow.refreshAllItemTables();
-			} else {
-				UserWindow.refreshAllItemTables();
-			}
-
+			Database.refreshAllTables();
+	
 			GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 		}
 

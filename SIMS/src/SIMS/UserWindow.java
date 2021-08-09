@@ -59,6 +59,10 @@ public class UserWindow extends javax.swing.JFrame {
     	}
     	singleton.inventorySubTabs.setSelectedIndex(2);
     }
+    
+    public static void refreshReportComboBox() {
+    	singleton.reportPanel.refreshComboBox();
+    }
 	
 	private void initComponents() {
 

@@ -57,6 +57,10 @@ public class SupervisorWindow extends javax.swing.JFrame {
     	}
     	singleton.inventorySubTabs.setSelectedIndex(2);
     }
+    
+    public static void refreshReportComboBox() {
+    	singleton.reportPanel.refreshComboBox();
+    }
 
 	public static String getUsername() {
 		return username;

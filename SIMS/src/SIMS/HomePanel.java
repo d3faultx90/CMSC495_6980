@@ -4,6 +4,7 @@
  * Date: July 19th, 2021
  * Purpose: Panel that is in the home panel of the main GUI
  */
+
 package SIMS;
 
 import java.time.LocalDateTime;
@@ -25,10 +26,9 @@ public class HomePanel extends javax.swing.JPanel {
     }
     
     private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {    
-    	
     	setSaleTextfields();
-    	SupervisorWindow.refreshAllItemTables();
-    	
+    	Database.refreshAllTables();
+    	Database.refreshAllComboBoxes();
     }                                                 
     
     public void setSaleTextfields() {
@@ -67,9 +67,9 @@ public class HomePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_helpButtonActionPerformed
 
     // When the user logs out, opens a new LoginWindow and closes the current window
-    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         GeneralGuiFunctions.closeAndOpenWindow(SwingUtilities.getWindowAncestor(this), new LoginWindow());
-    }//GEN-LAST:event_logoutButtonActionPerformed
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JLabel annualSalesLabel;
@@ -236,6 +236,6 @@ public class HomePanel extends javax.swing.JPanel {
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(114, Short.MAX_VALUE))
         );
-    }// </editor-fold>  
+    }
   
 }

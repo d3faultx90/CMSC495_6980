@@ -95,6 +95,22 @@ public class Database {
 		}
 	}
 	
+	static void refreshAllTables() {
+		if (role == 1) {
+			SupervisorWindow.refreshAllItemTables();
+		} else {
+			UserWindow.refreshAllItemTables();
+		}
+	}
+	
+	static void refreshAllComboBoxes() {
+		if (role == 1) {
+			SupervisorWindow.refreshReportComboBox();
+		} else {
+			UserWindow.refreshReportComboBox();
+		}
+	}
+	
 	// Accessor methods
 	static Connector getConnector() {
 		return connector;

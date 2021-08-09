@@ -108,6 +108,11 @@ public class ReportPanel extends javax.swing.JPanel {
 		// Convert to an Array because that is what the JComboBox expects
 		itemNames = categoryArrayList.toArray(String[]::new);
 	}
+	
+	protected void refreshComboBox() {
+		parseItemNames();
+		itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(itemNames));
+	}
 
 	private void populateTableWithQuantitySold(Object itemName) {
 

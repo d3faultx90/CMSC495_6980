@@ -136,7 +136,7 @@ public class GeneralGuiFunctions {
 		return itemsSold;
 	}
 	
-	// This is called for when the table has been reduced by the unoverloaded method
+	// This is called for when the table has been reduced by the unoverloaded method (item ID is not needed)
 	static int parseQuantitySold(List<List> sales) {
 		int itemsSold = 0;
 		for (List l : sales) {

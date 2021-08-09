@@ -4,8 +4,7 @@
  * Date: July 27th, 2021
  * Purpose:
  */
-package SIMS
-;
+package SIMS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,10 +30,6 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		OrderAndWasteDetailWindow.displayDetails(requestTable, 0);
-	}
-
-	private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		System.out.println("Pressed edit button");
 	}
 
 	private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,8 +58,8 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 						GeneralGuiFunctions.displayErrorPane("Problem in approveOrDeny in OrderOrWastePanel.java");
 					}
 
-					((DefaultTableModel)requestTable.getModel()).removeRow((requestTable.getSelectedRow()));
-					
+					((DefaultTableModel) requestTable.getModel()).removeRow((requestTable.getSelectedRow()));
+
 					if (Database.getRole() == 1) {
 						SupervisorWindow.refreshAllItemTables();
 					} else {
@@ -80,7 +75,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 		}
 	}
-	
+
 	private void printApprovalOrDenial(boolean isApproved) {
 		if (isApproved) {
 			GeneralGuiFunctions.displayConfirmationPane(tableTitle + " reqest was approved.");
@@ -100,7 +95,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 					model.addRow(new Object[] { date, usernames.get(l.get(2)) });
 					alreadyAdded.add(date);
 				}
-				
+
 			}
 		}
 	}
@@ -108,7 +103,6 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 	// Variables declaration
 	private javax.swing.JButton approveButton;
 	private javax.swing.JButton denyButton;
-	private javax.swing.JButton editButton;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JLabel requestLabel;
 	private javax.swing.JTable requestTable;
@@ -121,27 +115,27 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		requestTable = new javax.swing.JTable();
 		requestLabel = new javax.swing.JLabel();
 		viewButton = new javax.swing.JButton();
-		editButton = new javax.swing.JButton();
 		approveButton = new javax.swing.JButton();
 		denyButton = new javax.swing.JButton();
 
-		requestTable.setModel(
-				new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] { "Date", "Requesting User" }));
+		requestTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
+
+		}, new String[] { "Date", "Requesting User" }) {
+			boolean[] canEdit = new boolean[] { false, false };
+
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return canEdit[columnIndex];
+			}
+		});
+		requestTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jScrollPane1.setViewportView(requestTable);
 
-		requestLabel.setText(tableTitle + " Request(s)");
+		requestLabel.setText("Order Requests");
 
 		viewButton.setText("View");
 		viewButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				viewButtonActionPerformed(evt);
-			}
-		});
-
-		editButton.setText("Edit");
-		editButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				editButtonActionPerformed(evt);
 			}
 		});
 
@@ -160,31 +154,24 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 				denyButtonActionPerformed(evt);
 			}
 		});
-		
-		requestTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(layout.createSequentialGroup().addContainerGap()
-										.addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84,
+				.addGroup(layout.createSequentialGroup().addContainerGap()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(approveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87,
+										.addComponent(approveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(denyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGroup(layout.createSequentialGroup().addContainerGap()
-										.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(0, 0, Short.MAX_VALUE)))
-						.addContainerGap())
+										.addComponent(denyButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
 						.addGap(0, 0, Short.MAX_VALUE).addComponent(requestLabel).addGap(140, 140, 140)));
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,9 +181,7 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(viewButton).addComponent(editButton).addComponent(approveButton)
-								.addComponent(denyButton))
+								.addComponent(viewButton).addComponent(approveButton).addComponent(denyButton))
 						.addGap(0, 6, Short.MAX_VALUE)));
-	}
-
+	}// </editor-fold>
 }
