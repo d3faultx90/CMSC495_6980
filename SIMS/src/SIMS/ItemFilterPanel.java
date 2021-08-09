@@ -22,13 +22,13 @@ public class ItemFilterPanel extends javax.swing.JPanel {
 	
 	static List<List> currentInventory = new ArrayList<List>();
 
-	public ItemFilterPanel() {
+	protected ItemFilterPanel() {
 		initComponents();
 		initializeInventory();
 		populateTable();
 	}
 	
-	public void refreshTable(List<List> currentInventory) {
+	protected void refreshTable(List<List> currentInventory) {
 		GeneralGuiFunctions.clearTable(itemTable);
 		// Need some logic here or something (only update the static table once
 		this.currentInventory = currentInventory; // Needs updating if change has occured (item quantity up or down)

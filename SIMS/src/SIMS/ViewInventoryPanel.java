@@ -13,7 +13,7 @@ import javax.swing.JTable;
 
 public class ViewInventoryPanel extends javax.swing.JPanel {
 
-    public ViewInventoryPanel() {
+    protected ViewInventoryPanel() {
         initComponents();
     }  
 

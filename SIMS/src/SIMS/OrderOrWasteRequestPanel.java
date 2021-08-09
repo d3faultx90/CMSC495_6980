@@ -21,10 +21,10 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 	String tableTitle;
 	List<List> resultsFromQuery = new ArrayList<List>();
 
-	public OrderOrWasteRequestPanel(String tableTitle, List<List> resultsFromQuery) {
+	protected OrderOrWasteRequestPanel(String tableTitle) {
 		this.tableTitle = tableTitle;
 		initComponents();
-		this.resultsFromQuery = resultsFromQuery;
+		this.resultsFromQuery = tableTitle.equals("Order") ? Database.getOrderTable() : Database.getWasteTable();
 		addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
 	}
 
@@ -60,11 +60,8 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 					((DefaultTableModel) requestTable.getModel()).removeRow((requestTable.getSelectedRow()));
 
-					if (Database.getRole() == 1) {
-						SupervisorWindow.refreshAllItemTables();
-					} else {
-						UserWindow.refreshAllItemTables();
-					}
+					SupervisorWindow.refreshReorderTable();
+					SupervisorWindow.refreshAllItemTables();
 
 				}
 			}
@@ -100,12 +97,18 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		}
 	}
 
+	public void refreshTable() {
+		GeneralGuiFunctions.clearTable(requestTable);
+		this.resultsFromQuery = tableTitle.equals("Order") ? Database.getOrderTable() : Database.getWasteTable();
+		addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
+	}
+
 	// Variables declaration
 	private javax.swing.JButton approveButton;
 	private javax.swing.JButton denyButton;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JLabel requestLabel;
-	private javax.swing.JTable requestTable;
+	protected javax.swing.JTable requestTable;
 	private javax.swing.JButton viewButton;
 	// End of variables declaration
 
@@ -130,7 +133,8 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		requestTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jScrollPane1.setViewportView(requestTable);
 
-		requestLabel.setText("Order Requests");
+		requestLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		requestLabel.setText(tableTitle + " Requests");
 
 		viewButton.setText("View");
 		viewButton.addActionListener(new java.awt.event.ActionListener() {
@@ -157,23 +161,27 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addContainerGap()
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(approveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(denyButton, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-						.addGap(0, 0, Short.MAX_VALUE).addComponent(requestLabel).addGap(140, 140, 140)));
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+										.addGroup(layout.createSequentialGroup()
+												.addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(approveButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+														118, javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(denyButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+										.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGap(0, 0, Short.MAX_VALUE))
+						.addComponent(requestLabel, javax.swing.GroupLayout.Alignment.TRAILING,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE))
+				.addContainerGap()));
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap().addComponent(requestLabel)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

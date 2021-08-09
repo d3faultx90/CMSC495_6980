@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class WastePanel extends javax.swing.JPanel {
 
-	public WastePanel() {
+	protected WastePanel() {
 		initComponents();
 
 	}

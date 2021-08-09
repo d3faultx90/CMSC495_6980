@@ -11,7 +11,7 @@ public class ItemDetailsWindow extends javax.swing.JFrame {
 
 	
 	// Sets the window to reflect the details of the item chosen
-    public ItemDetailsWindow(String name, String description, String category, String wholesalePrice, String retailPrice, String quantity) {
+    protected ItemDetailsWindow(String name, String description, String category, String wholesalePrice, String retailPrice, String quantity) {
         initComponents();
         this.setTitle(name);
         itemNameLabel.setText(name);

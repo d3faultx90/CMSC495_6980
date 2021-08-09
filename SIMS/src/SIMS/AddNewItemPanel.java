@@ -37,7 +37,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 	private javax.swing.JTextField sellPriceTextfield;
 	// End of variables declaration
 
-	public AddNewItemPanel() {
+	protected AddNewItemPanel() {
 		parseCategories(); // Parse categories before initializing combo box
 		initComponents();
 	}

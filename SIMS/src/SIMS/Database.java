@@ -39,20 +39,6 @@ public class Database {
 	}
 	
 	private void initialize() {
-		// Only Admins and Supervisors need the user table
-		/*
-		if (role < 2) {
-			resultsFromUserQuery = connector.getResultsofQuery("users");
-		}
-		if (role > 0) {
-			resultsFromItemQuery = connector.getResultsofQuery("inventory");
-			resultsFromOrderQuery = connector.getResultsofQuery("orders");
-			resultsFromWasteQuery = connector.getResultsofQuery("waste");
-			resultsFromSalesQuery = connector.getResultsofQuery("sales");
-			populateItemMaps();
-			populateUserIdMap();
-		}
-		*/
 		connector.getAllResults();
 		populateItemMaps();
 		populateUserIdMap();
@@ -97,9 +83,9 @@ public class Database {
 	
 	static void refreshAllTables() {
 		if (role == 1) {
-			SupervisorWindow.refreshAllItemTables();
+			SupervisorWindow.refreshAllTables();
 		} else {
-			UserWindow.refreshAllItemTables();
+			UserWindow.refreshAllTables();
 		}
 	}
 	

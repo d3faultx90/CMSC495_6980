@@ -33,11 +33,11 @@ public class ReportPanel extends javax.swing.JPanel {
 	private javax.swing.ButtonGroup radioButtonGroup;
 	private javax.swing.JPanel reportsTab;
 	private javax.swing.JRadioButton salesRadioButton;
-	public javax.swing.JTable yearAndProfitTable;
+	protected javax.swing.JTable yearAndProfitTable;
 	private javax.swing.JLabel yearLookLabel;
 	// End of variables declaration
 
-	public ReportPanel() {
+	protected ReportPanel() {
 		parseItemNames();
 		initComponents();
 		getUniqueYears(Database.resultsFromSalesQuery);
@@ -108,7 +108,7 @@ public class ReportPanel extends javax.swing.JPanel {
 		// Convert to an Array because that is what the JComboBox expects
 		itemNames = categoryArrayList.toArray(String[]::new);
 	}
-	
+
 	protected void refreshComboBox() {
 		parseItemNames();
 		itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(itemNames));
@@ -182,7 +182,6 @@ public class ReportPanel extends javax.swing.JPanel {
 		});
 
 		yearAndProfitTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
-
 		}, new String[] { "Year", "Profits" }) {
 			Class[] types = new Class[] { java.lang.String.class, java.lang.String.class };
 			boolean[] canEdit = new boolean[] { false, false };

@@ -20,7 +20,7 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 
 	private List<List> salesPerMonth;
 
-	public MonthProfitPanel(Months month, String year, List<List> salesPerMonth, String itemName) {
+	protected MonthProfitPanel(Months month, String year, List<List> salesPerMonth, String itemName) {
 		this.month = month.name();
 		this.year = year;
 		this.salesPerMonth = salesPerMonth;

@@ -22,7 +22,7 @@ import enums.OrderStatus;
 
 public class OrderFilterPanel extends javax.swing.JPanel {
 
-	public OrderFilterPanel() {
+	protected OrderFilterPanel() {
 		initComponents();
 		changeTableHeaderWidth();
 		addOrderAndIdToTable();
@@ -31,25 +31,20 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 
 	private void filterFieldKeyReleased(java.awt.event.KeyEvent evt) {
 		// This needs to be updated with stuff from the order query
-		GeneralGuiFunctions.filterTable(itemTable, filterField);
+		GeneralGuiFunctions.filterTable(orderTable, filterField);
 	}
 
 	private void changeTableHeaderWidth() {
-		TableColumnModel columnModel = itemTable.getColumnModel();
+		TableColumnModel columnModel = orderTable.getColumnModel();
 		columnModel.getColumn(0).setPreferredWidth(35);
 		columnModel.getColumn(2).setPreferredWidth(20);
 	}
 
-	private void filterFieldActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	// Given a 2D list, add the item and the quantity of the list to the selected
-	// table
+	// Given a 2D list, add the item and the quantity of the list to the selected table
 	private void addOrderAndIdToTable() {
 
 		ArrayList<String> alreadyAdded = new ArrayList<String>();
-		DefaultTableModel model = (DefaultTableModel) itemTable.getModel();
+		DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
 
 		for (List l : Database.getOrderTable()) {
 			
@@ -66,12 +61,17 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 			}
 		}
 	}
+	
+	public void refreshTable() {
+		GeneralGuiFunctions.clearTable(orderTable);
+		addOrderAndIdToTable();
+	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JTextField filterField;
 	private javax.swing.JLabel filterLabel;
 	private javax.swing.JScrollPane itemScrollPane;
-	public javax.swing.JTable itemTable;
+	protected javax.swing.JTable orderTable;
 	// End of variables declaration//GEN-END:variables
 
 	/**
@@ -86,22 +86,17 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 		filterLabel = new javax.swing.JLabel();
 		filterField = new javax.swing.JTextField();
 		itemScrollPane = new javax.swing.JScrollPane();
-		itemTable = new javax.swing.JTable();
+		orderTable = new javax.swing.JTable();
 
 		filterLabel.setText("Filter");
 
-		filterField.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				filterFieldActionPerformed(evt);
-			}
-		});
 		filterField.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 				filterFieldKeyReleased(evt);
 			}
 		});
 
-		itemTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
+		orderTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {},
 				new String[] { "Order ID", "Order Date", "Status" }) {
 			Class[] types = new Class[] { java.lang.String.class, java.lang.String.class, java.lang.Object.class };
 			boolean[] canEdit = new boolean[] { false, false, false };
@@ -114,7 +109,7 @@ public class OrderFilterPanel extends javax.swing.JPanel {
 				return canEdit[columnIndex];
 			}
 		});
-		itemScrollPane.setViewportView(itemTable);
+		itemScrollPane.setViewportView(orderTable);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);

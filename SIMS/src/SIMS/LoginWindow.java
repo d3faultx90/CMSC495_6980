@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class LoginWindow extends javax.swing.JFrame {
 
-    public LoginWindow() {
+    protected LoginWindow() {
         initComponents();
     }
     

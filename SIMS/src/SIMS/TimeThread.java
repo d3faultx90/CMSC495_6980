@@ -22,11 +22,11 @@ public class TimeThread extends Thread {
     private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
 
     //The thread takes the label it will update each second as a parameter
-    public TimeThread(JLabel label) {
+    protected TimeThread(JLabel label) {
         this.label = label;
     }
 
-    public void stopThread() {
+    protected void stopThread() {
     	isRunning = false;
     }
 

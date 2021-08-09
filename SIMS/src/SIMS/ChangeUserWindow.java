@@ -11,7 +11,7 @@ public class ChangeUserWindow extends javax.swing.JFrame {
 	// Used to signal whether or not the textfields should be pre-populated
 	boolean isEditing;
 
-    public ChangeUserWindow(boolean isEditing, String[] userInfo) {
+    protected ChangeUserWindow(boolean isEditing, String[] userInfo) {
     	this.isEditing = isEditing;
         initComponents();
         populateTestFieldCheck(userInfo);

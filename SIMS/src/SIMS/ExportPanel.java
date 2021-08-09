@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
 
 public class ExportPanel extends javax.swing.JPanel {
 
-    public ExportPanel() {
+    protected ExportPanel() {
         initComponents();
     }                                     
 

@@ -30,7 +30,7 @@ public class MonthViewWindow extends javax.swing.JFrame {
 	List<List> novemberSales = new ArrayList<List>();
 	List<List> decemberSales = new ArrayList<List>();
 
-	public MonthViewWindow(String year) {
+	protected MonthViewWindow(String year) {
 		this.title = "All sales during " + year;
 		this.year = year;
 		List<List> sales = Database.getSalesTable();
@@ -39,7 +39,7 @@ public class MonthViewWindow extends javax.swing.JFrame {
 		initComponents();
 	}
 
-	public MonthViewWindow(String year, Object itemId) {
+	protected MonthViewWindow(String year, Object itemId) {
 		String objectName = (String) Database.getItemNamesMap().get(itemId);
 		this.title = objectName + " sales during " + year;
 		this.year = year;

@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class OrderPanel extends javax.swing.JPanel {
 
-	public OrderPanel() {
+	protected OrderPanel() {
 		initComponents();
 	}
 

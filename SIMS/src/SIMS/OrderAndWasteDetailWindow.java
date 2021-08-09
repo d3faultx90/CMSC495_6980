@@ -19,7 +19,7 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 	String wasteOrOrder;
 	String totalPrice;
 
-	public OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object[][] masterArray, String totalPrice) {
+	protected OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object[][] masterArray, String totalPrice) {
 		this.wasteOrOrder = wasteOrOrder;
 		this.date = date;
 		this.masterArray = masterArray;

@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 public class ReorderPanel extends javax.swing.JPanel {
 
-	public ReorderPanel() {
+	protected ReorderPanel() {
 		initComponents();
 	}
 
@@ -26,11 +26,11 @@ public class ReorderPanel extends javax.swing.JPanel {
 	}
 
 	private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {
-		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.itemTable, 1);
+		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.orderTable, 1);
 	}
 
 	private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		Object[][] previousOrder = parseItemAndQuantity(orderFilterPanel.itemTable);
+		Object[][] previousOrder = parseItemAndQuantity(orderFilterPanel.orderTable);
 		if (Database.getRole() == 1) {
 			SupervisorWindow.reorder(previousOrder);
 		} else {
@@ -76,7 +76,7 @@ public class ReorderPanel extends javax.swing.JPanel {
 
 	// Variables declaration - do not modify
 	private javax.swing.JButton helpButton;
-	private SIMS.OrderFilterPanel orderFilterPanel;
+	protected SIMS.OrderFilterPanel orderFilterPanel;
 	private javax.swing.JButton reorderButton1;
 	private javax.swing.JButton viewOrderDetailsButton;
 	// End of variables declaration

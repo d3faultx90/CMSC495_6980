@@ -17,7 +17,7 @@ public class HomePanel extends javax.swing.JPanel {
 	TimeThread time;
 	String username;
 	
-    public HomePanel(String username) {
+    protected HomePanel(String username) {
     	this.username = username;
         initComponents();
         time = new TimeThread(currentTimeLabel);
@@ -25,13 +25,15 @@ public class HomePanel extends javax.swing.JPanel {
         setSaleTextfields();
     }
     
-    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) {    
+    private void refreshDataButtonActionPerformed(java.awt.event.ActionEvent evt) { 
+    	Database.getConnector().getAllResults();
     	setSaleTextfields();
     	Database.refreshAllTables();
     	Database.refreshAllComboBoxes();
+    	GeneralGuiFunctions.displayConfirmationPane("Database refreshed succesfully!");
     }                                                 
     
-    public void setSaleTextfields() {
+    protected void setSaleTextfields() {
     	
         LocalDateTime date = LocalDateTime.now();
         String minusDay = DateHandler.formatDateForSql(date.minusDays(1));

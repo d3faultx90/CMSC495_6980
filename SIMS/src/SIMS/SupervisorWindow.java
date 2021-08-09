@@ -18,11 +18,8 @@ import java.util.HashMap;
 public class SupervisorWindow extends javax.swing.JFrame {
 
 	static String username;
-	static int userID; // THIS NEEDS TO GET FILLED OUT FOR USE IN SALES/ORDER/WASTE panel.
+	static int userID; 
 	private static SupervisorWindow singleton;
-	// resultsFromOrderQuery
-	// resultsFromSalesQuery
-	// resultsFromUsersQuery
 
 	private SupervisorWindow(Connector connector, String username) {
 		this.username = username;
@@ -31,17 +28,17 @@ public class SupervisorWindow extends javax.swing.JFrame {
 	}
 	
 	// Getter method for the singleton instance
-    public static SupervisorWindow getWindow() {
+    protected static SupervisorWindow getWindow() {
         return singleton;
     }
     
     // Setter method for the singleton (only called via login window)
-    public static SupervisorWindow createWindow(Connector connector, String username) {
+    protected static SupervisorWindow createWindow(Connector connector, String username) {
     	singleton = new SupervisorWindow(connector, username);
     	return singleton;
     }
     
-    public static void refreshAllItemTables() {
+    protected static void refreshAllItemTables() {
     	List<List> inventory = Database.getItemTable();
     	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable(inventory);
     	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable(inventory);
@@ -49,7 +46,22 @@ public class SupervisorWindow extends javax.swing.JFrame {
     	singleton.viewInventoryPanel.itemFilterPanel.refreshTable(inventory);
     }
     
-    public static void reorder(Object [][] previousOrder) {
+    protected static void refreshAllRequestTables() {
+    	singleton.requestsPanel.orderRequestPanel.refreshTable();
+    	singleton.requestsPanel.wasteRequestPanel.refreshTable();
+    }
+    
+    protected static void refreshReorderTable() {
+    	singleton.reorderPanel.orderFilterPanel.refreshTable();
+    }
+    
+    protected static void refreshAllTables() {
+    	refreshAllItemTables();
+    	refreshAllRequestTables();
+    	refreshReorderTable();
+    }
+    
+    protected static void reorder(Object [][] previousOrder) {
     	GeneralGuiFunctions.clearTable(singleton.orderPanel.orderPanel.orderTable);
     	for (Object[] o :  previousOrder) {
 			DefaultTableModel model = (DefaultTableModel) singleton.orderPanel.orderPanel.orderTable.getModel();
@@ -58,11 +70,11 @@ public class SupervisorWindow extends javax.swing.JFrame {
     	singleton.inventorySubTabs.setSelectedIndex(2);
     }
     
-    public static void refreshReportComboBox() {
+    protected static void refreshReportComboBox() {
     	singleton.reportPanel.refreshComboBox();
     }
 
-	public static String getUsername() {
+	protected static String getUsername() {
 		return username;
 	}
 

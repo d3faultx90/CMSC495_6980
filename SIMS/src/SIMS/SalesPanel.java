@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SalesPanel extends javax.swing.JPanel {
 
-	public SalesPanel() {
+	protected SalesPanel() {
 		initComponents();
 	}
 

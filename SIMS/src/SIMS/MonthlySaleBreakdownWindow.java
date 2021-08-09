@@ -14,7 +14,7 @@ public class MonthlySaleBreakdownWindow extends javax.swing.JFrame {
 	Object[][] masterArray;
 	String title;
 
-	public MonthlySaleBreakdownWindow(Object[][] masterArray, String title) {
+	protected MonthlySaleBreakdownWindow(Object[][] masterArray, String title) {
 		this.masterArray = masterArray;
 		this.title = title;
 		convertColumnsForSorting();

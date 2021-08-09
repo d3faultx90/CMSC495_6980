@@ -18,7 +18,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 
 	private boolean isSalesPanel;
 	
-	public OrderAndSalesPanel(boolean isSalesPanel) {
+	protected OrderAndSalesPanel(boolean isSalesPanel) {
 		this.isSalesPanel = isSalesPanel;
 		initComponents();
 		previousModel = (DefaultTableModel) orderTable.getModel();
@@ -255,7 +255,7 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 
 //		orderTable.getModel().addTableModelListener(new TableModelListener() {
 //			@Override
-//			public void tableChanged(TableModelEvent e) {
+//			protected void tableChanged(TableModelEvent e) {
 //				int selectedRow = orderTable.getSelectedRow();
 //				System.out.println(selectedRow);
 //				

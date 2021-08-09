@@ -19,7 +19,7 @@ public class AdminWindow extends javax.swing.JFrame {
 	String username;
 	static List<List> userInfoTable = new ArrayList<List>();
 
-	public AdminWindow(Connector connector, String username) {
+	protected AdminWindow(Connector connector, String username) {
 		Database database = new Database(connector);
 		this.username = username;
 		userInfoTable = Database.getUsersTable();
