@@ -26,7 +26,7 @@ public class ReorderPanel extends javax.swing.JPanel {
 	}
 
 	private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {
-		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.orderTable, 1);
+		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.orderTable, 1, Database.getOrderTable());
 	}
 
 	private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {

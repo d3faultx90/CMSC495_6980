@@ -29,7 +29,12 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 	}
 
 	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		OrderAndWasteDetailWindow.displayDetails(requestTable, 0);
+		if (tableTitle.equals("Order")) {
+			OrderAndWasteDetailWindow.displayDetails(requestTable, 0, Database.getOrderTable());
+		} else {
+			OrderAndWasteDetailWindow.displayDetails(requestTable, 0, Database.getWasteTable());
+		}
+		
 	}
 
 	private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,7 +86,6 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		}
 	}
 
-	// IF SUPERVISORS CAN GET ACCESS TO USER TABLES DO THIS HERE!!!!!!!!!!!!
 	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
 		Map usernames = Database.getUserIdMap();
 		ArrayList<String> alreadyAdded = new ArrayList<String>();

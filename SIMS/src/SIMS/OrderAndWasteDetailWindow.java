@@ -31,19 +31,17 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 		GeneralGuiFunctions.filterTable(detailsTable, filterTextfield);
 	}
 
-	static void displayDetails(JTable table, int dateIndex) {
+	static void displayDetails(JTable table, int dateIndex, List<List> requests) {
 
 		try {
 
 			Map<Object, Object> itemNames = Database.getItemNamesMap();
 			ArrayList<Object[]> masterList = new ArrayList<Object[]>();
-
-			JTable viewItem = table;
-			Object selectedCellValue = viewItem.getValueAt(viewItem.getSelectedRow(), dateIndex);
+			Object selectedCellValue = table.getValueAt(table.getSelectedRow(), dateIndex);
 
 			double totalPrice = 0;
 
-			for (List request : Database.getOrderTable()) {
+			for (List request : requests) {
 
 				if (selectedCellValue.equals(request.get(8))) {
 
@@ -64,7 +62,7 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 			}
 
 			String formattedTotalPrice = GeneralGuiFunctions.doubleToDollarRepresentation(totalPrice);
-			new OrderAndWasteDetailWindow("Order", (String) selectedCellValue, masterArray, formattedTotalPrice)
+			new OrderAndWasteDetailWindow("Request", (String) selectedCellValue, masterArray, formattedTotalPrice)
 					.setVisible(true);
 
 		} catch (ArrayIndexOutOfBoundsException e) {
