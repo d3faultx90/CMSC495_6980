@@ -23,8 +23,7 @@ public class SalesPanel extends javax.swing.JPanel {
 
 	private void saveSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		/**
-		 * Method grabs values from the JTable and gives them to createSales() to create
-		 * a sale on the SQL database.
+		 * Method grabs values from the JTable and gives them to createSales() to create a sale on the SQL database.
 		 */
 
 		// Copy variables here for easier reading
@@ -67,7 +66,7 @@ public class SalesPanel extends javax.swing.JPanel {
 			GeneralGuiFunctions.clearTable(salesPanel.orderTable);
 
 			Database.refreshAllTables();
-	
+
 			GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 		}
 
@@ -126,9 +125,8 @@ public class SalesPanel extends javax.swing.JPanel {
 						.addComponent(salesPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(saveSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(20, Short.MAX_VALUE)));
+						.addComponent(saveSaleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+						.addContainerGap()));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
@@ -146,6 +144,6 @@ public class SalesPanel extends javax.swing.JPanel {
 								.addComponent(salesTab, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addGap(0, 0, Short.MAX_VALUE))));
-	}// </editor-fold>
+	}
 
 }
