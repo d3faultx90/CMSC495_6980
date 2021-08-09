@@ -25,8 +25,7 @@ import javax.swing.JTable;
 
 public class GeneralGuiFunctions {
 
-	// Given a 2D list, add the item and the quantity of the list to the selected
-	// table
+	// Given a 2D list, add the item and the quantity of the list to the selected table
 	static void addItemAndQuantityToTable(javax.swing.JTable table, List<List> resultsFromItemQuery) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		for (List l : resultsFromItemQuery) {
@@ -107,7 +106,7 @@ public class GeneralGuiFunctions {
 	static void displayHelpPane(String helpInformation) {
 		JOptionPane.showMessageDialog(null, helpInformation, "Help", JOptionPane.QUESTION_MESSAGE);
 	}
-	
+
 	// Given a double, return it as a string formatted for prices
 	static String doubleToDollarRepresentation(Double price) {
 		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
@@ -135,7 +134,7 @@ public class GeneralGuiFunctions {
 		}
 		return itemsSold;
 	}
-	
+
 	// This is called for when the table has been reduced by the unoverloaded method (item ID is not needed)
 	static int parseQuantitySold(List<List> sales) {
 		int itemsSold = 0;

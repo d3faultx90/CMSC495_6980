@@ -1,3 +1,10 @@
+/*
+ * File: DateHandler.java
+ * Author: Ben Sutter
+ * Date: July 31st, 2021
+ * Purpose: Holds various helper methods to help display or pass various date formats.
+ */
+
 package SIMS;
 
 import java.text.DateFormat;
@@ -8,24 +15,30 @@ import java.util.Date;
 
 public class DateHandler {
 
-    private static LocalDateTime getDateTime() {
+	 // Takes a date and translates it to the format used for all SQL actions.
+    protected static String formatDateForSql(Date date) {
         /**
-         * Method to retrieve local system date and time
+         * Method to format local system date
          * 
-         * @return date  as LocalDateTime object
+         * @return dateToString as String object
          */
-    	
-         LocalDateTime date = LocalDateTime.now();
-         return  date;
-         
-    } // end of getDate()
-    
-    protected static String getTodaysDateUser() {
-        return formatDateForUser(LocalDateTime.now());
+
+        // convert 'date' variable to String and format like YYYY-MM-dd
+    	DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");  
+        return dateFormat.format(date);  
     } // end of formatDate()
     
-    protected static String getTodaysDateSql() {
-        return formatDateForSql(LocalDateTime.now());
+    // Takes a date and translates it to the format used for all SQL actions.
+    protected static String formatDateForSql(LocalDateTime date) {
+        /**
+         * Method to format local system date
+         * 
+         * @return dateToString as String object
+         */
+
+        // convert 'date' variable to String and format like YYYY-MM-dd
+        String dateToString = date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"));
+        return dateToString;
     } // end of formatDate()
     
     protected static String formatDateForUser(LocalDateTime date) {
@@ -40,62 +53,26 @@ public class DateHandler {
         return dateToString;
     } // end of formatDate()
     
-    //Make it universal?????
-    protected static String formatDateForSql(LocalDateTime date) {
+    private static LocalDateTime getDateTime() {
         /**
-         * Method to format local system date
+         * Method to retrieve local system date and time
          * 
-         * @return dateToString as String object
-         */
-
-        // convert 'df' variable to String and format like YYYY-MM-dd
-        String dateToString = date.format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss"));
-        return dateToString;
-    } // end of formatDate()
-    
-    //Make it universal?????
-    protected static String formatDateForSql(Date date) {
-        /**
-         * Method to format local system date
-         * 
-         * @return dateToString as String object
-         */
-
-        // convert 'df' variable to String and format like YYYY-MM-dd
-    	DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");  
-        return dateFormat.format(date);  
-    } // end of formatDate()
-    
-
-    
-    protected String formatDateTime() {
-        /**
-         * Method to format local system date and time
-         * 
-         * @return dateTimeToString as String object
+         * @return date  as LocalDateTime object
          */
     	
-    	LocalDateTime df = getDateTime();
-
-        // convert 'df' variable to String and format like MM-dd-yyyy HH:mm:ss
-        String dateTimeToString = df.format(DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm:ss"));
-        return dateTimeToString;
-    } // end of formatDateTime()
-
-    protected static String sqlDateTime() {
-        /**
-         * Method to format local system date and time
-         * 
-         * @return dateTimeToString as String object
-         */
-    	
-    	LocalDateTime df = getDateTime();
-
-        // convert 'df' variable to String and format like '2011-12-03+01:00'
-        String dateTimeToString = df.format(DateTimeFormatter.ISO_OFFSET_DATE);
-        return dateTimeToString;
-        
-    } // end of formatDateTime()
+         LocalDateTime date = LocalDateTime.now();
+         return  date;
+         
+    } // end of getDateTime()
     
+    // Returns todays date/time in the sql format
+    protected static String getTodaysDateSql() {
+        return formatDateForSql(LocalDateTime.now());
+    } // end of formatDate()
+    
+    // Returns todays date/time in the sql format
+    protected static String getTodaysDateUser() {
+        return formatDateForUser(LocalDateTime.now());
+    } // end of formatDate()
         
 }

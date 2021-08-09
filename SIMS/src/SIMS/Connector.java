@@ -1,3 +1,10 @@
+/*
+ * File: Connector.java
+ * Author: Zachary Young
+ * Date: July 19th, 2021
+ * Purpose: This class is responsible for connecting to the SQL database and handling all requests.
+ */
+
 package SIMS;
 
 import java.util.List;

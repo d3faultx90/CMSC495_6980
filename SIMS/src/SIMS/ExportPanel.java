@@ -4,6 +4,7 @@
  * Date: July 19th, 2021
  * Purpose: Panel that is used in the Import/Export tab of the Main GUI
  */
+
 package SIMS;
 
 import com.opencsv.CSVWriter;
@@ -18,15 +19,19 @@ import javax.swing.JFileChooser;
 
 public class ExportPanel extends javax.swing.JPanel {
 
+    // Variables declaration - do not modify
+    private javax.swing.JButton exportButton;
+    private javax.swing.JLabel exportLabel;
+    private javax.swing.JButton helpButton;
+    private javax.swing.JButton importButton;
+    private javax.swing.JLabel importLabel;
+    private javax.swing.JPanel panel;
+    // End of variables declaration
+    
     protected ExportPanel() {
         initComponents();
-    }                                     
-
-    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-    	GeneralGuiFunctions.displayHelpPane("To import data click on the import button. "
-        		+ "\nTo export database information,click on the export button ");
-    }                                           
-
+    }
+    
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	
     	Connector connector = Database.getConnector();
@@ -81,18 +86,12 @@ public class ExportPanel extends javax.swing.JPanel {
 	        	GeneralGuiFunctions.displayErrorPane("File IO Error");
 	        }
         }
-    }        
-       
-
-
-    // Variables declaration - do not modify
-    private javax.swing.JButton exportButton;
-    private javax.swing.JLabel exportLabel;
-    private javax.swing.JButton helpButton;
-    private javax.swing.JButton importButton;
-    private javax.swing.JLabel importLabel;
-    private javax.swing.JPanel panel;
-    // End of variables declaration
+    }
+    
+    private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    	GeneralGuiFunctions.displayHelpPane("To import data click on the import button. "
+        		+ "\nTo export database information,click on the export button ");
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
@@ -165,5 +164,6 @@ public class ExportPanel extends javax.swing.JPanel {
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-    }// </editor-fold>    
+    }// </editor-fold>   
+    
 }
