@@ -67,7 +67,6 @@ public class SupervisorWindow extends javax.swing.JFrame {
     
 	// Refreshes each itemTable within the various nested panels
     protected static void refreshAllItemTables() {
-    	List<List> inventory = Database.getItemTable();
     	ItemFilterPanel.updateCurrentInventory();
     	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable();
     	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable();

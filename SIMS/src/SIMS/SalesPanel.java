@@ -33,6 +33,8 @@ public class SalesPanel extends javax.swing.JPanel {
 		 * Method grabs values from the JTable and gives them to createSales() to create a sale on the SQL database.
 		 */
 
+		try {
+		
 		// Copy variables here for easier reading
 		javax.swing.JTable saleTable = salesPanel.orderTable;
 		Map<Object, Object> itemIds = Database.getItemIdMap();
@@ -73,6 +75,10 @@ public class SalesPanel extends javax.swing.JPanel {
 			Database.refreshAllTables(); // Refresh all tables so they reflect current quantity
 
 			GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
+		}
+		
+		} catch (Exception e) {
+			GeneralGuiFunctions.displayErrorPane("Error occured during sale, please check to ensure all fields (especially date) are valid.");
 		}
 
 	}

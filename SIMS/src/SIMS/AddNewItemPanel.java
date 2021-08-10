@@ -64,7 +64,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 					Database.refreshAllTables();
 					parseCategories();
 					categoryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(categories));
-					resetTextfields();
+					resetAllTextfields();
 					Database.refreshAllComboBoxes();
 				} catch (Exception e) {
 					// This unique exception occurs when the item already exists in SQL
@@ -78,7 +78,7 @@ public class AddNewItemPanel extends javax.swing.JPanel {
 
 	}
 	
-	private void resetTextfields() {
+	private void resetAllTextfields() {
 		nameTextfield.setText("");
 		categoryComboBox.setSelectedIndex(0); // Not a textfield but should be reset regardleess
 		newCategoryTextfield.setText("");

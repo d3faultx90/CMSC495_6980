@@ -34,13 +34,15 @@ public class ExportPanel extends javax.swing.JPanel {
     
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	
-    	Connector connector = Database.getConnector();
+    	// Refreshes database to ensure all results are current
+    	Database.getConnector().getAllResults();
     	
-    	List<List> sales = connector.exportResultsofQuery("sales");
-    	List<List> items = connector.exportResultsofQuery("inventory");
-    	List<List> orders = connector.exportResultsofQuery("orders");
-    	List<List> wastes = connector.exportResultsofQuery("waste");
+    	List<List> sales = Database.getSalesTable();
+    	List<List> items = Database.getItemTable();
+    	List<List> orders = Database.getOrderTable();
+    	List<List> wastes = Database.getWasteTable();
         
+    	// Used for file naming
         String today = DateHandler.getTodaysDateSql();
         today = today.replaceAll(" ", "_").replaceAll(":", ";");
         
@@ -92,9 +94,7 @@ public class ExportPanel extends javax.swing.JPanel {
     	GeneralGuiFunctions.displayHelpPane("To import data click on the import button. "
         		+ "\nTo export database information,click on the export button ");
     }
-
-    
-                             
+                  
     private void initComponents() {
 
         panel = new javax.swing.JPanel();

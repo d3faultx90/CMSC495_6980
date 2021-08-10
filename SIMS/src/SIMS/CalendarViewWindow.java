@@ -19,7 +19,7 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 	Object itemId;
 	
 	// Hardcoded to reduce number of queries and because the month won't change.
-	// These store all the sales per their specific month
+	// These store all the sales or quantity sold per their specific month
 	List<List> januarySales = new ArrayList<List>();
 	List<List> februarySales = new ArrayList<List>();
 	List<List> marchSales = new ArrayList<List>();
@@ -32,6 +32,22 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 	List<List> octoberSales = new ArrayList<List>();
 	List<List> novemberSales = new ArrayList<List>();
 	List<List> decemberSales = new ArrayList<List>();
+	
+	// Variables declaration - do not modify
+	private SIMS.MonthProfitPanel aprilPanel;
+	private SIMS.MonthProfitPanel augustPanel;
+	private SIMS.MonthProfitPanel decemberPanel;
+	private SIMS.MonthProfitPanel februaryPanel;
+	private SIMS.MonthProfitPanel januaryPanel;
+	private SIMS.MonthProfitPanel julyPanel;
+	private SIMS.MonthProfitPanel junePanel;
+	private SIMS.MonthProfitPanel marchPanel;
+	private SIMS.MonthProfitPanel mayPanel;
+	private SIMS.MonthProfitPanel novemberPanel;
+	private SIMS.MonthProfitPanel octoberPanel;
+	private SIMS.MonthProfitPanel septemberPanel;
+	private javax.swing.JLabel yearLabel;
+	// End of variables declaration
 
 	// Constructor for the profit display (USD)
 	protected CalendarViewWindow(String year) {
@@ -55,6 +71,7 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 		initComponents();
 	}
 
+	// Goes through the sales and adds them to their appropriate month 2D list
 	private void parseMonthlySales(List<List> sales) {
 
 		for (List l : sales) {
@@ -62,7 +79,6 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 			if (l.get(8).toString().substring(0, 4).equals(this.year)) {
 				// If month add whole list to 2d array
 				if (month.equals("01")) {
-
 					januarySales.add(l);
 				} else if (month.equals("02")) {
 					februarySales.add(l);
@@ -91,6 +107,7 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 		}
 	}
 
+	// Goes through the sales and adds them to their appropriate month 2D list
 	private void parseMonthlyQuantitySold(List<List> sales) {
 
 		for (List l : sales) {
@@ -241,20 +258,5 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 		pack();
 		setLocationRelativeTo(null);
 	}
-
-	// Variables declaration - do not modify
-	private SIMS.MonthProfitPanel aprilPanel;
-	private SIMS.MonthProfitPanel augustPanel;
-	private SIMS.MonthProfitPanel decemberPanel;
-	private SIMS.MonthProfitPanel februaryPanel;
-	private SIMS.MonthProfitPanel januaryPanel;
-	private SIMS.MonthProfitPanel julyPanel;
-	private SIMS.MonthProfitPanel junePanel;
-	private SIMS.MonthProfitPanel marchPanel;
-	private SIMS.MonthProfitPanel mayPanel;
-	private SIMS.MonthProfitPanel novemberPanel;
-	private SIMS.MonthProfitPanel octoberPanel;
-	private SIMS.MonthProfitPanel septemberPanel;
-	private javax.swing.JLabel yearLabel;
-	// End of variables declaration
+	
 }
