@@ -133,6 +133,24 @@ COMMENT="The inventory table is used for managing inventory items."
 ;
 
 -- Sales tables
+CREATE TABLE IF NOT EXISTS sales(
+    SalesID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    SalesEventID VARCHAR(130) NOT NULL,
+    EmployeeID INT NOT NULL,
+    ItemID INT NOT NULL,
+    SalesUnitPrice DECIMAL(8,2) NOT NULL,
+    SalesTax DECIMAL(5,4) NOT NULL,
+    TotalSalePrice  DECIMAL(10,2) AS (((SalesUnitPrice * Quantity) *
+	       	SalesTax) + (SalesUnitPrice * Quantity)), 
+    Quantity INT NOT NULL, 
+    SalesDate DATETIME NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES users(UserID),
+    FOREIGN KEY (ItemID) REFERENCES inventory(InventoryID)
+)
+COMMENT="The sales table is used for tracking customer sales."
+;
+
+-- Orders tables
 CREATE TABLE IF NOT EXISTS SIMS_app_data.orders(
     OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     OrderEventID VARCHAR(130) NOT NULL,
