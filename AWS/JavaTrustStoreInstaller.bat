@@ -43,8 +43,11 @@ echo.
 echo [ + ] Creating Java TrustStore in ...
 timeout /t 5
 cd "C:\Program Files\Java\jdk-16.0.1\bin\"
-cd
+keytool.exe -importcert -alias AWSMySQLCACert -file %pemPath% -keystore "C:\Program Files\Java\jdk-16.0.1\bin\SIMS_AWS_TrustStore" -storepass %trustStorePassword%
 echo.
-echo [ + ] TrustStore created, save the following. It is needed for your SIMS application:
+echo [ + ] TrustStore created. Save the following. It is needed for your SIMS application:
 echo TrustStore location: C:\Program Files\Java\jdk-16.0.1\bin\SIMS_AWS_TrustStore
 echo TrustStore password: %trustStorePassword%
+echo.
+set /p nothing="Press enter to exit ..."
+set /p nothing="Are you sure? Did you save everything???"
