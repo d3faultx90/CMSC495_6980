@@ -111,6 +111,6 @@ public class ItemFilterPanel extends javax.swing.JPanel {
 				.addComponent(itemScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
 				.addContainerGap()));
 
-	}// </editor-fold>//GEN-END:initComponents
+	}//GEN-END:initComponents
 
 }

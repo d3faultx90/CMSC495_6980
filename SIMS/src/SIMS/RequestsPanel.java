@@ -13,29 +13,29 @@ import javax.swing.table.DefaultTableModel;
 
 public class RequestsPanel extends javax.swing.JPanel {
 
+	// Variables declaration - do not modify
+	private javax.swing.JButton helpButton;
+	protected SIMS.OrderAndWasteRequestPanel orderRequestPanel;
+	private javax.swing.JPanel requestPanel;
+	protected SIMS.OrderAndWasteRequestPanel wasteRequestPanel;
+	// End of variables declaration
+	
 	protected RequestsPanel() {
 		initComponents();
 	}
-
+	
 	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		GeneralGuiFunctions.displayHelpPane("Any order or wastes submitted by a user will show up here."
 				+ "\nIf you can see this you are a supervisor and must approve or deny the request.");
 	}
-	
-	// Variables declaration - do not modify
-	private javax.swing.JButton helpButton;
-	protected SIMS.OrderOrWasteRequestPanel orderRequestPanel;
-	private javax.swing.JPanel requestPanel;
-	protected SIMS.OrderOrWasteRequestPanel wasteRequestPanel;
-	// End of variables declaration
 
 	private void initComponents() {
 
 		requestPanel = new javax.swing.JPanel();
 		helpButton = new javax.swing.JButton();
 		// Need to filter this to hide approved/denied orders
-		orderRequestPanel = new SIMS.OrderOrWasteRequestPanel("Order");
-		wasteRequestPanel = new SIMS.OrderOrWasteRequestPanel("Waste");
+		orderRequestPanel = new SIMS.OrderAndWasteRequestPanel("Order");
+		wasteRequestPanel = new SIMS.OrderAndWasteRequestPanel("Waste");
 
 		helpButton.setBackground(new java.awt.Color(255, 255, 153));
 		helpButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N

@@ -101,10 +101,11 @@ public class Database {
 
 	// Checks to see the role of the user, then performs the appropriate refresh method
 	static void refreshAllTables() {
+		connector.getAllResults();
 		if (role == 1) {
-			SupervisorWindow.refreshAllTables();
+			SupervisorWindow.refreshAllElements();
 		} else {
-			UserWindow.refreshAllTables();
+			UserWindow.refreshAllElements();
 		}
 	}
 

@@ -14,10 +14,19 @@ import javax.swing.JTable;
 
 public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 
-	Object[][] masterArray;
+	Object[][] masterArray; // Used to populate the JTable
 	String date;
 	String wasteOrOrder;
 	String totalPrice;
+
+	// Variables declaration - do not modify
+	private javax.swing.JLabel dateLabel;
+	private javax.swing.JTable detailsTable;
+	private javax.swing.JLabel filterLabel;
+	private javax.swing.JTextField filterTextfield;
+	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JLabel totalPriceTextfield;
+	// End of variables declaration
 
 	protected OrderAndWasteDetailWindow(String wasteOrOrder, String date, Object[][] masterArray, String totalPrice) {
 		this.wasteOrOrder = wasteOrOrder;
@@ -27,10 +36,12 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 		initComponents();
 	}
 
+	// Filters the table based on input from the textfield
 	private void filterTextfieldKeyReleased(java.awt.event.KeyEvent evt) {
 		GeneralGuiFunctions.filterTable(detailsTable, filterTextfield);
 	}
 
+	// Static method to populate and construct a OrderAndWasteDetailWindow
 	static void displayDetails(JTable table, int dateIndex, List<List> requests) {
 
 		try {
@@ -72,16 +83,6 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 		}
 	}
 
-	// Variables declaration - do not modify
-	private javax.swing.JLabel dateLabel;
-	private javax.swing.JTable detailsTable;
-	private javax.swing.JLabel filterLabel;
-	private javax.swing.JTextField filterTextfield;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JLabel totalPriceTextfield;
-	// End of variables declaration
-
-	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
 		jScrollPane1 = new javax.swing.JScrollPane();
@@ -150,6 +151,6 @@ public class OrderAndWasteDetailWindow extends javax.swing.JFrame {
 
 		pack();
 		setLocationRelativeTo(null);
-	}// </editor-fold>
+	}
 
 }

@@ -14,8 +14,8 @@ import javax.swing.SwingUtilities;
 
 public class HomePanel extends javax.swing.JPanel {
 
-	TimeThread time;
-	String username;
+	TimeThread time; // Used to increment the time in the header
+	String username; // Used to display a name in the welcome screen
 
 	// Variables declaration - do not modify
 	private javax.swing.JLabel annualSalesLabel;

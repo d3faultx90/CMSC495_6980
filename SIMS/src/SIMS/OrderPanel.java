@@ -15,6 +15,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class OrderPanel extends javax.swing.JPanel {
 
+	// Variables declaration - do not modify
+	protected SIMS.OrderAndSalesPanel orderPanel;
+	protected javax.swing.JButton orderButton;
+	private javax.swing.JPanel mainPanel;
+	// End of variables declaration
+	
 	protected OrderPanel() {
 		initComponents();
 	}
@@ -25,8 +31,9 @@ public class OrderPanel extends javax.swing.JPanel {
 		Map<Object, Object> itemNum = Database.getItemIdMap();
 		Map<Object, Object> itemPrices = Database.getWholesaleItemPricesMap();
 		
-		List<List> databBaseInfo = new ArrayList<List>();
+		List<List> dataBaseInfo = new ArrayList<List>();
 
+		// If there are no items in the table to order, say something
 		if (orderedItems.getRowCount() == 0) {
 			
 			GeneralGuiFunctions.displayErrorPane("Please select an item to order");
@@ -40,21 +47,15 @@ public class OrderPanel extends javax.swing.JPanel {
 				// 2D List to pass to createOrder
 				List<Object> list = new ArrayList<Object>();
 
-				
 				Object itemID = itemNum.get(orderedItems.getValueAt(i, 0));
 				Object price = itemPrices.get(orderedItems.getValueAt(i, 0));
 				Object quantity = orderedItems.getValueAt(i, 1);
-				
-				
-				
+
 				list.add(itemID);
 				list.add(price);
 				list.add(quantity);
-				
 
-				databBaseInfo.add(list);
-				
-				
+				dataBaseInfo.add(list);
 
 			} // end for
 			
@@ -67,32 +68,19 @@ public class OrderPanel extends javax.swing.JPanel {
 				confirmation = "Order";
 			} 
 
-			Database.getConnector().createOrder(databBaseInfo,date, status);
+			Database.getConnector().createOrder(dataBaseInfo,date, status);
 			
+			// Clear the table
 			GeneralGuiFunctions.clearTable(orderPanel.orderTable);
 			
 			GeneralGuiFunctions.displayConfirmationPane(confirmation + " was submitted succesfully");
 			
-			if (Database.getRole() == 1) {
-				SupervisorWindow.refreshAllItemTables();
-			} else {
-				UserWindow.refreshAllItemTables();
-			}
+			Database.refreshAllTables();
 
 		} // end else
 
-		
-
-	}// end orderButtonActionPerformed
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	protected SIMS.OrderAndSalesPanel orderPanel;
-	protected javax.swing.JButton orderButton;
-	private javax.swing.JPanel mainPanel;
-	// End of variables declaration//GEN-END:variables
-
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+	}
+            
     private void initComponents() {
 
         orderPanel = new SIMS.OrderAndSalesPanel(false);
@@ -127,6 +115,6 @@ public class OrderPanel extends javax.swing.JPanel {
                 .addComponent(orderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
-    }// </editor-fold>  
+    } 
 
 }

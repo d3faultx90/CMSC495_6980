@@ -16,33 +16,47 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
+public class OrderAndWasteRequestPanel extends javax.swing.JPanel {
 
 	String tableTitle;
-	List<List> resultsFromQuery = new ArrayList<List>();
+	List<List> resultsFromQuery; // Holds the results from the query (order or waste)
 
-	protected OrderOrWasteRequestPanel(String tableTitle) {
+	// Variables declaration
+	private javax.swing.JButton approveButton;
+	private javax.swing.JButton denyButton;
+	private javax.swing.JScrollPane jScrollPane1;
+	private javax.swing.JLabel requestLabel;
+	protected javax.swing.JTable requestTable;
+	private javax.swing.JButton viewButton;
+	// End of variables declaration
+
+	protected OrderAndWasteRequestPanel(String tableTitle) {
 		this.tableTitle = tableTitle;
 		initComponents();
+		// If table is order, grab order table, else grab waste
 		this.resultsFromQuery = tableTitle.equals("Order") ? Database.getOrderTable() : Database.getWasteTable();
 		addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
 	}
 
-	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		if (tableTitle.equals("Order")) {
-			OrderAndWasteDetailWindow.displayDetails(requestTable, 0, Database.getOrderTable());
-		} else {
-			OrderAndWasteDetailWindow.displayDetails(requestTable, 0, Database.getWasteTable());
+	// Populate the table with the date/time of request and the requesting user.
+	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
+		Map usernames = Database.getUserIdMap();
+		// Keeps track of requests already added since they only need to be seen once.
+		ArrayList<String> alreadyAdded = new ArrayList<String>();
+		for (List l : resultsFromQuery) {
+			if (GeneralGuiFunctions.castObjectToInteger(l.get(9)) == 0) {
+				String date = (String) l.get(8);
+				if (!alreadyAdded.contains(date)) {
+					model.addRow(new Object[] { date, usernames.get(l.get(2)) });
+					alreadyAdded.add(date);
+				}
+			}
 		}
-		
 	}
 
+	// Passes off the approval to the approveOrDeny method
 	private void approveButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		approveOrDeny(true);
-	}
-
-	private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		approveOrDeny(false);
 	}
 
 	private void approveOrDeny(boolean isApproved) {
@@ -51,20 +65,24 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 			for (List request : resultsFromQuery) {
 
 				if (selectedCellValue == request.get(8)) {
+					// Approved = 1, denied = 2
 					int status = isApproved ? 1 : 2;
 
+					// Need to differentiate which table is being updated
 					if (tableTitle.contains("Order")) {
 						Database.getConnector().updateOrderStatus(status, request.get(1).toString());
-						printApprovalOrDenial(isApproved);
+						displayApprovalOrDenial(isApproved);
 					} else if (tableTitle.contains("Waste")) {
 						Database.getConnector().updateWasteStatus(status, request.get(1).toString());
-						printApprovalOrDenial(isApproved);
+						displayApprovalOrDenial(isApproved);
 					} else {
 						GeneralGuiFunctions.displayErrorPane("Problem in approveOrDeny in OrderOrWastePanel.java");
 					}
 
+					// Removes the row that was selected from the table
 					((DefaultTableModel) requestTable.getModel()).removeRow((requestTable.getSelectedRow()));
 
+					// Refresh the reorder table to show the new approved/denied order and refresh item tables.
 					SupervisorWindow.refreshReorderTable();
 					SupervisorWindow.refreshAllItemTables();
 
@@ -78,7 +96,13 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		}
 	}
 
-	private void printApprovalOrDenial(boolean isApproved) {
+	// Passes off the denial to the approveOrDeny method
+	private void denyButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		approveOrDeny(false);
+	}
+
+	// Display a confirmation pane based on the selection chosen
+	private void displayApprovalOrDenial(boolean isApproved) {
 		if (isApproved) {
 			GeneralGuiFunctions.displayConfirmationPane(tableTitle + " reqest was approved.");
 		} else {
@@ -86,35 +110,22 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 		}
 	}
 
-	private void addIdAndRequestingUserToTable(DefaultTableModel model) {
-		Map usernames = Database.getUserIdMap();
-		ArrayList<String> alreadyAdded = new ArrayList<String>();
-		for (List l : resultsFromQuery) {
-			if (GeneralGuiFunctions.castObjectToInteger(l.get(9)) == 0) {
-				String date = (String) l.get(8);
-				if (!alreadyAdded.contains(date)) {
-					model.addRow(new Object[] { date, usernames.get(l.get(2)) });
-					alreadyAdded.add(date);
-				}
-
-			}
-		}
-	}
-
+	// Refreshes the table (is only called from the home panel's refresh inventory button)
 	public void refreshTable() {
 		GeneralGuiFunctions.clearTable(requestTable);
 		this.resultsFromQuery = tableTitle.equals("Order") ? Database.getOrderTable() : Database.getWasteTable();
 		addIdAndRequestingUserToTable((DefaultTableModel) requestTable.getModel());
 	}
 
-	// Variables declaration
-	private javax.swing.JButton approveButton;
-	private javax.swing.JButton denyButton;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JLabel requestLabel;
-	protected javax.swing.JTable requestTable;
-	private javax.swing.JButton viewButton;
-	// End of variables declaration
+	// Displays the details of the selected request
+	private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		if (tableTitle.equals("Order")) {
+			OrderAndWasteDetailWindow.displayDetails(requestTable, 0, Database.getOrderTable());
+		} else {
+			OrderAndWasteDetailWindow.displayDetails(requestTable, 0, Database.getWasteTable());
+		}
+
+	}
 
 	private void initComponents() {
 
@@ -195,5 +206,6 @@ public class OrderOrWasteRequestPanel extends javax.swing.JPanel {
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(viewButton).addComponent(approveButton).addComponent(denyButton))
 						.addGap(0, 6, Short.MAX_VALUE)));
-	}// </editor-fold>
+	}
+
 }

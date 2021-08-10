@@ -17,13 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class OrderAndSalesPanel extends javax.swing.JPanel {
 
-	private boolean isSalesPanel;
-
-	protected OrderAndSalesPanel(boolean isSalesPanel) {
-		this.isSalesPanel = isSalesPanel;
-		initComponents();
-		previousModel = (DefaultTableModel) orderTable.getModel();
-	}
+	private boolean isSalesPanel; // Used to differentiate between order and sales (slight differences)
 
 	// Variables declaration
 	private javax.swing.JButton addToButton;
@@ -38,11 +32,16 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 	private javax.swing.JTextField quantityTextfield;
 	private javax.swing.JButton removeFromButton;
 	// End of variables declaration
+	
+	protected OrderAndSalesPanel(boolean isSalesPanel) {
+		this.isSalesPanel = isSalesPanel;
+		initComponents();
+	}
 
-	// When pressed,checks if item is selected, quantity entered and adds the
-	// selected item along with its quantity to the order table
+	// When pressed,checks if item is selected, quantity entered and adds the selected item along with its quantity to the order table
 	private void addToButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
+		// Used to keep track of items that have already been added to the list
 		ArrayList<String> list = new ArrayList<String>();
 
 		try {
@@ -97,8 +96,16 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 
 		}
 
-	} // end addToButtonActionPerformed
+	} 
 
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
+		GeneralGuiFunctions.displayHelpPane("In this form you can:\n" + "Filter the current order list.\n"
+				+ "Select an item and quantity amount then add it to the order.\n"
+				+ "When finshed, click the Order button to send the order.");
+		
+	}
+	
 	// Checks if an item is selected then removes the selected row from the table
 	private void removeFromButtonActionPerformed(java.awt.event.ActionEvent evt) { // GEN-FIRST:event_removeFromButtonActionPerformed
 
@@ -114,13 +121,6 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 			GeneralGuiFunctions.displayErrorPane("An error has occured");
 		}
 	} // end removeFromButtonActionPerformed
-
-	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
-		GeneralGuiFunctions.displayHelpPane("In this form you can:\n" + "Filter the current order list.\n"
-				+ "Select an item and quantity amount then add it to the order.\n"
-				+ "When finshed, click the Order button to send the order.");
-	} // end helpButtonActionPerformed
 
 	private void initComponents() {
 
@@ -247,6 +247,6 @@ public class OrderAndSalesPanel extends javax.swing.JPanel {
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(completionPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
-	}// </editor-fold>
+	}
 
 }

@@ -18,7 +18,12 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 	private String year;
 	private String profits;
 
-	private List<List> salesPerMonth;
+	private List<List> salesPerMonth; // Holds the sales unique to the given month
+
+	// Variables declaration - do not modify
+	private javax.swing.JLabel monthLabel;
+	private javax.swing.JButton monthProfitButton;
+	// End of variables declaration
 
 	protected MonthProfitPanel(Months month, String year, List<List> salesPerMonth, String itemName) {
 		this.month = month.name();
@@ -35,7 +40,13 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 		}
 		initComponents();
 	}
-
+	
+	// Create a new monthly breakdown window based on the sales per month parsed.
+	private void monthProfitButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		new MonthlySaleBreakdownWindow(parseSalesForBreakdownWindow(), month + " " + year).setVisible(true);
+	}
+	
+	// This 2D object array is given to the panel to the breakdown window to show specific columns
 	private Object[][] parseSalesForBreakdownWindow() {
 		Object[][] parsed = new Object[salesPerMonth.size()][4];
 
@@ -49,15 +60,6 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 		}
 		return parsed;
 	}
-
-	private void monthProfitButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		new MonthlySaleBreakdownWindow(parseSalesForBreakdownWindow(), month + " " + year).setVisible(true);
-	}
-
-	// Variables declaration - do not modify
-	private javax.swing.JLabel monthLabel;
-	private javax.swing.JButton monthProfitButton;
-	// End of variables declaration
 
 	private void initComponents() {
 
@@ -99,6 +101,6 @@ public class MonthProfitPanel extends javax.swing.JPanel {
 				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(monthProfitButton,
 						javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
 				.addContainerGap(10, Short.MAX_VALUE)));
-	}// </editor-fold>
+	}
 
 }

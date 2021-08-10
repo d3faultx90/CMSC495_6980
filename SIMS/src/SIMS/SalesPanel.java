@@ -17,6 +17,13 @@ import java.util.List;
 
 public class SalesPanel extends javax.swing.JPanel {
 
+	// Variables declaration - do not modify
+	protected com.toedter.calendar.JDateChooser dateChooser;
+	protected SIMS.OrderAndSalesPanel salesPanel;
+	private javax.swing.JPanel salesTab;
+	protected javax.swing.JButton saveSaleButton;
+	// End of variables declaration
+	
 	protected SalesPanel() {
 		initComponents();
 	}
@@ -31,13 +38,13 @@ public class SalesPanel extends javax.swing.JPanel {
 		Map<Object, Object> itemIds = Database.getItemIdMap();
 		Map<Object, Object> itemPrices = Database.getRetailItemPricesMap();
 
+		// If there are no items in the order table, don't allow a sale
 		if (saleTable.getRowCount() == 0) {
 
 			GeneralGuiFunctions.displayErrorPane("Please select an item to order");
 
 		} else {
 
-			// DELETE THIS AND GRAB IT FROM ELSEWHERE
 			int employeeId = Database.getConnector().userID;
 			double salesTax = .08; // Don't hardcode
 			String date = DateHandler.formatDateForSql(dateChooser.getDate());
@@ -55,29 +62,20 @@ public class SalesPanel extends javax.swing.JPanel {
 				list.add(quantity);
 				itemIdsAndQuantity.add(list);
 
-				// System.out.println("Sale happened for " + quantity + " items with the id of "
-				// + itemID);
 			}
-			// System.out.println(itemIdsAndQuantity);
+
 			// Pass the 2D list here once method is updated
 			Database.getConnector().createSales(itemIdsAndQuantity, salesTax, date);
 
 			// Clears the order table after the success
 			GeneralGuiFunctions.clearTable(salesPanel.orderTable);
 
-			Database.refreshAllTables();
+			Database.refreshAllTables(); // Refresh all tables so they reflect current quantity
 
 			GeneralGuiFunctions.displayConfirmationPane("Sale completed sucessfully");
 		}
 
 	}
-
-	// Variables declaration - do not modify
-	protected com.toedter.calendar.JDateChooser dateChooser;
-	protected SIMS.OrderAndSalesPanel salesPanel;
-	private javax.swing.JPanel salesTab;
-	protected javax.swing.JButton saveSaleButton;
-	// End of variables declaration
 
 	private void initComponents() {
 

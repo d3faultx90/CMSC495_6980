@@ -240,7 +240,7 @@ public class CalendarViewWindow extends javax.swing.JFrame {
 
 		pack();
 		setLocationRelativeTo(null);
-	}// </editor-fold>
+	}
 
 	// Variables declaration - do not modify
 	private SIMS.MonthProfitPanel aprilPanel;

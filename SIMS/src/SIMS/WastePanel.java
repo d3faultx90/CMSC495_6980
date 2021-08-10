@@ -20,11 +20,23 @@ import javax.swing.table.DefaultTableModel;
 
 public class WastePanel extends javax.swing.JPanel {
 
+	// Variables declaration - do not modify
+	private javax.swing.JButton helpButton;
+	protected SIMS.ItemFilterPanel itemFilterPanel;
+	private javax.swing.JPanel panel;
+	private javax.swing.JLabel quantityLabel;
+	private javax.swing.JTextField quantityTextfield;
+	protected javax.swing.JButton wasteButton;
+	// End of variables declaration
+	
 	protected WastePanel() {
 		initComponents();
-
 	}
-
+	
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayHelpPane(" First select the item name then enter the quantity and click on the waste button!");
+	}
+	
 	private void wasteButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
@@ -50,6 +62,7 @@ public class WastePanel extends javax.swing.JPanel {
 				
 			} else {
 				
+				// Grab all parameters needed to submit the waste request on the SQL side
 				Object id = Database.itemIds.get(selectedCellValue);
 				Object price = Database.itemRetailPrices.get(selectedCellValue);
 
@@ -68,46 +81,24 @@ public class WastePanel extends javax.swing.JPanel {
 					confirmation = "Waste (" + selectedCellValue + " x" + quantity + ") was submitted successfully";
 				} 
 
+				// Update things on the SQL side
 				Database.getConnector().createWaste(itemID, wholeSalePrice, removalQuantity, date, status);
 				
 				GeneralGuiFunctions.displayConfirmationPane(confirmation);
 				
-				if (Database.getRole() == 1) {
-					SupervisorWindow.refreshAllItemTables();
-				} else {
-					UserWindow.refreshAllItemTables();
-				}
+				Database.refreshAllTables(); // Refresh tables so quantity can be updated
+				
 			}
-
-
 
 		} catch (NumberFormatException d) {
 			GeneralGuiFunctions.displayErrorPane("I am really angry ... call an admin.");
-
 		} catch (ArrayIndexOutOfBoundsException e) {
-
 			GeneralGuiFunctions.displayErrorPane("Please select an item");
-
 		}
 
-	} // end wasteButtonActionPerformed
+	} // end wasteButtonActionPerformed 
 
-	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane(" First select the item name then enter the quantity and click on the waste button!");
-		
-		
-	}
-
-	// Variables declaration - do not modify
-	private javax.swing.JButton helpButton;
-	protected SIMS.ItemFilterPanel itemFilterPanel;
-	private javax.swing.JPanel panel;
-	private javax.swing.JLabel quantityLabel;
-	private javax.swing.JTextField quantityTextfield;
-	protected javax.swing.JButton wasteButton;
-	// End of variables declaration
-
-    private void initComponents() {
+	private void initComponents() {
 
         panel = new javax.swing.JPanel();
         wasteButton = new javax.swing.JButton();
@@ -182,6 +173,6 @@ public class WastePanel extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-    }// </editor-fold>  
+    }
 
 }

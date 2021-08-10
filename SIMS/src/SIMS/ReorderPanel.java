@@ -4,6 +4,7 @@
  * Date: July 19th, 2021
  * Purpose: Panel that is used in the reorder subtab
  */
+
 package SIMS;
 
 import java.util.ArrayList;
@@ -12,34 +13,24 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 public class ReorderPanel extends javax.swing.JPanel {
 
+	// Variables declaration - do not modify
+	private javax.swing.JButton helpButton;
+	protected SIMS.OrderFilterPanel orderFilterPanel;
+	private javax.swing.JButton reorderButton1;
+	private javax.swing.JButton viewOrderDetailsButton;
+	// End of variables declaration
+	
 	protected ReorderPanel() {
 		initComponents();
 	}
-
-	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		GeneralGuiFunctions.displayHelpPane(
-				"Select the order Id and click on view details to display more details or click on reorder to reorder");
-	}
-
-	private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {
-		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.orderTable, 1, Database.getOrderTable());
-	}
-
-	private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		Object[][] previousOrder = parseItemAndQuantity(orderFilterPanel.orderTable);
-		if (Database.getRole() == 1) {
-			SupervisorWindow.reorder(previousOrder);
-		} else {
-			UserWindow.reorder(previousOrder);
-		}
-
-	}
-
-	static Object[][] parseItemAndQuantity(JTable table) {
+	
+	// Given the JTable, it will parse the items and quantities within it
+	private Object[][] parseItemAndQuantity(JTable table) {
 		try {
 			Map<Object, Object> itemNames = Database.getItemNamesMap();
 			ArrayList<Object[]> masterList = new ArrayList<Object[]>();
@@ -74,13 +65,27 @@ public class ReorderPanel extends javax.swing.JPanel {
 		return new Object[1][1];
 	}
 
-	// Variables declaration - do not modify
-	private javax.swing.JButton helpButton;
-	protected SIMS.OrderFilterPanel orderFilterPanel;
-	private javax.swing.JButton reorderButton1;
-	private javax.swing.JButton viewOrderDetailsButton;
-	// End of variables declaration
+	private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		GeneralGuiFunctions.displayHelpPane(
+				"Select the order Id and click on view details to display more details or click on reorder to reorder");
+	}
+	
+	// Reordering simply means populating the order tab with the selected order
+	private void reorderButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		Object[][] previousOrder = parseItemAndQuantity(orderFilterPanel.orderTable);
+		// Find the appropriate window to update
+		if (Database.getRole() == 1) {
+			SupervisorWindow.reorder(previousOrder);
+		} else {
+			UserWindow.reorder(previousOrder);
+		}
+	}
 
+	// Views details of the order
+	private void viewOrderDetailsButtonActionPreformed(java.awt.event.ActionEvent evt) {
+		OrderAndWasteDetailWindow.displayDetails(orderFilterPanel.orderTable, 1, Database.getOrderTable());
+	}
+	
 	private void initComponents() {
 
 		orderFilterPanel = new SIMS.OrderFilterPanel();
@@ -134,6 +139,6 @@ public class ReorderPanel extends javax.swing.JPanel {
 						.addComponent(viewOrderDetailsButton)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(reorderButton1).addContainerGap(44, Short.MAX_VALUE)));
-	}// </editor-fold>
+	}
 
 }

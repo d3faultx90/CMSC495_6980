@@ -95,8 +95,8 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JButton changePasswordButton;
     // End of variables declaration    
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    
+                             
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
@@ -220,6 +220,6 @@ public class LoginWindow extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>  
+    } 
 
 }

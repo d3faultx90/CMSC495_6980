@@ -1,11 +1,12 @@
-package SIMS;
-
 /*
  * File: TimeThread.java
  * Author: Ben Sutter
  * Date: May 4th, 2021
  * Purpose: While the thread is running/not paused display the current time in seconds.
  */
+
+package SIMS;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

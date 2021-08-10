@@ -40,13 +40,14 @@ public class ReportPanel extends javax.swing.JPanel {
 	protected ReportPanel() {
 		parseItemNames();
 		initComponents();
-		getUniqueYears(Database.resultsFromSalesQuery);
+		getUniqueYears();
 		populateTableWithSales();
 	}
 
-	private void getUniqueYears(List<List> sales) {
+	// Goes through all sales and parses the unique years
+	private void getUniqueYears() {
 		ArrayList<String> uniqueYears = new ArrayList<String>();
-		for (List l : sales) {
+		for (List l : Database.getSalesTable()) {
 			String year = l.get(8).toString().substring(0, 4);
 			if (!uniqueYears.contains(year)) {
 				// System.out.println(year);
@@ -58,6 +59,7 @@ public class ReportPanel extends javax.swing.JPanel {
 		this.uniqueYears = uniqueYears;
 	}
 
+	// Gives a year to connector to retrieve
 	private List<List> getYearsSales(String year) {
 		return Database.getConnector().retrieveSalesOnDate(year);
 	}
@@ -67,12 +69,15 @@ public class ReportPanel extends javax.swing.JPanel {
 				+ "\nSelect a year and press the button to view the monthly breakdown of sales."
 				+ "\nPress the month button in the new window to view even further details (FEATURE MAY BE CUT)");
 	}
-
+	
+	// When the current combobox changes, the table is automatically populated with year and quantity sold
 	private void itemComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
 		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
 	}
 
+	
 	private void itemRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		getUniqueYears();
 		itemComboBox.setVisible(true);
 		yearAndProfitTable.getColumnModel().getColumn(1).setHeaderValue("Quantity Sold");
 		yearAndProfitTable.getTableHeader().resizeAndRepaint();
@@ -109,11 +114,6 @@ public class ReportPanel extends javax.swing.JPanel {
 		itemNames = categoryArrayList.toArray(String[]::new);
 	}
 
-	protected void refreshComboBox() {
-		parseItemNames();
-		itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(itemNames));
-	}
-
 	private void populateTableWithQuantitySold(Object itemName) {
 
 		GeneralGuiFunctions.clearTable(yearAndProfitTable);
@@ -138,7 +138,13 @@ public class ReportPanel extends javax.swing.JPanel {
 
 	}
 
+	protected void refreshComboBox() {
+		parseItemNames();
+		itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(itemNames));
+	}
+
 	private void salesRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		getUniqueYears();
 		yearAndProfitTable.getColumnModel().getColumn(1).setHeaderValue("Profits");
 		yearAndProfitTable.getTableHeader().resizeAndRepaint();
 		itemComboBox.setVisible(false);
@@ -309,6 +315,6 @@ public class ReportPanel extends javax.swing.JPanel {
 								.addComponent(reportsTab, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addGap(0, 0, Short.MAX_VALUE))));
-	}// </editor-fold>
+	}
 
 }

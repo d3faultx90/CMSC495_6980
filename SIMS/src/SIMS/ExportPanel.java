@@ -93,8 +93,8 @@ public class ExportPanel extends javax.swing.JPanel {
         		+ "\nTo export database information,click on the export button ");
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    
+                             
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
@@ -164,6 +164,6 @@ public class ExportPanel extends javax.swing.JPanel {
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-    }// </editor-fold>   
+    }  
     
 }

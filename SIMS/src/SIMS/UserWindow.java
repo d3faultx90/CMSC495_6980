@@ -1,22 +1,35 @@
 /*
- * File: SupervisorWindow.java
+ * File: UserWindow.java
  * Author: Ben Sutter
- * Date: July 19th, 2021
- * Purpose: Master GUI that holds many of the elements
+ * Date: August 3rd, 2021
+ * Purpose: Master GUI that holds many of the panels.
+ * Utilizes the singleton design pattern to allow for refreshing elements of the UI.
  */
+
 package SIMS;
 
 import java.util.List;
-
 import javax.swing.table.DefaultTableModel;
-
 import java.util.ArrayList;
 
 public class UserWindow extends javax.swing.JFrame {
 
 	static String username;
 	private static UserWindow singleton;
-
+	
+    // Variables declaration - do not modify
+	private SIMS.HomePanel homePanel;
+    private javax.swing.JTabbedPane inventorySubTabs;
+	private javax.swing.JPanel inventoryTab;
+	private javax.swing.JTabbedPane jTabbedPane1;
+	private SIMS.OrderPanel orderPanel;
+	private SIMS.ReorderPanel reorderPanel;
+	private SIMS.ReportPanel reportPanel;
+	private SIMS.SalesPanel salesPanel;
+	private SIMS.ViewInventoryPanel viewInventoryPanel;
+	private SIMS.WastePanel wastePanel;
+	// End of variables declaration
+	
 	protected UserWindow(Connector connector, String user) {
 		username = user;
 		Database database = new Database(connector);
@@ -25,25 +38,26 @@ public class UserWindow extends javax.swing.JFrame {
 		
 	}
 
-	protected void changeTextForUser() {
-		salesPanel.dateChooser.setVisible(false);
-		wastePanel.wasteButton.setText("Submit Waste Request");
-		//salesPanel.saveSaleButton.setText("Submit Sales Request");
-		orderPanel.orderButton.setText("Submit Order Request");
-	}
+	// Setter method for the singleton (only called via login window)
+    protected static UserWindow createWindow(Connector connector, String username) {
+    	singleton = new UserWindow(connector, username);
+    	return singleton;
+    }
 
 	// Getter method for the singleton instance
     protected static UserWindow getWindow() {
         return singleton;
     }
-    
-    // Setter method for the singleton (only called via login window)
-    protected static UserWindow createWindow(Connector connector, String username) {
-    	singleton = new UserWindow(connector, username);
-    	return singleton;
+
+    // Refresh all elements within the GUI (called when HomePanel's refresh button is hit).
+    protected static void refreshAllElements() {
+    	refreshAllItemTables();
+    	refreshReorderTable();
+    	refreshReportComboBox();
     }
     
-    protected static void refreshAllItemTables() {
+    // Refreshes each itemTable within the various nested panels
+	protected static void refreshAllItemTables() {
     	ItemFilterPanel.updateCurrentInventory();
     	singleton.salesPanel.salesPanel.itemFilterPanel.refreshTable();
     	singleton.orderPanel.orderPanel.itemFilterPanel.refreshTable();
@@ -51,15 +65,17 @@ public class UserWindow extends javax.swing.JFrame {
     	singleton.viewInventoryPanel.itemFilterPanel.refreshTable();
     }
     
+	// Refreshes both request panels so they reflect the state of the database
     protected static void refreshReorderTable() {
     	singleton.reorderPanel.orderFilterPanel.refreshTable();
     }
     
-    protected static void refreshAllTables() {
-    	refreshAllItemTables();
-    	refreshReorderTable();
+    // Refreshes the report combo box in case a new item was added.
+    protected static void refreshReportComboBox() {
+    	singleton.reportPanel.refreshComboBox();
     }
     
+    // Given a 2D array with the order info, populate the order table and tab to it.
     protected static void reorder(Object [][] previousOrder) {
     	GeneralGuiFunctions.clearTable(singleton.orderPanel.orderPanel.orderTable);
     	for (Object[] o :  previousOrder) {
@@ -69,9 +85,13 @@ public class UserWindow extends javax.swing.JFrame {
     	singleton.inventorySubTabs.setSelectedIndex(2);
     }
     
-    protected static void refreshReportComboBox() {
-    	singleton.reportPanel.refreshComboBox();
-    }
+    // Changes some aspects of the UI to reflect that it is a user and not a supervisor
+	protected void changeTextForUser() {
+		salesPanel.dateChooser.setVisible(false);
+		wastePanel.wasteButton.setText("Submit Waste Request");
+		//salesPanel.saveSaleButton.setText("Submit Sales Request");
+		orderPanel.orderButton.setText("Submit Order Request");
+	}
 	
 	private void initComponents() {
 
@@ -128,18 +148,6 @@ public class UserWindow extends javax.swing.JFrame {
 
 		pack();
 		setLocationRelativeTo(null);
-	}// </editor-fold>//GEN-END:initComponents
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private SIMS.HomePanel homePanel;
-	private javax.swing.JTabbedPane inventorySubTabs;
-	private javax.swing.JPanel inventoryTab;
-	private javax.swing.JTabbedPane jTabbedPane1;
-	private SIMS.OrderPanel orderPanel;
-	private SIMS.ReorderPanel reorderPanel;
-	private SIMS.ReportPanel reportPanel;
-	private SIMS.SalesPanel salesPanel;
-	private SIMS.ViewInventoryPanel viewInventoryPanel;
-	private SIMS.WastePanel wastePanel;
-	// End of variables declaration//GEN-END:variables
+	}
+	
 }
