@@ -75,7 +75,7 @@ public class ReportPanel extends javax.swing.JPanel {
 		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
 	}
 
-	
+	// When the radio button is toggled to, parse unique years (in case of change) and show the textfield
 	private void itemRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		getUniqueYears();
 		itemComboBox.setVisible(true);
@@ -84,10 +84,12 @@ public class ReportPanel extends javax.swing.JPanel {
 		populateTableWithQuantitySold(itemComboBox.getSelectedItem());
 	}
 
+	// When the button is pressed, show the monthly break down of profits or items sold
 	private void monthlyBreakdownButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
 			String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 0);
+			// If it is item, send Item id to overloaded constructor
 			if (itemRadioButton.isSelected()) {
 				Object itemId = Database.getItemIdMap().get(itemComboBox.getSelectedItem());
 				new CalendarViewWindow(selectedCellValue, itemId).setVisible(true);
@@ -114,6 +116,7 @@ public class ReportPanel extends javax.swing.JPanel {
 		itemNames = categoryArrayList.toArray(String[]::new);
 	}
 
+	// Change the table to show data relevant to the selected item
 	private void populateTableWithQuantitySold(Object itemName) {
 
 		GeneralGuiFunctions.clearTable(yearAndProfitTable);
@@ -128,6 +131,7 @@ public class ReportPanel extends javax.swing.JPanel {
 
 	}
 
+	// Similar to the method above, but shows ALL sales within the given year
 	private void populateTableWithSales() {
 		GeneralGuiFunctions.clearTable(yearAndProfitTable);
 		DefaultTableModel model = (DefaultTableModel) yearAndProfitTable.getModel();
@@ -138,11 +142,13 @@ public class ReportPanel extends javax.swing.JPanel {
 
 	}
 
+	// Refreshes the combo box in case new items was added
 	protected void refreshComboBox() {
 		parseItemNames();
 		itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(itemNames));
 	}
 
+	// When the sales button is toggled to, hide the combo box and populate table with sales instead of quantity sold
 	private void salesRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		getUniqueYears();
 		yearAndProfitTable.getColumnModel().getColumn(1).setHeaderValue("Profits");
@@ -151,6 +157,7 @@ public class ReportPanel extends javax.swing.JPanel {
 		populateTableWithSales();
 	}
 
+	//If a table with a quantity of 0 is selected, don't allow the user to display the information (there is no information)
 	private void yearAndProfitTableMouseClicked(java.awt.event.MouseEvent evt) {
 		String selectedCellValue = (String) yearAndProfitTable.getValueAt(yearAndProfitTable.getSelectedRow(), 1);
 		if (selectedCellValue.equals("0")) {
