@@ -2,42 +2,47 @@
 Created by: Zachary Young
 Updated by: Zachary Young
 Created on: 07/01/2021
-Last edited: 08/08/2021
+Last edited: 08/09/2021
 Created for: CMSC495
 Tested platform(s): 
-  mysql  Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
-Ensure the following are applied:
-  - Create new users that can query application database
-  - Lock down new user permissions
+  mysql Ver 15.1 Distrib 10.3.28-MariaDB, for Linux (x86_64) using readline 5.1
+  mysql AWS RDS Ver 8.0.25
   
+
 HELPFUL COMMANDS:
-  drop app tables:
+-- drop app tables:
 DROP TABLE IF EXISTS SIMS_app_data.orders;
+DROP TABLE IF EXISTS SIMS_app_data.waste;
+DROP TABLE IF EXISTS SIMS_app_data.sales;
 DROP TABLE IF EXISTS SIMS_app_data.users;
 DROP TABLE IF EXISTS SIMS_app_data.inventory;
-DROP TABLE IF EXISTS SIMS_app_data.sales;
-  
-  drop app mysql.user:
+
+-- drop mysql.user(s) created
 DROP USER IF EXISTS 'SIMS_admin';
 DROP USER IF EXISTS 'SIMS_admin_bkup';
 DROP USER IF EXISTS 'zyoung5';
-
-  drop app database: 
+DROP USER IF EXISTS 'guhlan';
+DROP USER IF EXISTS 'bsutte'; 
+DROP USER IF EXISTS 'stetan';
+DROP USER IF EXISTS 'mbalth';
+  
+-- drop app database: 
 USE mysql; DROP DATABASE IF EXISTS SIMS_app_data;
-        
-EXAMPLE USAGE:
-mysql -u root -p < ./SIMS_MySQL_setup.sql
+
 */
 
 
-/* create original application admin for DataBase connection */
+/* create original application admin and users for DataBase connection */
 SELECT ' [+] Creating users ...' as '';
 USE mysql;
 CREATE USER IF NOT EXISTS 'SIMS_admin' IDENTIFIED BY 'SIMS_Sup3r_C0mplex!';
 CREATE USER IF NOT EXISTS 'SIMS_admin_bkup' IDENTIFIED BY 'SIMS_Sup3r_B&kup!';
 CREATE USER IF NOT EXISTS 'zyoung5' IDENTIFIED BY 'P@ssw0rd';
+CREATE USER IF NOT EXISTS 'guhlan' IDENTIFIED BY 'P@ssw0rd';
+CREATE USER IF NOT EXISTS 'bsutte' IDENTIFIED BY 'P@ssw0rd';
+CREATE USER IF NOT EXISTS 'stetan' IDENTIFIED BY 'P@ssw0rd';
+CREATE USER IF NOT EXISTS 'mbalth' IDENTIFIED BY 'P@ssw0rd';
 SELECT ' [+] Users created:' as '';
-SELECT user FROM mysql.user WHERE user LIKE "SIMS%";
 SELECT user FROM mysql.user;
 
 
@@ -47,7 +52,8 @@ CREATE DATABASE IF NOT EXISTS SIMS_app_data;
 SELECT ' [+] database built:' as '';
 SHOW databases;
 
-/* harden default SIMS admin account */
+/* harden account */
+/* currently everyuser has admin of SIMS_app_data -- this is bad */
 SELECT ' [+] Updating user permissions ...' as '';
 SELECT user,ssl_type,Host from mysql.user;
 UPDATE mysql.user SET ssl_type = 'ANY' WHERE Host != 'localhost';
@@ -55,17 +61,34 @@ FLUSH PRIVILEGES;
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
 SHOW GRANTS FOR 'zyoung5';
+SHOW GRANTS FOR 'guhlan';
+SHOW GRANTS FOR 'bsutte'; 
+SHOW GRANTS FOR 'stetan';
+SHOW GRANTS FOR 'mbalth';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin';
 REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'SIMS_admin_bkup';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'zyoung5';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'guhlan';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'bsutte';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'stetan';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'mbalth';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'SIMS_admin_bkup';
 GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'zyoung5';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'guhlan';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'bsutte';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'stetan';
+GRANT ALL PRIVILEGES ON SIMS_app_data.* TO 'mbalth';
 UPDATE mysql.user SET ssl_type = 'ANY' WHERE Host != 'localhost';
 FLUSH PRIVILEGES;
 SELECT user,ssl_type,Host from mysql.user;
 SHOW GRANTS FOR 'SIMS_admin';
 SHOW GRANTS FOR 'SIMS_admin_bkup';
 SHOW GRANTS FOR 'zyoung5';
+SHOW GRANTS FOR 'guhlan';
+SHOW GRANTS FOR 'bsutte'; 
+SHOW GRANTS FOR 'stetan';
+SHOW GRANTS FOR 'mbalth';
 SELECT ' [+] Users permissions updated.' as '';
 
 /* All users created will have a SQL account and be \
@@ -73,15 +96,7 @@ SELECT ' [+] Users permissions updated.' as '';
     
     Administrator = 0
     Supervisor    = 1
-    User          = 2
-    
-    examples:
-CREATE USER IF NOT EXISTS 'zyoung5' IDENTIFIED BY 'P@ssw0rd';
-SHOW GRANTS FOR 'zyoung5';
-REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'zyoung5';
-GRANT SELECT, INSERT ON SIMS_app_data.* TO 'zyoung5';
-SHOW GRANTS FOR 'zyoung5';
-    
+    User          = 2 
 */
 
 USE SIMS_app_data;
